@@ -471,11 +471,24 @@ function battingNow() {
   return match.innings === 1 ? match.myBatting : !match.myBatting;
 }
 
+function sideStatus(isA) {
+  if (match.over) return isA === (match.myScore > match.oppScore) ? '🏆 Winner' : '';
+  const batting = isA ? battingNow() : !battingNow();
+  if (batting) return `⚪ Ball ${match.balls}/${BALLS_PER_INNINGS}`;
+  if (setup.mode === 'challenge') return '🎯 Target set';
+  return match.innings === 2 ? '✅ Innings done' : '🥎 Bowling';
+}
+
 function refreshMatchUI() {
   $('sb-score-a').textContent = `${match.myScore}/${match.myWkts}`;
   $('sb-score-b').textContent = match.oppWkts === null ? `${match.oppScore}` : `${match.oppScore}/${match.oppWkts}`;
-  $('sb-team-a').classList.toggle('batting', battingNow());
-  $('sb-team-b').classList.toggle('batting', !battingNow());
+  $('sb-team-a').classList.toggle('batting', battingNow() && !match.over);
+  $('sb-team-b').classList.toggle('batting', !battingNow() && !match.over);
+  $('sb-status-a').textContent = sideStatus(true);
+  $('sb-status-b').textContent = sideStatus(false);
+  $('sb-innings').textContent = match.over ? 'MATCH OVER'
+    : setup.mode === 'challenge' ? 'THE CHASE'
+    : match.innings === 1 ? '1ST INNINGS' : '2ND INNINGS';
 
   if (match.target !== null && !match.over) {
     const who = setup.mode === 'friend'
