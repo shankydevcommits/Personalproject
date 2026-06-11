@@ -32,13 +32,13 @@ const SEGMENTS = [
   { label: 'W', runs: 'W', color: '#ff4d6a' },
   { label: '2', runs: 2,   color: '#1fb6d4' },
   { label: '6', runs: 6,   color: '#ffc83d' },
-  { label: '0', runs: 0,   color: '#41507a' },
+  { label: '0', runs: 0,   color: '#f4793b' },
   { label: '1', runs: 1,   color: '#2f7bff' },
   { label: '4', runs: 4,   color: '#7c4dff' },
   { label: 'W', runs: 'W', color: '#ff4d6a' },
   { label: '3', runs: 3,   color: '#27d17f' },
   { label: '6', runs: 6,   color: '#ffc83d' },
-  { label: '0', runs: 0,   color: '#41507a' },
+  { label: '0', runs: 0,   color: '#f4793b' },
 ];
 const SEG_COUNT = SEGMENTS.length;
 const BALLS_PER_INNINGS = 6;
@@ -63,7 +63,7 @@ function currentDifficulty() {
 
 /* Pun rosters — every country's legends, lightly scrambled */
 const ROSTERS = {
-  IND: [{ name: 'Viral Kohli', emoji: '🔥' }, { name: 'Rohit Charmer', emoji: '✨' }, { name: 'MS Phoni', emoji: '🧤' }, { name: 'Sachin Ten-Duelkar', emoji: '⚔️' }],
+  IND: [{ name: 'Viral Kohli', emoji: '🔥' }, { name: 'Rohit Charmer', emoji: '✨' }, { name: 'Helicopter Mahi', emoji: '🚁' }, { name: 'Sachin Ten-Duelkar', emoji: '⚔️' }],
   AUS: [{ name: 'Steve Smasher', emoji: '💥' }, { name: 'Glenn Maxi-Well', emoji: '⚡' }, { name: 'David Warner Bros', emoji: '🎬' }, { name: 'Ricky Pointing', emoji: '👉' }],
   ENG: [{ name: 'Ben Strokes', emoji: '🚣' }, { name: 'Joe Rooter', emoji: '🌳' }, { name: 'Jos the Butler', emoji: '🤵' }, { name: 'Kevin Pieter-Sun', emoji: '☀️' }],
   PAK: [{ name: 'Babar A-Slam', emoji: '💥' }, { name: 'Shahid A-Fridge', emoji: '🧊' }, { name: 'Wasim A-Cram', emoji: '📚' }, { name: 'Inzamam-ul-Hulk', emoji: '💪' }],

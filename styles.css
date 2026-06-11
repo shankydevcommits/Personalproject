@@ -162,6 +162,7 @@ body {
 .stadium-list { display: flex; flex-direction: column; gap: 8px; }
 .stadium-card {
   display: flex; align-items: center; gap: 12px; width: 100%;
+  background: rgba(255,255,255,.06);
   border: 2px solid rgba(255,255,255,.12); border-radius: 16px;
   padding: 12px 14px; cursor: pointer; color: var(--white);
   font-family: 'Rubik', sans-serif; text-align: left; transition: all .15s ease;
