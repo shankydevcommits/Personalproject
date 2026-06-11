@@ -25,20 +25,20 @@ const STADIUMS = [
   { id: 'galle',   icon: '🏰', name: 'Galle Fort Ground', city: 'Galle',     unlock: 10 },
 ];
 
-/* Wheel — 12 slices, every slot scores or takes a wicket. No empties. */
+/* Wheel — 12 slices: dots, runs and wickets. */
 const SEGMENTS = [
   { label: '1', runs: 1,   color: '#2f7bff' },
   { label: '4', runs: 4,   color: '#7c4dff' },
   { label: 'W', runs: 'W', color: '#ff4d6a' },
   { label: '2', runs: 2,   color: '#1fb6d4' },
   { label: '6', runs: 6,   color: '#ffc83d' },
-  { label: '3', runs: 3,   color: '#27d17f' },
+  { label: '0', runs: 0,   color: '#41507a' },
   { label: '1', runs: 1,   color: '#2f7bff' },
   { label: '4', runs: 4,   color: '#7c4dff' },
   { label: 'W', runs: 'W', color: '#ff4d6a' },
-  { label: '2', runs: 2,   color: '#1fb6d4' },
-  { label: '6', runs: 6,   color: '#ffc83d' },
   { label: '3', runs: 3,   color: '#27d17f' },
+  { label: '6', runs: 6,   color: '#ffc83d' },
+  { label: '0', runs: 0,   color: '#41507a' },
 ];
 const SEG_COUNT = SEGMENTS.length;
 const BALLS_PER_INNINGS = 6;
@@ -46,47 +46,45 @@ const WICKETS_PER_INNINGS = 2;
 const POINTS_PER_WIN = 2;
 const CHAMPION_BONUS = 10;
 
-/* Wheel odds per difficulty, tuned by simulation to hit the target win %.
-   `bat` biases your batting spins, `bowl` biases the bot's batting spins. */
+/* Hidden adaptive difficulty — never shown to the player.
+   The wheel quietly tightens as their win streak grows:
+   fresh players win ~75% of matches, hot streaks face ~5% odds.
+   Weights tuned by simulating 400k matches. */
 const DIFFICULTY = {
-  easy:   { label: 'Easy',   tag: 'E', winPct: '75%', bat: { 6: 1.2, 4: 1.2, W: 0.7 },  bowl: { 6: 0.7, 4: 0.8, W: 1.5 } },
-  medium: { label: 'Medium', tag: 'M', winPct: '50%', bat: {},                           bowl: {} },
-  hard:   { label: 'Hard',   tag: 'H', winPct: '5%',  bat: { 6: 0.5, 4: 0.65, W: 2.6 }, bowl: { 6: 1.8, 4: 1.7, W: 0.35 } },
+  easy:   { bat: { 6: 1.2, 4: 1.2, W: 0.7, 0: 0.8 },       bowl: { 6: 0.7, 4: 0.8, W: 1.5, 0: 1.2 } },
+  medium: { bat: {},                                        bowl: {} },
+  hard:   { bat: { 6: 0.52, 4: 0.67, W: 2.5, 0: 1.35 },     bowl: { 6: 1.75, 4: 1.65, W: 0.37, 0: 0.65 } },
 };
-const DIFF_BY_TAG = { E: 'easy', M: 'medium', H: 'hard' };
+function currentDifficulty() {
+  if (profile.streak >= 5) return 'hard';
+  if (profile.streak >= 2) return 'medium';
+  return 'easy';
+}
 
-const ROSTER = [
-  { name: 'Rocket Rahul',   emoji: '🚀' }, { name: 'Boom Boom Baz',  emoji: '💥' },
-  { name: 'Captain Storm',  emoji: '🌩️' }, { name: 'Silky Singh',    emoji: '🎩' },
-  { name: 'The Wall Jr',    emoji: '🧱' }, { name: 'Maxi Power',     emoji: '⚡' },
-  { name: 'Tornado Tariq',  emoji: '🌪️' }, { name: 'Dash Dilshan',   emoji: '💨' },
-  { name: 'King Kavi',      emoji: '👑' }, { name: 'Mr. 360',        emoji: '🔄' },
-  { name: 'Thunder Tane',   emoji: '🌊' }, { name: 'Golden Arm Gill',emoji: '🥇' },
-];
+/* Pun rosters — every country's legends, lightly scrambled */
+const ROSTERS = {
+  IND: [{ name: 'Viral Kohli', emoji: '🔥' }, { name: 'Rohit Charmer', emoji: '✨' }, { name: 'MS Phoni', emoji: '🧤' }, { name: 'Sachin Ten-Duelkar', emoji: '⚔️' }],
+  AUS: [{ name: 'Steve Smasher', emoji: '💥' }, { name: 'Glenn Maxi-Well', emoji: '⚡' }, { name: 'David Warner Bros', emoji: '🎬' }, { name: 'Ricky Pointing', emoji: '👉' }],
+  ENG: [{ name: 'Ben Strokes', emoji: '🚣' }, { name: 'Joe Rooter', emoji: '🌳' }, { name: 'Jos the Butler', emoji: '🤵' }, { name: 'Kevin Pieter-Sun', emoji: '☀️' }],
+  PAK: [{ name: 'Babar A-Slam', emoji: '💥' }, { name: 'Shahid A-Fridge', emoji: '🧊' }, { name: 'Wasim A-Cram', emoji: '📚' }, { name: 'Inzamam-ul-Hulk', emoji: '💪' }],
+  NZ:  [{ name: 'Kane Williamsong', emoji: '🎵' }, { name: 'Brendon McBoom', emoji: '💣' }, { name: 'Ross Tailor', emoji: '✂️' }, { name: 'Martin Gup-Tilt', emoji: '🎯' }],
+  SA:  [{ name: 'AB de Chilliers', emoji: '🌶️' }, { name: 'Quinton de Sock', emoji: '🧦' }, { name: 'Hashim Am-La-La', emoji: '🎶' }, { name: 'Jacques Cool-is', emoji: '😎' }],
+  WI:  [{ name: 'Chris Gale-Force', emoji: '🌪️' }, { name: 'Brian Lah-Rah', emoji: '📣' }, { name: 'Dwayne Bravo!', emoji: '👏' }, { name: 'Andre Muscle', emoji: '💪' }],
+  SL:  [{ name: 'Kumar Sangakaraoke', emoji: '🎤' }, { name: 'Mahela Jaya-Winner', emoji: '🏅' }, { name: 'Lasith Sling-Shot', emoji: '🪃' }, { name: 'Tillakaratne Dil-Scoop', emoji: '🍨' }],
+  BAN: [{ name: 'Shakib Al Hammer', emoji: '🔨' }, { name: 'Tamim Iq-Bowl', emoji: '🎳' }, { name: 'Mushfiqur The Rock', emoji: '🪨' }, { name: 'Mashrafe More-Taza', emoji: '🌶️' }],
+  AFG: [{ name: 'Rashid Khan-fetti', emoji: '🎊' }, { name: 'Mohammad Na-Beast', emoji: '🦁' }, { name: 'Rahmanullah Gur-Blaze', emoji: '🔥' }, { name: 'Hazratullah Za-Zai-nami', emoji: '🌊' }],
+};
+function rosterFor(code) {
+  // custom teams get the pick of the whole world
+  return ROSTERS[code] || Object.values(ROSTERS).flat();
+}
 
 const FLAG_OPTIONS = ['🦁','🐯','🦅','🐉','🔥','⚡','🌟','🦈','🐺','👑','💎','🌋','🛡️','🚀'];
 
 const LEGENDS = [
-  { name: 'Sir Lucky Lara',     flag: '🌴', pts: 312, streak: 14 },
-  { name: 'Don Spinman',        flag: '🇦🇺', pts: 284, streak: 12 },
-  { name: 'Wheel-iv Richards',  flag: '🌴', pts: 251, streak: 11 },
-  { name: 'Sachin Spinkar',     flag: '🇮🇳', pts: 226, streak: 10 },
-  { name: 'AB de Whirliers',    flag: '🇿🇦', pts: 198, streak: 9 },
-  { name: 'Lady Luck Lanning',  flag: '🇦🇺', pts: 174, streak: 9 },
-  { name: 'Wasim Wheelram',     flag: '🇵🇰', pts: 151, streak: 8 },
-  { name: 'Spin Williamson',    flag: '🇳🇿', pts: 129, streak: 7 },
-  { name: 'Jos the Tosser',     flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', pts: 108, streak: 7 },
-  { name: 'Murali the Magnet',  flag: '🇱🇰', pts: 90,  streak: 6 },
-  { name: 'Shakib al Lucky',    flag: '🇧🇩', pts: 74,  streak: 5 },
-  { name: 'Rashid Roulette',    flag: '🇦🇫', pts: 60,  streak: 5 },
-  { name: 'Fortune Faf',        flag: '🇿🇦', pts: 47,  streak: 4 },
-  { name: 'Gamble Gayle',       flag: '🌴', pts: 36,  streak: 4 },
-  { name: 'Chancy Chahal',      flag: '🇮🇳', pts: 26,  streak: 3 },
-  { name: 'Risky Root',         flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', pts: 18,  streak: 3 },
-  { name: 'Dicey de Kock',      flag: '🇿🇦', pts: 12,  streak: 2 },
-  { name: 'Maybe Mahmud',       flag: '🇧🇩', pts: 8,   streak: 2 },
-  { name: 'Punter Pradeep',     flag: '🇱🇰', pts: 4,   streak: 1 },
-  { name: 'Rookie Raza',        flag: '🇵🇰', pts: 2,   streak: 1 },
+  { name: 'Sir Lucky Lara',    flag: '🌴', pts: 312, streak: 14 },
+  { name: 'Don Spinman',       flag: '🇦🇺', pts: 284, streak: 12 },
+  { name: 'Wheel-iv Richards', flag: '🌴', pts: 251, streak: 11 },
 ];
 
 const BADGES = [
@@ -121,7 +119,7 @@ function saveProfile() { localStorage.setItem('cwc-profile', JSON.stringify(prof
 let setup = {};
 let match = null;          // live match state
 let cup = null;            // tournament state
-let challenge = null;      // accepted friend-challenge {oppCode, score, diff, stadiumId}
+let challenge = null;      // accepted friend-challenge {oppCode, score, stadiumId}
 let spinning = false;
 let wheelAngle = 0;
 let pickedFlag = null;
@@ -177,6 +175,7 @@ const sfx = {
   six: () => { crowdCheer(); tone(523, .12, 'triangle', .12); tone(659, .12, 'triangle', .12, .1); tone(784, .25, 'triangle', .12, .2); },
   four: () => { crowdCheer(); tone(523, .12, 'triangle', .12); tone(659, .2, 'triangle', .12, .1); },
   run: () => tone(440, .1, 'triangle', .1),
+  dot: () => tone(220, .15, 'sine', .1),
   wicket: () => { tone(180, .3, 'sawtooth', .14); tone(120, .4, 'sawtooth', .14, .12); },
   win: () => { crowdCheer(); [523,659,784,1047].forEach((f,i)=>tone(f,.22,'triangle',.12,i*.14)); },
   lose: () => { [392,330,262].forEach((f,i)=>tone(f,.3,'sine',.1,i*.18)); },
@@ -213,9 +212,8 @@ function closeModal(id) { $(id).classList.remove('open'); }
 function startSetup(mode) {
   sfx.pick();
   setup = {
-    mode, myTeam: null, oppTeam: null, batFirst: null,
-    stadium: null, difficulty: null,
-    batsmen: batsmenUnlocked() ? [...(profile.batsmen || [])].slice(0, 3) : [],
+    mode, myTeam: null, oppTeam: null, batFirst: null, stadium: null,
+    batsmen: [],
   };
 
   const titles = { cup: '🏆 WORLD CUP', quick: '⚡ QUICK MATCH', friend: '👥 VS FRIEND', challenge: '🎯 CHALLENGE' };
@@ -225,13 +223,20 @@ function startSetup(mode) {
   $('label-oppteam').textContent = mode === 'friend' ? 'Player 2 — choose your country' : 'Choose opposition';
 
   // which steps each mode needs
-  $('step-opp').style.display        = (mode === 'quick' || mode === 'friend') ? '' : 'none';
-  $('step-batbowl').style.display    = mode === 'challenge' ? 'none' : '';
-  $('step-difficulty').style.display = (mode === 'quick' || mode === 'cup') ? '' : 'none';
-  $('step-stadium').style.display    = mode === 'challenge' ? 'none' : '';
-  $('step-batsmen').style.display    = mode === 'friend' ? 'none' : '';
+  $('step-opp').style.display     = (mode === 'quick' || mode === 'friend') ? '' : 'none';
+  $('step-batbowl').style.display = mode === 'challenge' ? 'none' : '';
+  $('step-stadium').style.display = mode === 'challenge' ? 'none' : '';
+  $('step-batsmen').style.display = mode === 'friend' ? 'none' : '';
 
-  renderTeamGrid('grid-myteam', t => { setup.myTeam = t; if (setup.oppTeam === t) setup.oppTeam = null; renderSetup(); }, true);
+  renderTeamGrid('grid-myteam', t => {
+    setup.myTeam = t;
+    if (setup.oppTeam === t) setup.oppTeam = null;
+    // batting picks belong to a country — reset them on team change
+    const valid = rosterFor(t).map(p => p.name);
+    setup.batsmen = (profile.batsmen || []).filter(n => valid.includes(n)).slice(0, 3);
+    renderBatsmen();
+    renderSetup();
+  }, true);
   renderTeamGrid('grid-oppteam', t => { setup.oppTeam = t; renderSetup(); }, false);
   renderBatsmen();
   renderStadiums();
@@ -275,7 +280,11 @@ function renderBatsmen() {
 
   const grid = $('grid-batsmen');
   grid.innerHTML = '';
-  ROSTER.forEach(p => {
+  if (!setup.myTeam) {
+    grid.innerHTML = '<div class="locked-banner">👆 Pick your country first to see its legends</div>';
+    return;
+  }
+  rosterFor(setup.myTeam).forEach(p => {
     const b = document.createElement('button');
     b.className = 'batsman-card';
     b.innerHTML = `<span class="b-emoji">${p.emoji}</span>${p.name}`;
@@ -293,7 +302,6 @@ function renderBatsmen() {
 }
 
 function pickBatBowl(choice) { sfx.pick(); setup.batFirst = choice === 'bat'; renderSetup(); }
-function pickDifficulty(d) { sfx.pick(); setup.difficulty = d; renderSetup(); }
 
 function renderStadiums() {
   const list = $('grid-stadium');
@@ -323,9 +331,6 @@ function renderSetup() {
   });
   $('pick-bat').classList.toggle('selected', setup.batFirst === true);
   $('pick-bowl').classList.toggle('selected', setup.batFirst === false);
-  ['easy', 'medium', 'hard'].forEach(d => {
-    $('diff-' + d).classList.toggle('selected', setup.difficulty === d);
-  });
   document.querySelectorAll('#grid-stadium .stadium-card').forEach((c, i) => {
     c.classList.toggle('selected', STADIUMS[i].id === setup.stadium);
   });
@@ -347,8 +352,7 @@ function renderSetup() {
     setup.myTeam &&
     (m === 'challenge' || setup.batFirst !== null) &&
     (m === 'challenge' || setup.stadium) &&
-    ((m !== 'quick' && m !== 'friend') || setup.oppTeam) &&
-    ((m !== 'quick' && m !== 'cup') || setup.difficulty);
+    ((m !== 'quick' && m !== 'friend') || setup.oppTeam);
   $('btn-start').disabled = !ready;
 }
 
@@ -390,8 +394,9 @@ function saveCustomTeam() {
    MATCH ENGINE — super over: 6 balls, 2 wickets, per side
    ============================================================ */
 function batters() {
-  const picked = setup.batsmen || [];
-  const rest = ROSTER.map(p => p.name).filter(n => !picked.includes(n));
+  const roster = rosterFor(setup.myTeam).map(p => p.name);
+  const picked = (setup.batsmen || []).filter(n => roster.includes(n));
+  const rest = roster.filter(n => !picked.includes(n));
   return [...picked, ...rest].slice(0, 3);
 }
 
@@ -429,10 +434,10 @@ function startMatch() {
   const st = stadium(setup.stadium);
   $('match-stadium').textContent = `${st.icon} ${st.name}, ${st.city}`;
   $('match-stage').textContent =
-    setup.mode === 'cup' ? `${CUP_ROUNDS[cup.round]} · ${DIFFICULTY[setup.difficulty].label.toUpperCase()}`
-    : setup.mode === 'quick' ? `QUICK MATCH · ${DIFFICULTY[setup.difficulty].label.toUpperCase()}`
+    setup.mode === 'cup' ? CUP_ROUNDS[cup.round]
+    : setup.mode === 'quick' ? 'QUICK MATCH'
     : setup.mode === 'friend' ? 'FRIENDLY · PASS & PLAY'
-    : `FRIEND CHALLENGE · ${DIFFICULTY[setup.difficulty].label.toUpperCase()}`;
+    : 'FRIEND CHALLENGE';
 
   $('sb-flag-a').textContent = team(setup.myTeam).flag;
   $('sb-name-a').textContent = setup.myTeam;
@@ -568,11 +573,12 @@ function shade(hex, amt) {
   return `rgb(${r},${g},${b})`;
 }
 
-/* Difficulty-weighted segment pick. Friend matches use a fair wheel. */
+/* Quietly weighted segment pick. Friend matches and challenge
+   chases always use the fair wheel. */
 function pickSegment() {
   let weights = {};
-  if (setup.mode !== 'friend') {
-    const diff = DIFFICULTY[setup.difficulty || 'medium'];
+  if (setup.mode === 'quick' || setup.mode === 'cup') {
+    const diff = DIFFICULTY[currentDifficulty()];
     weights = battingNow() ? diff.bat : diff.bowl;
   }
   const w = SEGMENTS.map(s => weights[s.runs] ?? 1);
@@ -651,9 +657,11 @@ function resolveBall(result) {
 
     if (result === 6) { sfx.six(); burstConfetti(meBatting || friendly ? 26 : 8); }
     else if (result === 4) sfx.four();
+    else if (result === 0) sfx.dot();
     else sfx.run();
 
     const lines = {
+      0: ['Dot ball! Pressure builds... 😬', 'Beaten! No run. 😶'],
       1: ['Quick single taken. 🏃', 'Worked away for one. 👍'],
       2: ['Two runs! Good running! 🏃🏃', 'Pushed into the gap for a couple. ✌️'],
       3: ['Three! Excellent placement! 💨', 'They come back for a third! 🔥'],
@@ -872,14 +880,13 @@ function nextAction() { sfx.pick(); if (nextActionFn) nextActionFn(); }
 /* ---------------- share & friend challenges ---------------- */
 function makeChallengeCode() {
   const stIdx = Math.max(0, STADIUMS.findIndex(s => s.id === setup.stadium));
-  return `CWC-${setup.myTeam}-${match.myScore}-${DIFFICULTY[setup.difficulty].tag}-${stIdx}`;
+  return `CWC-${setup.myTeam}-${match.myScore}-${stIdx}`;
 }
 
 function shareChallenge() {
   const code = makeChallengeCode();
-  const text = `🏏 I scored ${match.myScore}/${match.myWkts} in Cricket World Cup ` +
-    `(${DIFFICULTY[setup.difficulty].label} mode). Think you can beat me? ` +
-    `Open the game, tap 🎯 Enter Code and type: ${code}`;
+  const text = `🏏 I scored ${match.myScore}/${match.myWkts} in Cricket World Cup. ` +
+    `Think you can beat me? Open the game, tap 🎯 Enter Code and type: ${code}`;
   if (navigator.share) navigator.share({ text }).catch(() => {});
   else navigator.clipboard?.writeText(text)
     .then(() => toast(`📋 Challenge copied! Code: ${code}`))
@@ -894,19 +901,17 @@ function openChallengeModal() {
 
 function acceptChallenge() {
   const raw = $('ch-code').value.trim().toUpperCase();
-  const mres = raw.match(/^CWC-([A-Z]{2,3})-(\d{1,2})-([EMH])-(\d)$/);
-  if (!mres) { toast('Hmm, that code doesn\'t look right. Format: CWC-IND-14-M-1'); return; }
-  const [, oppCode, score, diffTag, stIdx] = mres;
+  const mres = raw.match(/^CWC-([A-Z]{2,3})-(\d{1,2})-(\d)$/);
+  if (!mres) { toast('Hmm, that code doesn\'t look right. Format: CWC-IND-14-1'); return; }
+  const [, oppCode, score, stIdx] = mres;
   challenge = {
     oppCode,
     score: parseInt(score, 10),
-    diff: DIFF_BY_TAG[diffTag],
     stadiumId: (STADIUMS[parseInt(stIdx, 10)] || STADIUMS[0]).id,
   };
   closeModal('modal-challenge');
   startSetup('challenge');
-  setup.difficulty = challenge.diff;
-  toast(`🎯 Challenge accepted! Beat ${challenge.score} by ${team(oppCode).code} on ${DIFFICULTY[challenge.diff].label}.`, 3500);
+  toast(`🎯 Challenge accepted! Beat ${challenge.score} by ${team(oppCode).code}.`, 3500);
 }
 
 function shareResult() {

@@ -79,21 +79,6 @@
     </div>
   </div>
 
-  <div class="setup-step" id="step-difficulty">
-    <h3>🎚️ Difficulty</h3>
-    <div class="choice-row">
-      <button class="choice-card diff" id="diff-easy" onclick="pickDifficulty('easy')">
-        <span class="choice-icon">😎</span><b>EASY</b><small>75% win odds</small>
-      </button>
-      <button class="choice-card diff" id="diff-medium" onclick="pickDifficulty('medium')">
-        <span class="choice-icon">⚖️</span><b>MEDIUM</b><small>50% win odds</small>
-      </button>
-      <button class="choice-card diff" id="diff-hard" onclick="pickDifficulty('hard')">
-        <span class="choice-icon">💀</span><b>HARD</b><small>5% win odds</small>
-      </button>
-    </div>
-  </div>
-
   <div class="setup-step" id="step-stadium">
     <h3>🏟️ Pick your stadium</h3>
     <div class="stadium-list" id="grid-stadium"></div>
@@ -167,6 +152,7 @@
   </div>
   <p class="lb-hint">Earn ⭐ 2 points per win and climb past the legends!</p>
   <div class="lb-list" id="lb-list"></div>
+  <div class="coming-soon">🌐 Live leaderboards coming soon!</div>
 </section>
 
 <!-- ============ TROPHY ROOM ============ -->
@@ -201,7 +187,7 @@
   <div class="modal">
     <h3>🎯 FRIEND CHALLENGE</h3>
     <p class="modal-hint">Got a code from a friend? Enter it and try to beat their score!</p>
-    <input type="text" id="ch-code" placeholder="CWC-IND-14-M-1" style="text-transform:uppercase">
+    <input type="text" id="ch-code" placeholder="CWC-IND-14-1" style="text-transform:uppercase">
     <div class="modal-buttons">
       <button class="btn btn-gold" onclick="acceptChallenge()">ACCEPT CHALLENGE</button>
       <button class="btn btn-ghost" onclick="closeModal('modal-challenge')">Cancel</button>

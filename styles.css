@@ -373,6 +373,13 @@ body {
 }
 .lb-row.top3 .lb-rank { opacity: 1; }
 
+.coming-soon {
+  margin-top: 16px; width: 100%; max-width: 460px; text-align: center;
+  border: 1px dashed rgba(255,200,61,.5); color: var(--gold);
+  border-radius: 14px; padding: 12px; font-size: 13px; font-weight: 700;
+  letter-spacing: .5px;
+}
+
 /* ---------- modals ---------- */
 .modal-backdrop {
   position: fixed; inset: 0; z-index: 40; display: none;
