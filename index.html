@@ -26,13 +26,20 @@
   <div class="stat-strip">
     <div class="stat-chip">🏆 <b id="hud-trophies">0</b><small>Cups</small></div>
     <div class="stat-chip">⭐ <b id="hud-points">0</b><small>Points</small></div>
-    <div class="stat-chip">🔥 <b id="hud-streak">0</b><small>Streak</small></div>
+    <div class="stat-chip">🔥 <b id="hud-streak">0</b><small>Win Streak</small></div>
   </div>
 
   <div class="home-buttons">
     <button class="btn btn-gold btn-big" onclick="startSetup('cup')">🏆 PLAY WORLD CUP</button>
-    <button class="btn btn-blue btn-big" onclick="startSetup('quick')">⚡ QUICK MATCH</button>
-    <button class="btn btn-ghost" onclick="showTrophyRoom()">🎖️ Trophy Room</button>
+    <button class="btn btn-blue btn-big" onclick="startSetup('quick')">⚡ QUICK MATCH vs BOT</button>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="startSetup('friend')">👥 VS Friend</button>
+      <button class="btn btn-ghost" onclick="openChallengeModal()">🎯 Enter Code</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="showLeaderboard()">🌍 Leaderboard</button>
+      <button class="btn btn-ghost" onclick="showTrophyRoom()">🎖️ Trophy Room</button>
+    </div>
   </div>
   <p class="footnote">A game of pure luck. Anyone can be a champion.</p>
 </section>
@@ -45,17 +52,23 @@
   </div>
 
   <div class="setup-step" id="step-team">
-    <h3><span class="step-num">1</span> Choose your country</h3>
+    <h3>🚩 <span id="label-myteam">Choose your country</span></h3>
     <div class="team-grid" id="grid-myteam"></div>
   </div>
 
   <div class="setup-step" id="step-opp">
-    <h3><span class="step-num">2</span> Choose opposition</h3>
+    <h3>⚔️ <span id="label-oppteam">Choose opposition</span></h3>
     <div class="team-grid" id="grid-oppteam"></div>
   </div>
 
+  <div class="setup-step" id="step-batsmen">
+    <h3>🧢 Pick your 3 batsmen <span class="mini-tag" id="batsmen-tag"></span></h3>
+    <div id="batsmen-locked" class="locked-banner">🔒 Win <b>5 World Cups</b> to handpick your batting order</div>
+    <div class="batsmen-grid" id="grid-batsmen"></div>
+  </div>
+
   <div class="setup-step" id="step-batbowl">
-    <h3><span class="step-num" id="num-batbowl">3</span> Bat or bowl first?</h3>
+    <h3>🪙 Bat or bowl first?</h3>
     <div class="choice-row">
       <button class="choice-card" id="pick-bat" onclick="pickBatBowl('bat')">
         <span class="choice-icon">🏏</span><b>BAT FIRST</b><small>Set the target</small>
@@ -66,8 +79,23 @@
     </div>
   </div>
 
+  <div class="setup-step" id="step-difficulty">
+    <h3>🎚️ Difficulty</h3>
+    <div class="choice-row">
+      <button class="choice-card diff" id="diff-easy" onclick="pickDifficulty('easy')">
+        <span class="choice-icon">😎</span><b>EASY</b><small>75% win odds</small>
+      </button>
+      <button class="choice-card diff" id="diff-medium" onclick="pickDifficulty('medium')">
+        <span class="choice-icon">⚖️</span><b>MEDIUM</b><small>50% win odds</small>
+      </button>
+      <button class="choice-card diff" id="diff-hard" onclick="pickDifficulty('hard')">
+        <span class="choice-icon">💀</span><b>HARD</b><small>5% win odds</small>
+      </button>
+    </div>
+  </div>
+
   <div class="setup-step" id="step-stadium">
-    <h3><span class="step-num" id="num-stadium">4</span> Pick your stadium</h3>
+    <h3>🏟️ Pick your stadium</h3>
     <div class="stadium-list" id="grid-stadium"></div>
   </div>
 
@@ -99,6 +127,7 @@
     </div>
   </div>
 
+  <div class="batter-chip" id="batter-chip"></div>
   <div class="balls-row" id="balls-row"></div>
 
   <div class="wheel-zone">
@@ -123,10 +152,21 @@
     <div class="result-rewards" id="result-rewards"></div>
     <div class="result-buttons">
       <button class="btn btn-gold btn-big" id="btn-next" onclick="nextAction()">NEXT ▶</button>
+      <button class="btn btn-blue" id="btn-challenge" onclick="shareChallenge()">🎯 Challenge a Friend</button>
       <button class="btn btn-ghost" onclick="shareResult()">📣 Share Result</button>
       <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
     </div>
   </div>
+</section>
+
+<!-- ============ LEADERBOARD ============ -->
+<section id="screen-leaderboard" class="screen">
+  <div class="setup-head">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <h2>🌍 WORLD RANKINGS</h2>
+  </div>
+  <p class="lb-hint">Earn ⭐ 2 points per win and climb past the legends!</p>
+  <div class="lb-list" id="lb-list"></div>
 </section>
 
 <!-- ============ TROPHY ROOM ============ -->
@@ -138,6 +178,36 @@
   <div class="trophy-cabinet" id="trophy-cabinet"></div>
   <div class="badge-list" id="badge-list"></div>
 </section>
+
+<!-- ============ CUSTOM TEAM MODAL ============ -->
+<div class="modal-backdrop" id="modal-team">
+  <div class="modal">
+    <h3>🛠️ CREATE YOUR TEAM</h3>
+    <label>Team name</label>
+    <input type="text" id="ct-name" maxlength="18" placeholder="e.g. Thunder Titans">
+    <label>3-letter code</label>
+    <input type="text" id="ct-code" maxlength="3" placeholder="e.g. TTN" style="text-transform:uppercase">
+    <label>Pick a flag</label>
+    <div class="flag-grid" id="ct-flags"></div>
+    <div class="modal-buttons">
+      <button class="btn btn-gold" onclick="saveCustomTeam()">SAVE TEAM</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-team')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHALLENGE CODE MODAL ============ -->
+<div class="modal-backdrop" id="modal-challenge">
+  <div class="modal">
+    <h3>🎯 FRIEND CHALLENGE</h3>
+    <p class="modal-hint">Got a code from a friend? Enter it and try to beat their score!</p>
+    <input type="text" id="ch-code" placeholder="CWC-IND-14-M-1" style="text-transform:uppercase">
+    <div class="modal-buttons">
+      <button class="btn btn-gold" onclick="acceptChallenge()">ACCEPT CHALLENGE</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-challenge')">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <div id="toast"></div>
 

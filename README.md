@@ -11,22 +11,45 @@ Win four knockout matches in a row to lift the World Cup. 🏆
 2. Double-click **`index.html`** — it opens in your web browser and the game runs immediately.
 3. It works on a phone browser too, and looks best there.
 
-## The game in 30 seconds
+## Game modes
 
-- **Quick Match** — pick both teams, bat or bowl, stadium, and play one super over.
 - **World Cup** — survive 4 knockout rounds (Group → Quarter-Final → Semi-Final → Final). Lose once and you're out.
-- **The wheel** decides every ball: `0, 1, 2, 3, 4, 6` or `W` (wicket). 6 balls or 2 wickets per innings. Highest score wins. Pure luck — anyone can be a champion.
+- **Quick Match vs Bot** — pick both teams and play one super over.
+- **VS Friend** — pass-and-play on one phone: Player 1 spins their innings, then hands the phone over.
+- **Friend Challenge** — after any bot match, tap *🎯 Challenge a Friend* to get a short code
+  (like `CWC-IND-14-M-1`). Your friend taps *🎯 Enter Code*, types it in, and chases your score.
+  No internet or account needed — the code carries the whole challenge.
+
+## The wheel
+
+Every ball is one spin: `1, 2, 3, 4, 6` or `W` (wicket) — **every slot counts, no empty slots**.
+6 balls or 2 wickets per innings. Highest score wins.
+
+Three difficulty levels change the wheel's luck (verified by simulating 300,000 matches):
+
+| Difficulty | Your win odds |
+|---|---|
+| 😎 Easy | ~75% |
+| ⚖️ Medium | ~50% |
+| 💀 Hard | ~5% |
 
 ## Gamification (the hooks)
 
-- ⭐ **Cup Points** for every win, +50 for winning the World Cup
-- 🔥 **Win streaks** with bonus points from 3 wins in a row
+- ⭐ **2 points for every win**, +1 bonus while on a 3+ win streak, +10 for winning the World Cup
+- 🌍 **World Rankings leaderboard** — climb past 20 legend players as your points grow
+- 🔥 **Win streak** counter on the home screen, trophy room, and leaderboard
 - 🏟️ **Stadium unlocks** — Wankhede, Newlands and Galle are locked until you win enough matches
-- 🎖️ **7 badges** in the Trophy Room (First Blood, Dynasty, Unstoppable…)
-- 📣 **Share button** — posts your scoreline to spark "can you beat my luck?" challenges
+- 🧢 **Pick your 3 batsmen** (in batting order) — unlocked after **5 World Cup wins**
+- 🛠️ **Create your own team** — name, code and flag — unlocked after **10 World Cup wins**
+- 🎖️ **9 badges** in the Trophy Room (First Blood, Dynasty, Franchise Owner…)
+- 📣 **Share button** + challenge codes to spark "can you beat my luck?" battles
 - Confetti, crowd-roar sound effects, and last-ball chase drama
 
 All progress is saved automatically on the player's device.
+
+> **Note on the leaderboard:** it's an offline ladder of in-game legends. A live leaderboard of
+> real players (and live online multiplayer instead of codes) needs a small server backend —
+> a good v2 once the game has fans.
 
 ## Getting it on the App Store / Play Store for $1
 
