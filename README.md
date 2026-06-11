@@ -26,7 +26,8 @@ You can also download the repo as a ZIP and double-click `index.html`.
 
 ## The wheel
 
-Every ball is one spin: `0, 1, 2, 3, 4, 6` or `W` (wicket).
+Every ball is one spin: `0, 1, 2, 3, 4, 5, 6` or `W` (wicket) — eight slices,
+every outcome exactly once, and whatever the pointer lands on is what happens.
 6 balls or 2 wickets per innings. Highest score wins.
 The wheel quietly adapts to your form to keep matches dramatic.
 

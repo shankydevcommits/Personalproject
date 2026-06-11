@@ -25,20 +25,16 @@ const STADIUMS = [
   { id: 'galle',   icon: '🏰', name: 'Galle Fort Ground', city: 'Galle',     unlock: 10 },
 ];
 
-/* Wheel — 12 slices: dots, runs and wickets. */
+/* Wheel — 8 slices, every cricket outcome exactly once. */
 const SEGMENTS = [
+  { label: '0', runs: 0,   color: '#f4793b' },
   { label: '1', runs: 1,   color: '#2f7bff' },
-  { label: '4', runs: 4,   color: '#7c4dff' },
-  { label: 'W', runs: 'W', color: '#ff4d6a' },
   { label: '2', runs: 2,   color: '#1fb6d4' },
-  { label: '6', runs: 6,   color: '#ffc83d' },
-  { label: '0', runs: 0,   color: '#f4793b' },
-  { label: '1', runs: 1,   color: '#2f7bff' },
-  { label: '4', runs: 4,   color: '#7c4dff' },
-  { label: 'W', runs: 'W', color: '#ff4d6a' },
   { label: '3', runs: 3,   color: '#27d17f' },
+  { label: '4', runs: 4,   color: '#7c4dff' },
+  { label: '5', runs: 5,   color: '#ff7ad9' },
   { label: '6', runs: 6,   color: '#ffc83d' },
-  { label: '0', runs: 0,   color: '#f4793b' },
+  { label: 'W', runs: 'W', color: '#ff4d6a' },
 ];
 const SEG_COUNT = SEGMENTS.length;
 const BALLS_PER_INNINGS = 6;
@@ -51,9 +47,9 @@ const CHAMPION_BONUS = 10;
    fresh players win ~75% of matches, hot streaks face ~5% odds.
    Weights tuned by simulating 400k matches. */
 const DIFFICULTY = {
-  easy:   { bat: { 6: 1.2, 4: 1.2, W: 0.7, 0: 0.8 },       bowl: { 6: 0.7, 4: 0.8, W: 1.5, 0: 1.2 } },
-  medium: { bat: {},                                        bowl: {} },
-  hard:   { bat: { 6: 0.52, 4: 0.67, W: 2.5, 0: 1.35 },     bowl: { 6: 1.75, 4: 1.65, W: 0.37, 0: 0.65 } },
+  easy:   { bat: { 6: 1.2, 5: 1.15, 4: 1.2, W: 0.7, 0: 0.85 },     bowl: { 6: 0.75, 5: 0.8, 4: 0.8, W: 1.5, 0: 1.2 } },
+  medium: { bat: {},                                                bowl: {} },
+  hard:   { bat: { 6: 0.52, 5: 0.57, 4: 0.62, W: 2.5, 0: 1.35 },   bowl: { 6: 1.85, 5: 1.75, 4: 1.75, W: 0.37, 0: 0.62 } },
 };
 function currentDifficulty() {
   if (profile.streak >= 5) return 'hard';
@@ -400,6 +396,11 @@ function batters() {
   return [...picked, ...rest].slice(0, 3);
 }
 
+function pickBowler(code, batterNames) {
+  const roster = rosterFor(code).map(p => p.name);
+  return roster.find(n => !batterNames.includes(n)) || roster[roster.length - 1];
+}
+
 function startMatch() {
   if (batsmenUnlocked() && setup.batsmen.length) {
     profile.batsmen = [...setup.batsmen];
@@ -428,8 +429,11 @@ function startMatch() {
     target: isChallenge ? challenge.score + 1 : null,
     over: false,
     log: [],
-    batters: batsmenUnlocked() && setup.mode !== 'friend' ? batters() : null,
+    batters: batters(),
+    oppBatters: rosterFor(opp).slice(0, 3).map(p => p.name),
   };
+  match.myBowler = pickBowler(setup.myTeam, match.batters);
+  match.oppBowler = pickBowler(opp, match.oppBatters);
 
   const st = stadium(setup.stadium);
   $('match-stadium').textContent = `${st.icon} ${st.name}, ${st.city}`;
@@ -485,10 +489,14 @@ function refreshMatchUI() {
     $('sb-target').textContent = '';
   }
 
-  // on-strike batter (only when your picked XI is batting)
+  // who's on strike and who's steaming in
   const chip = $('batter-chip');
-  if (match.batters && battingNow() && !match.over) {
-    chip.textContent = `🏏 On strike: ${match.batters[Math.min(match.myWkts, 2)]}`;
+  if (!match.over) {
+    const meBat = battingNow();
+    const batter = meBat ? match.batters[Math.min(match.myWkts, 2)]
+                         : match.oppBatters[Math.min(match.oppWkts ?? 0, 2)];
+    const bowler = meBat ? match.oppBowler : match.myBowler;
+    chip.textContent = `🏏 ${batter}  ·  ⚡ ${bowler} bowling`;
   } else {
     chip.textContent = '';
   }
@@ -543,8 +551,10 @@ function drawWheel(angle) {
     ctx2d.lineWidth = 3;
     ctx2d.stroke();
 
+    // rotate(i*arc) puts the label dead-centre of slice i — the slice
+    // spans i*arc - PI/2 ± arc/2 and (0,-r) sits at -PI/2 pre-rotation
     ctx2d.save();
-    ctx2d.rotate(a0 + arc / 2);
+    ctx2d.rotate(i * arc);
     ctx2d.textAlign = 'center';
     ctx2d.textBaseline = 'middle';
     ctx2d.font = `800 ${R * .22}px Rubik, sans-serif`;
@@ -555,8 +565,9 @@ function drawWheel(angle) {
     ctx2d.restore();
   }
 
+  // studs sit on the slice boundaries
   for (let i = 0; i < SEG_COUNT; i++) {
-    const a = i * arc - Math.PI / 2;
+    const a = i * arc - Math.PI / 2 - arc / 2;
     ctx2d.beginPath();
     ctx2d.arc(Math.cos(a) * (R - 14), Math.sin(a) * (R - 14), 6, 0, Math.PI * 2);
     ctx2d.fillStyle = '#fff';
@@ -635,41 +646,43 @@ function resolveBall(result) {
   match.balls++;
   match.log.push(result);
 
+  const batterName = meBatting
+    ? match.batters[Math.min(match.myWkts, 2)]
+    : match.oppBatters[Math.min(match.oppWkts ?? 0, 2)];
+  const bowlerName = meBatting ? match.oppBowler : match.myBowler;
+
   if (result === 'W') {
-    const outName = match.batters && meBatting ? match.batters[Math.min(match.myWkts, 2)] : null;
     match.wickets++;
     if (meBatting) match.myWkts++; else if (match.oppWkts !== null) match.oppWkts++;
     sfx.wicket();
     if (meBatting && !friendly) document.body.classList.add('shake');
     setTimeout(() => document.body.classList.remove('shake'), 500);
-    if (friendly) {
-      setCommentary(`${sideName} lose a wicket! OUT! 😱`);
-    } else if (meBatting) {
-      setCommentary(outName
-        ? `${outName} is GONE! Bowled him! 😱`
-        : pickLine(['BOWLED HIM! Disaster strikes! 😱', 'Caught at deep midwicket! OUT! 😱', 'Cleaned up! The crowd goes silent... 💔']));
-    } else {
-      setCommentary(pickLine(['WICKET! What a delivery! 🎯', 'Edged and TAKEN! You beauty! 🙌', 'Timber! You\'ve rattled the stumps! 🤩']));
-    }
+    const wLine = pickLine([
+      `${batterName} is GONE! ${bowlerName} strikes! 😱`,
+      `${bowlerName} cleans up ${batterName}! TIMBER! 🎯`,
+      `Edged and TAKEN! ${bowlerName} sends ${batterName} packing! 🙌`,
+    ]);
+    setCommentary(friendly ? `${sideName}: ${wLine}` : wLine);
   } else {
     if (meBatting) { match.myScore += result; if (result === 6) match.sixesThisInnings++; }
     else match.oppScore += result;
 
     if (result === 6) { sfx.six(); burstConfetti(meBatting || friendly ? 26 : 8); }
-    else if (result === 4) sfx.four();
+    else if (result === 4 || result === 5) sfx.four();
     else if (result === 0) sfx.dot();
     else sfx.run();
 
     const lines = {
-      0: ['Dot ball! Pressure builds... 😬', 'Beaten! No run. 😶'],
-      1: ['Quick single taken. 🏃', 'Worked away for one. 👍'],
-      2: ['Two runs! Good running! 🏃🏃', 'Pushed into the gap for a couple. ✌️'],
-      3: ['Three! Excellent placement! 💨', 'They come back for a third! 🔥'],
-      4: ['FOUR! Cracked through the covers! 🎯', 'FOUR! Races away to the rope! ⚡'],
-      6: ['SIX! That\'s OUT of the ground! 💥', 'MAXIMUM! Into the second tier! 🚀'],
+      0: [`Dot ball! ${bowlerName} piles on the pressure... 😬`, `${bowlerName} beats the bat! No run. 😶`],
+      1: [`${batterName} takes a quick single. 🏃`, `${batterName} works it away for one. 👍`],
+      2: [`Two runs! Great running by ${batterName}! 🏃🏃`, `${batterName} pushes into the gap for a couple. ✌️`],
+      3: [`Three! Brilliant placement from ${batterName}! 💨`, `${batterName} comes back for a third! 🔥`],
+      4: [`FOUR! ${batterName} cracks it through the covers! 🎯`, `FOUR! ${batterName} finds the rope! ⚡`],
+      5: [`FIVE! Overthrows — total chaos in the field! 🤪`, `Five runs! Wild throw and ${batterName} just keeps running! 😵`],
+      6: [`SIX! ${batterName} sends it OUT of the ground! 💥`, `MAXIMUM! ${batterName} deposits it into the second tier! 🚀`],
     };
     const line = pickLine(lines[result]);
-    setCommentary(friendly ? `${sideName}: ${line}` : meBatting ? line : `${team(match.opp).code}: ${line}`);
+    setCommentary(friendly ? `${sideName}: ${line}` : line);
   }
 
   refreshMatchUI();
