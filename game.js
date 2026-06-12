@@ -154,6 +154,15 @@ const CUP_ROUNDS = ['GROUP STAGE', 'QUARTER-FINAL', 'SEMI-FINAL', 'THE FINAL'];
 
 const $ = id => document.getElementById(id);
 
+/* anonymous usage analytics (GoatCounter) — event counts only, no personal data */
+function track(name) {
+  try {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: 'event/' + name, title: name, event: true });
+    }
+  } catch {}
+}
+
 function allTeams() {
   return profile.customTeam ? [...TEAMS, profile.customTeam] : TEAMS;
 }
@@ -391,11 +400,18 @@ function renderSetup() {
     c.classList.toggle('selected', c.dataset.name === setup.bowler);
   });
 
-  const ready =
-    setup.myTeam && setup.batFirst !== null && setup.overs &&
-    setup.difficulty && setup.stadium &&
-    (setup.mode !== 'quick' || setup.oppTeam);
-  $('btn-start').disabled = !ready;
+  // the start button doubles as a helper: it names the next missing step
+  const missing =
+    !setup.myTeam ? 'Choose your country ☝️'
+    : (setup.mode === 'quick' && !setup.oppTeam) ? 'Choose your opposition ⚔️'
+    : setup.batFirst === null ? 'Bat or bowl first? 🪙'
+    : !setup.overs ? 'Pick a match length ⏱️'
+    : !setup.difficulty ? 'Pick a difficulty 🎚️'
+    : !setup.stadium ? 'Pick your stadium 🏟️'
+    : null;
+  const btn = $('btn-start');
+  btn.disabled = !!missing;
+  btn.textContent = missing ? `👉 ${missing}` : "LET'S PLAY! 🎡";
 }
 
 /* ---------------- custom team ---------------- */
@@ -460,6 +476,14 @@ function startMatch() {
   const opp = setup.mode === 'cup' ? cup.opponents[cup.round] : setup.oppTeam;
   const fmt = FORMATS[setup.overs];
 
+  // batting lineups: 5 batsmen + the bowler as last man in
+  const myBowlerNames = (() => {
+    const all = squadBowl(setup.myTeam).map(p => p.name);
+    const first = myBowlerName();
+    return [first, ...all.filter(n => n !== first)];
+  })();
+  const oppBowlerNames = squadBowl(opp).map(p => p.name);
+
   match = {
     opp,
     ballsLimit: fmt.balls,
@@ -473,11 +497,13 @@ function startMatch() {
     target: null,
     over: false,
     log: [],
-    batters: battingLineup(),
-    oppBatters: squadBat(opp).slice(0, 5).map(p => p.name),
-    myBowler: myBowlerName(),
-    oppBowler: squadBowl(opp)[0].name,
+    myLineup: [...battingLineup(), myBowlerName()],
+    oppLineup: [...squadBat(opp).slice(0, 5).map(p => p.name), oppBowlerNames[0]],
+    myBowlers: myBowlerNames,
+    oppBowlers: oppBowlerNames,
+    crease: { striker: 0, nonStriker: 1, nextIn: 2 },
   };
+  track(`match-start-${setup.mode}-${setup.overs}ov-${setup.difficulty}`);
 
   const st = stadium(setup.stadium);
   $('match-stadium').textContent = `${st.icon} ${st.name}, ${st.city}`;
@@ -504,7 +530,12 @@ function battingNow() {
 
 function fmtOvers(balls) { return `${Math.floor(balls / 6)}.${balls % 6}`; }
 
-function batterIdx(wkts, lineup) { return Math.min(wkts, lineup.length - 1); }
+function battingSideLineup() { return battingNow() ? match.myLineup : match.oppLineup; }
+/* the bowling attack rotates: a new bowler every over */
+function bowlerForOver(overIdx) {
+  const attack = battingNow() ? match.oppBowlers : match.myBowlers;
+  return attack[overIdx % attack.length];
+}
 
 function sideStatus(isA) {
   if (match.over) return isA === (match.myScore > match.oppScore) ? '🏆 Winner' : '';
@@ -533,14 +564,14 @@ function refreshMatchUI() {
     $('sb-target').textContent = '';
   }
 
-  // who's on strike and who's steaming in
+  // who's at the crease (striker marked *) and who's steaming in
   const chip = $('batter-chip');
   if (!match.over) {
-    const meBat = battingNow();
-    const batter = meBat ? match.batters[batterIdx(match.myWkts, match.batters)]
-                         : match.oppBatters[batterIdx(match.oppWkts, match.oppBatters)];
-    const bowler = meBat ? match.oppBowler : match.myBowler;
-    chip.textContent = `🏏 ${batter}  ·  ⚡ ${bowler} bowling`;
+    const lineup = battingSideLineup();
+    const striker = lineup[match.crease.striker];
+    const nonStriker = lineup[match.crease.nonStriker];
+    const bowler = bowlerForOver(Math.floor(match.balls / 6));
+    chip.innerHTML = `🏏 ${striker}* <small>&amp; ${nonStriker}</small><br><small>⚡ ${bowler} bowling</small>`;
   } else {
     chip.textContent = '';
   }
@@ -687,17 +718,20 @@ function spin() {
 function resolveBall(result) {
   if (!match || match.over) return;
   const meBatting = battingNow();
+  const lineup = battingSideLineup();
+  const crease = match.crease;
+  const batterName = lineup[crease.striker];
+  const bowlerName = bowlerForOver(Math.floor(match.balls / 6)); // this ball's bowler
   match.balls++;
   match.log.push(result);
-
-  const batterName = meBatting
-    ? match.batters[batterIdx(match.myWkts, match.batters)]
-    : match.oppBatters[batterIdx(match.oppWkts, match.oppBatters)];
-  const bowlerName = meBatting ? match.oppBowler : match.myBowler;
 
   if (result === 'W') {
     match.wickets++;
     if (meBatting) match.myWkts++; else match.oppWkts++;
+    // next batsman walks in and takes strike
+    if (match.wickets < match.maxWkts && crease.nextIn < lineup.length) {
+      crease.striker = crease.nextIn++;
+    }
     sfx.wicket();
     if (meBatting) document.body.classList.add('shake');
     setTimeout(() => document.body.classList.remove('shake'), 500);
@@ -707,6 +741,10 @@ function resolveBall(result) {
       `Edged and TAKEN! ${bowlerName} sends ${batterName} packing! 🙌`,
     ]));
   } else {
+    // odd runs (1, 3 or 5): the batsmen cross — strike rotates
+    if (result % 2 === 1) {
+      [crease.striker, crease.nonStriker] = [crease.nonStriker, crease.striker];
+    }
     if (meBatting) { match.myScore += result; if (result === 6) match.sixesThisInnings++; }
     else match.oppScore += result;
 
@@ -727,11 +765,18 @@ function resolveBall(result) {
     setCommentary(pickLine(lines[result]));
   }
 
-  refreshMatchUI();
-
   const batScore = meBatting ? match.myScore : match.oppScore;
   const chaseDone = match.target !== null && batScore >= match.target;
   const inningsDone = match.balls >= match.ballsLimit || match.wickets >= match.maxWkts || chaseDone;
+
+  // end of the over: batsmen change ends, the next bowler comes on
+  if (!inningsDone && match.balls % 6 === 0) {
+    [crease.striker, crease.nonStriker] = [crease.nonStriker, crease.striker];
+    const nextBowler = bowlerForOver(Math.floor(match.balls / 6));
+    toast(`🔄 End of the over — batsmen cross, ${nextBowler} comes on to bowl`, 2800);
+  }
+
+  refreshMatchUI();
 
   if (chaseDone || (match.innings === 2 && inningsDone)) {
     setTimeout(endMatch, 1100);
@@ -747,6 +792,7 @@ function switchInnings() {
   match.innings = 2;
   match.target = (match.myBatting ? match.myScore : match.oppScore) + 1;
   match.balls = 0; match.wickets = 0; match.log = [];
+  match.crease = { striker: 0, nonStriker: 1, nextIn: 2 };
   if (battingNow()) match.sixesThisInnings = 0;
 
   const meBatting = battingNow();
@@ -766,6 +812,7 @@ function endMatch() {
   const tie = match.myScore === match.oppScore;
 
   if (match.sixesThisInnings >= 3) profile.threeSixes = true;
+  track(iWon ? 'match-won' : tie ? 'match-tied' : 'match-lost');
 
   if (tie) {
     sfx.lose();
@@ -798,6 +845,7 @@ function endMatch() {
         if (profile.trophies === CUSTOM_TEAM_UNLOCK_CUPS) rewards.push('🛠️ UNLOCKED: create your own team!');
         profile.points += pts;
         saveProfile(); checkBadges();
+        track('cup-won');
         sfx.win(); burstConfetti(160);
         showResult({
           emoji: '🏆', title: 'WORLD CHAMPIONS!', lose: false,

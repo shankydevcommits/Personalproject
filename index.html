@@ -49,26 +49,31 @@
 
   <div class="setup-step" id="step-team">
     <h3>🚩 Choose your country</h3>
+    <p class="step-hint">💡 This is the team YOU play as — tap a flag to wear their colours.</p>
     <div class="team-grid" id="grid-myteam"></div>
   </div>
 
   <div class="setup-step" id="step-opp">
     <h3>⚔️ Choose opposition</h3>
+    <p class="step-hint">💡 Pick the rivals you want to beat. They bat and bowl against you.</p>
     <div class="team-grid" id="grid-oppteam"></div>
   </div>
 
   <div class="setup-step" id="step-batsmen">
     <h3>🧢 Pick your top 3 batsmen <span class="mini-tag">tap in batting order</span></h3>
+    <p class="step-hint">💡 Tap names in batting order. When a wicket falls, the next batsman walks in.</p>
     <div class="batsmen-grid" id="grid-batsmen"></div>
   </div>
 
   <div class="setup-step" id="step-bowler">
     <h3>🥎 Pick your strike bowler</h3>
+    <p class="step-hint">💡 Your opening bowler — your other two bowlers take over in later overs.</p>
     <div class="batsmen-grid" id="grid-bowler"></div>
   </div>
 
   <div class="setup-step" id="step-batbowl">
     <h3>🪙 Bat or bowl first?</h3>
+    <p class="step-hint">💡 Bat first to set a target, or bowl first and chase their score down.</p>
     <div class="choice-row">
       <button class="choice-card" id="pick-bat" onclick="pickBatBowl('bat')">
         <span class="choice-icon">🏏</span><b>BAT FIRST</b><small>Set the target</small>
@@ -81,6 +86,7 @@
 
   <div class="setup-step" id="step-overs">
     <h3>⏱️ Match length</h3>
+    <p class="step-hint">💡 More overs = a longer game and more wickets in hand.</p>
     <div class="choice-grid">
       <button class="choice-card" id="overs-1" onclick="pickOvers(1)">
         <span class="choice-icon">⚡</span><b>1 OVER</b><small>6 balls · 2 wkts</small>
@@ -99,6 +105,7 @@
 
   <div class="setup-step" id="step-difficulty">
     <h3>🎚️ Difficulty</h3>
+    <p class="step-hint">💡 How scary should the opposition be? Hard is for heroes only.</p>
     <div class="choice-row">
       <button class="choice-card" id="diff-easy" onclick="pickDifficulty('easy')">
         <span class="choice-icon">😎</span><b>EASY</b>
@@ -114,6 +121,7 @@
 
   <div class="setup-step" id="step-stadium">
     <h3>🏟️ Pick your stadium</h3>
+    <p class="step-hint">💡 Your home ground for this match — win games to unlock more.</p>
     <div class="stadium-list" id="grid-stadium"></div>
   </div>
 
@@ -237,6 +245,7 @@
 
 <div id="toast"></div>
 
+<script data-goatcounter="https://cricketworldcup.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script src="game.js"></script>
 </body>
 </html>
