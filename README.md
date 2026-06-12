@@ -1,8 +1,8 @@
 # 🏏 Cricket World Cup — Spin to Glory
 
 A fast, pure-luck cricket game inspired by viral spin-the-wheel games.
-Pick your country, pick the enemy, choose to bat or bowl, pick your favourite
-stadium — then spin the wheel ball-by-ball in a 6-ball, 2-wicket super over.
+Pick your country, your top-order batsmen and strike bowler, the opposition,
+match length, difficulty and stadium — then spin the wheel ball-by-ball.
 Win four knockout matches in a row to lift the World Cup. 🏆
 
 ## ▶️ Play it now
@@ -13,23 +13,27 @@ Win four knockout matches in a row to lift the World Cup. 🏆
 (It deploys automatically from this repository via GitHub Pages — every push
 updates the website within a couple of minutes.)
 
-You can also download the repo as a ZIP and double-click `index.html`.
-
 ## Game modes
 
 - **World Cup** — survive 4 knockout rounds (Group → Quarter-Final → Semi-Final → Final). Lose once and you're out.
-- **Quick Match vs Bot** — pick both teams and play one super over.
-- **VS Friend** — pass-and-play on one phone: Player 1 spins their innings, then hands the phone over.
-- **Friend Challenge** — after any bot match, tap *🎯 Challenge a Friend* to get a short code
-  (like `CWC-IND-14-1`). Your friend taps *🎯 Enter Code*, types it in, and chases your score.
-  No internet or account needed — the code carries the whole challenge.
+- **Quick Match** — pick both teams and play a one-off game.
+
+## Match setup
+
+- **Match length**: 1 over (6 balls, 2 wkts), 2 overs (12 balls, 3 wkts),
+  3 overs (18 balls, 4 wkts) or Full Game (30 balls, 4 wkts)
+- **Difficulty**: Easy, Medium or Hard
+- **Squad**: choose your top 3 batsmen (in order) and your strike bowler from
+  each country's 8 pun legends (Viral Kohli, Jasprit Boom-rah, Ben Strokes,
+  Shaheen Shah of Swing, AB de Chilliers…)
+- **Bat or bowl first**, and your favourite stadium
+- A **back button** during the match lets you leave any time (with a confirm prompt)
 
 ## The wheel
 
 Every ball is one spin: `0, 1, 2, 3, 4, 5, 6` or `W` (wicket) — eight slices,
 every outcome exactly once, and whatever the pointer lands on is what happens.
-6 balls or 2 wickets per innings. Highest score wins.
-The wheel quietly adapts to your form to keep matches dramatic.
+Run out of balls or wickets and the innings closes. Highest score wins.
 
 ## Gamification (the hooks)
 
@@ -37,11 +41,10 @@ The wheel quietly adapts to your form to keep matches dramatic.
 - 🌍 **World Rankings** — overtake the three all-time legends; live leaderboards coming soon
 - 🔥 **Win streak** counter on the home screen, trophy room, and leaderboard
 - 🏟️ **Stadium unlocks** — Wankhede, Newlands and Galle are locked until you win enough matches
-- 🧢 **Pick your 3 batsmen** from your country's pun-legend roster (Viral Kohli, Ben Strokes,
-  AB de Chilliers…) — unlocked after **5 World Cup wins**
 - 🛠️ **Create your own team** — name, code and flag — unlocked after **10 World Cup wins**
 - 🎖️ **9 badges** in the Trophy Room (First Blood, Dynasty, Franchise Owner…)
-- 📣 **Share button** + challenge codes to spark "can you beat my luck?" battles
+- 📣 **Share button** for "can you beat my luck?" bragging
+- Live scoreboard with ball-by-ball dots, over counter, batter on strike and bowler
 - Confetti, crowd-roar sound effects, and last-ball chase drama
 
 All progress is saved automatically on the player's device.

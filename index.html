@@ -31,11 +31,7 @@
 
   <div class="home-buttons">
     <button class="btn btn-gold btn-big" onclick="startSetup('cup')">🏆 PLAY WORLD CUP</button>
-    <button class="btn btn-blue btn-big" onclick="startSetup('quick')">⚡ QUICK MATCH vs BOT</button>
-    <div class="btn-row">
-      <button class="btn btn-ghost" onclick="startSetup('friend')">👥 VS Friend</button>
-      <button class="btn btn-ghost" onclick="openChallengeModal()">🎯 Enter Code</button>
-    </div>
+    <button class="btn btn-blue btn-big" onclick="startSetup('quick')">⚡ QUICK MATCH</button>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="showLeaderboard()">🌍 Leaderboard</button>
       <button class="btn btn-ghost" onclick="showTrophyRoom()">🎖️ Trophy Room</button>
@@ -52,19 +48,23 @@
   </div>
 
   <div class="setup-step" id="step-team">
-    <h3>🚩 <span id="label-myteam">Choose your country</span></h3>
+    <h3>🚩 Choose your country</h3>
     <div class="team-grid" id="grid-myteam"></div>
   </div>
 
   <div class="setup-step" id="step-opp">
-    <h3>⚔️ <span id="label-oppteam">Choose opposition</span></h3>
+    <h3>⚔️ Choose opposition</h3>
     <div class="team-grid" id="grid-oppteam"></div>
   </div>
 
   <div class="setup-step" id="step-batsmen">
-    <h3>🧢 Pick your 3 batsmen <span class="mini-tag" id="batsmen-tag"></span></h3>
-    <div id="batsmen-locked" class="locked-banner">🔒 Win <b>5 World Cups</b> to handpick your batting order</div>
+    <h3>🧢 Pick your top 3 batsmen <span class="mini-tag">tap in batting order</span></h3>
     <div class="batsmen-grid" id="grid-batsmen"></div>
+  </div>
+
+  <div class="setup-step" id="step-bowler">
+    <h3>🥎 Pick your strike bowler</h3>
+    <div class="batsmen-grid" id="grid-bowler"></div>
   </div>
 
   <div class="setup-step" id="step-batbowl">
@@ -79,6 +79,39 @@
     </div>
   </div>
 
+  <div class="setup-step" id="step-overs">
+    <h3>⏱️ Match length</h3>
+    <div class="choice-grid">
+      <button class="choice-card" id="overs-1" onclick="pickOvers(1)">
+        <span class="choice-icon">⚡</span><b>1 OVER</b><small>6 balls · 2 wkts</small>
+      </button>
+      <button class="choice-card" id="overs-2" onclick="pickOvers(2)">
+        <span class="choice-icon">🔥</span><b>2 OVERS</b><small>12 balls · 3 wkts</small>
+      </button>
+      <button class="choice-card" id="overs-3" onclick="pickOvers(3)">
+        <span class="choice-icon">💪</span><b>3 OVERS</b><small>18 balls · 4 wkts</small>
+      </button>
+      <button class="choice-card" id="overs-5" onclick="pickOvers(5)">
+        <span class="choice-icon">🏟️</span><b>FULL GAME</b><small>30 balls · 4 wkts</small>
+      </button>
+    </div>
+  </div>
+
+  <div class="setup-step" id="step-difficulty">
+    <h3>🎚️ Difficulty</h3>
+    <div class="choice-row">
+      <button class="choice-card" id="diff-easy" onclick="pickDifficulty('easy')">
+        <span class="choice-icon">😎</span><b>EASY</b>
+      </button>
+      <button class="choice-card" id="diff-medium" onclick="pickDifficulty('medium')">
+        <span class="choice-icon">⚖️</span><b>MEDIUM</b>
+      </button>
+      <button class="choice-card" id="diff-hard" onclick="pickDifficulty('hard')">
+        <span class="choice-icon">💀</span><b>HARD</b>
+      </button>
+    </div>
+  </div>
+
   <div class="setup-step" id="step-stadium">
     <h3>🏟️ Pick your stadium</h3>
     <div class="stadium-list" id="grid-stadium"></div>
@@ -89,10 +122,13 @@
 
 <!-- ============ MATCH SCREEN ============ -->
 <section id="screen-match" class="screen">
-  <div class="stadium-banner" id="stadium-banner">
-    <div class="stadium-lights"><i></i><i></i><i></i><i></i></div>
-    <div class="stadium-name" id="match-stadium">🏟️</div>
-    <div class="match-stage" id="match-stage">QUICK MATCH</div>
+  <div class="match-head">
+    <button class="back-btn" onclick="confirmQuit()">←</button>
+    <div class="stadium-banner" id="stadium-banner">
+      <div class="stadium-lights"><i></i><i></i><i></i><i></i></div>
+      <div class="stadium-name" id="match-stadium">🏟️</div>
+      <div class="match-stage" id="match-stage">QUICK MATCH</div>
+    </div>
   </div>
 
   <div class="scoreboard">
@@ -115,6 +151,7 @@
         <span class="sb-status" id="sb-status-b"></span>
       </div>
     </div>
+    <div class="over-label" id="over-label"></div>
     <div class="balls-row" id="balls-row"></div>
   </div>
 
@@ -142,7 +179,6 @@
     <div class="result-rewards" id="result-rewards"></div>
     <div class="result-buttons">
       <button class="btn btn-gold btn-big" id="btn-next" onclick="nextAction()">NEXT ▶</button>
-      <button class="btn btn-blue" id="btn-challenge" onclick="shareChallenge()">🎯 Challenge a Friend</button>
       <button class="btn btn-ghost" onclick="shareResult()">📣 Share Result</button>
       <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
     </div>
@@ -187,15 +223,14 @@
   </div>
 </div>
 
-<!-- ============ CHALLENGE CODE MODAL ============ -->
-<div class="modal-backdrop" id="modal-challenge">
+<!-- ============ QUIT CONFIRM MODAL ============ -->
+<div class="modal-backdrop" id="modal-quit">
   <div class="modal">
-    <h3>🎯 FRIEND CHALLENGE</h3>
-    <p class="modal-hint">Got a code from a friend? Enter it and try to beat their score!</p>
-    <input type="text" id="ch-code" placeholder="CWC-IND-14-1" style="text-transform:uppercase">
+    <h3>🚪 LEAVE THE MATCH?</h3>
+    <p class="modal-hint">Are you sure you want to leave? This match's progress will be lost.</p>
     <div class="modal-buttons">
-      <button class="btn btn-gold" onclick="acceptChallenge()">ACCEPT CHALLENGE</button>
-      <button class="btn btn-ghost" onclick="closeModal('modal-challenge')">Cancel</button>
+      <button class="btn btn-ghost" onclick="quitMatch()">Yes, leave</button>
+      <button class="btn btn-gold" onclick="closeModal('modal-quit')">▶ Keep playing</button>
     </div>
   </div>
 </div>

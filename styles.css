@@ -144,6 +144,7 @@ body {
 .team-card.disabled { opacity: .25; pointer-events: none; }
 
 .choice-row { display: flex; gap: 10px; }
+.choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .choice-card {
   flex: 1; background: rgba(255,255,255,.06); border: 2px solid rgba(255,255,255,.12);
   border-radius: 18px; padding: 16px 10px; text-align: center; cursor: pointer;
@@ -177,8 +178,10 @@ body {
 .btn-start { width: 100%; max-width: 460px; margin: 26px 0 10px; }
 
 /* ---------- MATCH ---------- */
+.match-head { display: flex; gap: 10px; width: 100%; max-width: 460px; align-items: stretch; }
+.match-head .back-btn { height: auto; flex-shrink: 0; }
 .stadium-banner {
-  width: 100%; max-width: 460px; border-radius: 20px; padding: 14px 16px 12px;
+  flex: 1; border-radius: 20px; padding: 14px 16px 12px;
   text-align: center; position: relative; overflow: hidden;
   border: 1px solid rgba(255,255,255,.14);
 }
@@ -211,7 +214,8 @@ body {
 .sb-vs { font-family: 'Bungee', cursive; font-size: 14px; opacity: .55; }
 .sb-target { font-size: 11px; font-weight: 600; color: var(--green); margin-top: 2px; min-height: 14px; }
 
-.balls-row { display: flex; gap: 7px; margin-top: 10px; min-height: 30px; justify-content: center; }
+.over-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: var(--gold); margin-top: 8px; }
+.balls-row { display: flex; gap: 7px; margin-top: 6px; min-height: 30px; justify-content: center; }
 .ball-dot {
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;

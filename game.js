@@ -1,6 +1,6 @@
 /* ============================================================
    CRICKET WORLD CUP — Spin to Glory
-   Pure-luck super-over cricket. 6 balls. 2 wickets. One wheel.
+   Pure-luck cricket. Pick your length. One wheel decides all.
    ============================================================ */
 
 const TEAMS = [
@@ -37,42 +37,74 @@ const SEGMENTS = [
   { label: 'W', runs: 'W', color: '#ff4d6a' },
 ];
 const SEG_COUNT = SEGMENTS.length;
-const BALLS_PER_INNINGS = 6;
-const WICKETS_PER_INNINGS = 2;
 const POINTS_PER_WIN = 2;
 const CHAMPION_BONUS = 10;
 
-/* Hidden adaptive difficulty — never shown to the player.
-   The wheel quietly tightens as their win streak grows:
-   fresh players win ~75% of matches, hot streaks face ~5% odds.
-   Weights tuned by simulating 400k matches. */
+/* Match lengths: overs → balls and wickets in hand */
+const FORMATS = {
+  1: { balls: 6,  wkts: 2, label: '1 OVER' },
+  2: { balls: 12, wkts: 3, label: '2 OVERS' },
+  3: { balls: 18, wkts: 4, label: '3 OVERS' },
+  5: { balls: 30, wkts: 4, label: 'FULL GAME' },
+};
+
+/* Wheel odds per difficulty (player picks; percentages stay our secret).
+   `bat` biases your batting spins, `bowl` biases the bot's batting spins.
+   Tuned by simulating 400k one-over matches. */
 const DIFFICULTY = {
   easy:   { bat: { 6: 1.2, 5: 1.15, 4: 1.2, W: 0.7, 0: 0.85 },     bowl: { 6: 0.75, 5: 0.8, 4: 0.8, W: 1.5, 0: 1.2 } },
   medium: { bat: {},                                                bowl: {} },
   hard:   { bat: { 6: 0.52, 5: 0.57, 4: 0.62, W: 2.5, 0: 1.35 },   bowl: { 6: 1.85, 5: 1.75, 4: 1.75, W: 0.37, 0: 0.62 } },
 };
-function currentDifficulty() {
-  if (profile.streak >= 5) return 'hard';
-  if (profile.streak >= 2) return 'medium';
-  return 'easy';
-}
 
-/* Pun rosters — every country's legends, lightly scrambled */
-const ROSTERS = {
-  IND: [{ name: 'Viral Kohli', emoji: '🔥' }, { name: 'Rohit Charmer', emoji: '✨' }, { name: 'Helicopter Mahi', emoji: '🚁' }, { name: 'Sachin Ten-Duelkar', emoji: '⚔️' }],
-  AUS: [{ name: 'Steve Smasher', emoji: '💥' }, { name: 'Glenn Maxi-Well', emoji: '⚡' }, { name: 'David Warner Bros', emoji: '🎬' }, { name: 'Ricky Pointing', emoji: '👉' }],
-  ENG: [{ name: 'Ben Strokes', emoji: '🚣' }, { name: 'Joe Rooter', emoji: '🌳' }, { name: 'Jos the Butler', emoji: '🤵' }, { name: 'Kevin Pieter-Sun', emoji: '☀️' }],
-  PAK: [{ name: 'Babar A-Slam', emoji: '💥' }, { name: 'Shahid A-Fridge', emoji: '🧊' }, { name: 'Wasim A-Cram', emoji: '📚' }, { name: 'Inzamam-ul-Hulk', emoji: '💪' }],
-  NZ:  [{ name: 'Kane Williamsong', emoji: '🎵' }, { name: 'Brendon McBoom', emoji: '💣' }, { name: 'Ross Tailor', emoji: '✂️' }, { name: 'Martin Gup-Tilt', emoji: '🎯' }],
-  SA:  [{ name: 'AB de Chilliers', emoji: '🌶️' }, { name: 'Quinton de Sock', emoji: '🧦' }, { name: 'Hashim Am-La-La', emoji: '🎶' }, { name: 'Jacques Cool-is', emoji: '😎' }],
-  WI:  [{ name: 'Chris Gale-Force', emoji: '🌪️' }, { name: 'Brian Lah-Rah', emoji: '📣' }, { name: 'Dwayne Bravo!', emoji: '👏' }, { name: 'Andre Muscle', emoji: '💪' }],
-  SL:  [{ name: 'Kumar Sangakaraoke', emoji: '🎤' }, { name: 'Mahela Jaya-Winner', emoji: '🏅' }, { name: 'Lasith Sling-Shot', emoji: '🪃' }, { name: 'Tillakaratne Dil-Scoop', emoji: '🍨' }],
-  BAN: [{ name: 'Shakib Al Hammer', emoji: '🔨' }, { name: 'Tamim Iq-Bowl', emoji: '🎳' }, { name: 'Mushfiqur The Rock', emoji: '🪨' }, { name: 'Mashrafe More-Taza', emoji: '🌶️' }],
-  AFG: [{ name: 'Rashid Khan-fetti', emoji: '🎊' }, { name: 'Mohammad Na-Beast', emoji: '🦁' }, { name: 'Rahmanullah Gur-Blaze', emoji: '🔥' }, { name: 'Hazratullah Za-Zai-nami', emoji: '🌊' }],
+/* Squads — 5 batsmen + 3 bowlers per country, every name a loving pun */
+const SQUADS = {
+  IND: {
+    bat: [{ name: 'Viral Kohli', emoji: '🔥' }, { name: 'Rohit Charmer', emoji: '✨' }, { name: 'Helicopter Mahi', emoji: '🚁' }, { name: 'Sachin Ten-Duelkar', emoji: '⚔️' }, { name: 'Gautam Gambler', emoji: '🎲' }],
+    bowl: [{ name: 'Jasprit Boom-rah', emoji: '💣' }, { name: 'Kul-Deep Spinner', emoji: '🌀' }, { name: 'Bhuvi Swing-Kumar', emoji: '🎺' }],
+  },
+  AUS: {
+    bat: [{ name: 'Steve Smasher', emoji: '💥' }, { name: 'Glenn Maxi-Well', emoji: '⚡' }, { name: 'David Warner Bros', emoji: '🎬' }, { name: 'Ricky Pointing', emoji: '👉' }, { name: 'Travis Headbanger', emoji: '🤘' }],
+    bowl: [{ name: 'Mitch Starc-Struck', emoji: '🌟' }, { name: 'Pat Express Cummins', emoji: '🚄' }, { name: 'Nathan the Lion', emoji: '🦁' }],
+  },
+  ENG: {
+    bat: [{ name: 'Ben Strokes', emoji: '🚣' }, { name: 'Joe Rooter', emoji: '🌳' }, { name: 'Jos the Butler', emoji: '🤵' }, { name: 'Kevin Pieter-Sun', emoji: '☀️' }, { name: 'Harry Brookworm', emoji: '📖' }],
+    bowl: [{ name: 'Jimmy Anders-Swing', emoji: '🌬️' }, { name: 'Stuart Broad-Smile', emoji: '😁' }, { name: 'Jofra Archer-y', emoji: '🏹' }],
+  },
+  PAK: {
+    bat: [{ name: 'Babar A-Slam', emoji: '💥' }, { name: 'Inzamam-ul-Hulk', emoji: '💪' }, { name: 'Shahid A-Fridge', emoji: '🧊' }, { name: 'Mohammad Rizz-wan', emoji: '😏' }, { name: 'Fakhar Zaman-ia', emoji: '🎉' }],
+    bowl: [{ name: 'Wasim A-Cram', emoji: '📚' }, { name: 'Shaheen Shah of Swing', emoji: '🦅' }, { name: 'Waqar Yorker-nis', emoji: '🎯' }],
+  },
+  NZ: {
+    bat: [{ name: 'Kane Williamsong', emoji: '🎵' }, { name: 'Brendon McBoom', emoji: '💣' }, { name: 'Ross Tailor', emoji: '✂️' }, { name: 'Martin Gup-Tilt', emoji: '🎯' }, { name: 'Devon Conway-or-Highway', emoji: '🛣️' }],
+    bowl: [{ name: 'Trent Bolt', emoji: '🔩' }, { name: 'Tim Southee-Paw', emoji: '🐾' }, { name: 'Daniel Vettori-ous', emoji: '🏆' }],
+  },
+  SA: {
+    bat: [{ name: 'AB de Chilliers', emoji: '🌶️' }, { name: 'Quinton de Sock', emoji: '🧦' }, { name: 'Hashim Am-La-La', emoji: '🎶' }, { name: 'Jacques Cool-is', emoji: '😎' }, { name: 'Faf the Laugh', emoji: '😂' }],
+    bowl: [{ name: 'Dale Steyn-less Steel', emoji: '🔪' }, { name: 'Kagiso Ra-bada-boom', emoji: '💥' }, { name: 'Allan Donald Duck', emoji: '🦆' }],
+  },
+  WI: {
+    bat: [{ name: 'Chris Gale-Force', emoji: '🌪️' }, { name: 'Brian Lah-Rah', emoji: '📣' }, { name: 'Dwayne Bravo!', emoji: '👏' }, { name: 'Andre Muscle', emoji: '💪' }, { name: 'Shimron Sky-Hetmyer', emoji: '🚀' }],
+    bowl: [{ name: 'Curtly Ambrose-ia', emoji: '🍯' }, { name: 'Courtney Walsh-ing Machine', emoji: '🌀' }, { name: 'Sunil Narine-ja', emoji: '🥷' }],
+  },
+  SL: {
+    bat: [{ name: 'Kumar Sangakaraoke', emoji: '🎤' }, { name: 'Mahela Jaya-Winner', emoji: '🏅' }, { name: 'Tillakaratne Dil-Scoop', emoji: '🍨' }, { name: 'Sanath Jaya-Sunya', emoji: '☀️' }, { name: 'Angelo Math-ews', emoji: '➗' }],
+    bowl: [{ name: 'Lasith Sling-Shot', emoji: '🪃' }, { name: 'Muttiah Murali-Whirl', emoji: '🌀' }, { name: 'Chaminda Vaas-t Ocean', emoji: '🌊' }],
+  },
+  BAN: {
+    bat: [{ name: 'Shakib Al Hammer', emoji: '🔨' }, { name: 'Tamim Iq-Bowl', emoji: '🎳' }, { name: 'Mushfiqur The Rock', emoji: '🪨' }, { name: 'Litton Das-h', emoji: '💨' }, { name: 'Silent Killer Riyad', emoji: '🤫' }],
+    bowl: [{ name: 'Mustafizur The Fizz', emoji: '🥤' }, { name: 'Mashrafe More-Taza', emoji: '🌶️' }, { name: 'Taskin Tornado', emoji: '🌪️' }],
+  },
+  AFG: {
+    bat: [{ name: 'Rahmanullah Gur-Blaze', emoji: '🔥' }, { name: 'Hazratullah Za-Zai-nami', emoji: '🌊' }, { name: 'Ibrahim Zad-Sprint', emoji: '🏃' }, { name: 'Mohammad Na-Beast', emoji: '🦁' }, { name: 'Najibullah Zad-Boom', emoji: '💥' }],
+    bowl: [{ name: 'Rashid Khan-fetti', emoji: '🎊' }, { name: 'Mujeeb Mystery-Zad', emoji: '🔮' }, { name: 'Mohammad Nabi-Strike', emoji: '🎯' }],
+  },
 };
-function rosterFor(code) {
-  // custom teams get the pick of the whole world
-  return ROSTERS[code] || Object.values(ROSTERS).flat();
+function squadBat(code) {
+  return SQUADS[code] ? SQUADS[code].bat : Object.values(SQUADS).flatMap(s => s.bat);
+}
+function squadBowl(code) {
+  return SQUADS[code] ? SQUADS[code].bowl : Object.values(SQUADS).flatMap(s => s.bowl);
 }
 
 const FLAG_OPTIONS = ['🦁','🐯','🦅','🐉','🔥','⚡','🌟','🦈','🐺','👑','💎','🌋','🛡️','🚀'];
@@ -84,24 +116,23 @@ const LEGENDS = [
 ];
 
 const BADGES = [
-  { id: 'first-win',  icon: '🥇', name: 'First Blood',     desc: 'Win your first match',                  test: p => p.wins >= 1 },
-  { id: 'champion',   icon: '🏆', name: 'World Champion',  desc: 'Win the World Cup',                     test: p => p.trophies >= 1 },
-  { id: 'dynasty',    icon: '👑', name: 'Dynasty',         desc: 'Win 3 World Cups',                      test: p => p.trophies >= 3 },
-  { id: 'squad-boss', icon: '🧢', name: 'Squad Boss',      desc: 'Win 5 World Cups — pick your batsmen',  test: p => p.trophies >= 5 },
-  { id: 'franchise',  icon: '🛠️', name: 'Franchise Owner', desc: 'Win 10 World Cups — create your team',  test: p => p.trophies >= 10 },
-  { id: 'streak3',    icon: '🔥', name: 'On Fire',         desc: 'Win 3 matches in a row',                test: p => p.bestStreak >= 3 },
-  { id: 'streak7',    icon: '☄️', name: 'Unstoppable',     desc: 'Win 7 matches in a row',                test: p => p.bestStreak >= 7 },
-  { id: 'maximum',    icon: '💥', name: 'Maximum Damage',  desc: 'Hit 3 sixes in one innings',            test: p => p.threeSixes },
-  { id: 'globetrot',  icon: '🌍', name: 'Globetrotter',    desc: 'Unlock every stadium',                  test: p => p.wins >= 10 },
+  { id: 'first-win',  icon: '🥇', name: 'First Blood',     desc: 'Win your first match',                 test: p => p.wins >= 1 },
+  { id: 'champion',   icon: '🏆', name: 'World Champion',  desc: 'Win the World Cup',                    test: p => p.trophies >= 1 },
+  { id: 'dynasty',    icon: '👑', name: 'Dynasty',         desc: 'Win 3 World Cups',                     test: p => p.trophies >= 3 },
+  { id: 'squad-boss', icon: '🧢', name: 'Squad Boss',      desc: 'Win 5 World Cups',                     test: p => p.trophies >= 5 },
+  { id: 'franchise',  icon: '🛠️', name: 'Franchise Owner', desc: 'Win 10 World Cups — create your team', test: p => p.trophies >= 10 },
+  { id: 'streak3',    icon: '🔥', name: 'On Fire',         desc: 'Win 3 matches in a row',               test: p => p.bestStreak >= 3 },
+  { id: 'streak7',    icon: '☄️', name: 'Unstoppable',     desc: 'Win 7 matches in a row',               test: p => p.bestStreak >= 7 },
+  { id: 'maximum',    icon: '💥', name: 'Maximum Damage',  desc: 'Hit 3 sixes in one innings',           test: p => p.threeSixes },
+  { id: 'globetrot',  icon: '🌍', name: 'Globetrotter',    desc: 'Unlock every stadium',                 test: p => p.wins >= 10 },
 ];
 
-const BATSMEN_UNLOCK_CUPS = 5;
 const CUSTOM_TEAM_UNLOCK_CUPS = 10;
 
 /* ---------------- persistent profile ---------------- */
 const DEFAULT_PROFILE = {
   points: 0, trophies: 0, wins: 0, streak: 0, bestStreak: 0,
-  threeSixes: false, customTeam: null, batsmen: [],
+  threeSixes: false, customTeam: null, batsmen: [], bowler: null,
 };
 let profile = loadProfile();
 
@@ -113,9 +144,8 @@ function saveProfile() { localStorage.setItem('cwc-profile', JSON.stringify(prof
 
 /* ---------------- game state ---------------- */
 let setup = {};
-let match = null;          // live match state
-let cup = null;            // tournament state
-let challenge = null;      // accepted friend-challenge {oppCode, score, stadiumId}
+let match = null;
+let cup = null;
 let spinning = false;
 let wheelAngle = 0;
 let pickedFlag = null;
@@ -131,7 +161,6 @@ function team(code) {
   return allTeams().find(t => t.code === code) || { code, name: code, flag: '🏴‍☠️' };
 }
 function stadium(id) { return STADIUMS.find(s => s.id === id) || STADIUMS[0]; }
-function batsmenUnlocked() { return profile.trophies >= BATSMEN_UNLOCK_CUPS; }
 function customTeamUnlocked() { return profile.trophies >= CUSTOM_TEAM_UNLOCK_CUPS; }
 
 /* ============================================================
@@ -184,7 +213,7 @@ function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');
 }
-function goHome() { cup = null; challenge = null; refreshHud(); show('screen-home'); }
+function goHome() { cup = null; refreshHud(); show('screen-home'); }
 
 function refreshHud() {
   $('hud-trophies').textContent = profile.trophies;
@@ -202,39 +231,43 @@ function toast(msg, ms = 2400) {
 function openModal(id) { $(id).classList.add('open'); }
 function closeModal(id) { $(id).classList.remove('open'); }
 
+/* ---------------- quitting a match ---------------- */
+function confirmQuit() { sfx.pick(); openModal('modal-quit'); }
+function quitMatch() {
+  closeModal('modal-quit');
+  match = null;      // stops any in-flight spin from resolving
+  spinning = false;
+  $('btn-spin').classList.remove('spinning');
+  goHome();
+}
+
 /* ============================================================
-   SETUP FLOW  — modes: quick | cup | friend | challenge
+   SETUP FLOW  — modes: quick | cup
    ============================================================ */
 function startSetup(mode) {
   sfx.pick();
   setup = {
-    mode, myTeam: null, oppTeam: null, batFirst: null, stadium: null,
-    batsmen: [],
+    mode, myTeam: null, oppTeam: null, batFirst: null,
+    overs: null, difficulty: null, stadium: null,
+    batsmen: [], bowler: null,
   };
 
-  const titles = { cup: '🏆 WORLD CUP', quick: '⚡ QUICK MATCH', friend: '👥 VS FRIEND', challenge: '🎯 CHALLENGE' };
-  $('setup-title').textContent = titles[mode];
-
-  $('label-myteam').textContent = mode === 'friend' ? 'Player 1 — choose your country' : 'Choose your country';
-  $('label-oppteam').textContent = mode === 'friend' ? 'Player 2 — choose your country' : 'Choose opposition';
-
-  // which steps each mode needs
-  $('step-opp').style.display     = (mode === 'quick' || mode === 'friend') ? '' : 'none';
-  $('step-batbowl').style.display = mode === 'challenge' ? 'none' : '';
-  $('step-stadium').style.display = mode === 'challenge' ? 'none' : '';
-  $('step-batsmen').style.display = mode === 'friend' ? 'none' : '';
+  $('setup-title').textContent = mode === 'cup' ? '🏆 WORLD CUP' : '⚡ QUICK MATCH';
+  $('step-opp').style.display = mode === 'quick' ? '' : 'none';
 
   renderTeamGrid('grid-myteam', t => {
     setup.myTeam = t;
     if (setup.oppTeam === t) setup.oppTeam = null;
-    // batting picks belong to a country — reset them on team change
-    const valid = rosterFor(t).map(p => p.name);
-    setup.batsmen = (profile.batsmen || []).filter(n => valid.includes(n)).slice(0, 3);
-    renderBatsmen();
+    // squad picks belong to a country — keep only ones still valid
+    const validBat = squadBat(t).map(p => p.name);
+    const validBowl = squadBowl(t).map(p => p.name);
+    setup.batsmen = (profile.batsmen || []).filter(n => validBat.includes(n)).slice(0, 3);
+    setup.bowler = validBowl.includes(profile.bowler) ? profile.bowler : null;
+    renderSquad();
     renderSetup();
   }, true);
   renderTeamGrid('grid-oppteam', t => { setup.oppTeam = t; renderSetup(); }, false);
-  renderBatsmen();
+  renderSquad();
   renderStadiums();
   renderSetup();
   show('screen-setup');
@@ -252,7 +285,6 @@ function renderTeamGrid(gridId, onPick, isMyGrid) {
     grid.appendChild(b);
   });
 
-  // "create your own team" slot lives in the player-1 grid
   if (isMyGrid && !profile.customTeam) {
     const c = document.createElement('button');
     c.className = 'team-card create';
@@ -267,37 +299,48 @@ function renderTeamGrid(gridId, onPick, isMyGrid) {
   }
 }
 
-function renderBatsmen() {
-  const unlocked = batsmenUnlocked();
-  $('batsmen-locked').style.display = unlocked ? 'none' : '';
-  $('grid-batsmen').style.display = unlocked ? '' : 'none';
-  $('batsmen-tag').textContent = unlocked ? 'tap in batting order' : '';
-  if (!unlocked) return;
-
-  const grid = $('grid-batsmen');
-  grid.innerHTML = '';
+function renderSquad() {
+  const batGrid = $('grid-batsmen');
+  const bowlGrid = $('grid-bowler');
+  batGrid.innerHTML = '';
+  bowlGrid.innerHTML = '';
   if (!setup.myTeam) {
-    grid.innerHTML = '<div class="locked-banner">👆 Pick your country first to see its legends</div>';
+    batGrid.innerHTML = '<div class="locked-banner">👆 Pick your country first to meet its legends</div>';
+    bowlGrid.innerHTML = '<div class="locked-banner">👆 Pick your country first</div>';
     return;
   }
-  rosterFor(setup.myTeam).forEach(p => {
+  squadBat(setup.myTeam).forEach(p => {
     const b = document.createElement('button');
     b.className = 'batsman-card';
     b.innerHTML = `<span class="b-emoji">${p.emoji}</span>${p.name}`;
+    b.dataset.name = p.name;
     b.onclick = () => {
       sfx.pick();
       const i = setup.batsmen.indexOf(p.name);
       if (i >= 0) setup.batsmen.splice(i, 1);
       else if (setup.batsmen.length < 3) setup.batsmen.push(p.name);
-      else { toast('🧢 You already have 3 batsmen — tap one to swap out'); return; }
+      else { toast('🧢 Top 3 is full — tap a picked batsman to swap out'); return; }
       renderSetup();
     };
+    batGrid.appendChild(b);
+  });
+  squadBowl(setup.myTeam).forEach(p => {
+    const b = document.createElement('button');
+    b.className = 'batsman-card';
+    b.innerHTML = `<span class="b-emoji">${p.emoji}</span>${p.name}`;
     b.dataset.name = p.name;
-    grid.appendChild(b);
+    b.onclick = () => {
+      sfx.pick();
+      setup.bowler = setup.bowler === p.name ? null : p.name;
+      renderSetup();
+    };
+    bowlGrid.appendChild(b);
   });
 }
 
 function pickBatBowl(choice) { sfx.pick(); setup.batFirst = choice === 'bat'; renderSetup(); }
+function pickOvers(o) { sfx.pick(); setup.overs = o; renderSetup(); }
+function pickDifficulty(d) { sfx.pick(); setup.difficulty = d; renderSetup(); }
 
 function renderStadiums() {
   const list = $('grid-stadium');
@@ -327,10 +370,12 @@ function renderSetup() {
   });
   $('pick-bat').classList.toggle('selected', setup.batFirst === true);
   $('pick-bowl').classList.toggle('selected', setup.batFirst === false);
+  [1, 2, 3, 5].forEach(o => $('overs-' + o).classList.toggle('selected', setup.overs === o));
+  ['easy', 'medium', 'hard'].forEach(d => $('diff-' + d).classList.toggle('selected', setup.difficulty === d));
   document.querySelectorAll('#grid-stadium .stadium-card').forEach((c, i) => {
     c.classList.toggle('selected', STADIUMS[i].id === setup.stadium);
   });
-  document.querySelectorAll('.batsman-card').forEach(c => {
+  document.querySelectorAll('#grid-batsmen .batsman-card').forEach(c => {
     const order = setup.batsmen.indexOf(c.dataset.name);
     c.classList.toggle('selected', order >= 0);
     const old = c.querySelector('.order-pip');
@@ -342,13 +387,14 @@ function renderSetup() {
       c.appendChild(pip);
     }
   });
+  document.querySelectorAll('#grid-bowler .batsman-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.name === setup.bowler);
+  });
 
-  const m = setup.mode;
   const ready =
-    setup.myTeam &&
-    (m === 'challenge' || setup.batFirst !== null) &&
-    (m === 'challenge' || setup.stadium) &&
-    ((m !== 'quick' && m !== 'friend') || setup.oppTeam);
+    setup.myTeam && setup.batFirst !== null && setup.overs &&
+    setup.difficulty && setup.stadium &&
+    (setup.mode !== 'quick' || setup.oppTeam);
   $('btn-start').disabled = !ready;
 }
 
@@ -383,27 +429,27 @@ function saveCustomTeam() {
   saveProfile();
   closeModal('modal-team');
   toast(`🛠️ ${name} (${code}) created! They're in your team list now.`);
-  startSetup(setup.mode); // re-render grids with the new team
+  startSetup(setup.mode);
 }
 
 /* ============================================================
-   MATCH ENGINE — super over: 6 balls, 2 wickets, per side
+   MATCH ENGINE
    ============================================================ */
-function batters() {
-  const roster = rosterFor(setup.myTeam).map(p => p.name);
+function battingLineup() {
+  const roster = squadBat(setup.myTeam).map(p => p.name);
   const picked = (setup.batsmen || []).filter(n => roster.includes(n));
   const rest = roster.filter(n => !picked.includes(n));
-  return [...picked, ...rest].slice(0, 3);
+  return [...picked, ...rest].slice(0, 5);
 }
-
-function pickBowler(code, batterNames) {
-  const roster = rosterFor(code).map(p => p.name);
-  return roster.find(n => !batterNames.includes(n)) || roster[roster.length - 1];
+function myBowlerName() {
+  const roster = squadBowl(setup.myTeam).map(p => p.name);
+  return roster.includes(setup.bowler) ? setup.bowler : roster[0];
 }
 
 function startMatch() {
-  if (batsmenUnlocked() && setup.batsmen.length) {
+  if (setup.batsmen.length || setup.bowler) {
     profile.batsmen = [...setup.batsmen];
+    profile.bowler = setup.bowler;
     saveProfile();
   }
   if (setup.mode === 'cup' && !cup) {
@@ -411,92 +457,77 @@ function startMatch() {
     cup = { round: 0, opponents: pool.slice(0, 4).map(t => t.code) };
   }
 
-  const isChallenge = setup.mode === 'challenge';
-  const opp = isChallenge ? challenge.oppCode
-    : setup.mode === 'cup' ? cup.opponents[cup.round]
-    : setup.oppTeam;
-  if (isChallenge) setup.stadium = challenge.stadiumId;
+  const opp = setup.mode === 'cup' ? cup.opponents[cup.round] : setup.oppTeam;
+  const fmt = FORMATS[setup.overs];
 
   match = {
     opp,
-    innings: isChallenge ? 2 : 1,
-    myBatting: isChallenge ? false : setup.batFirst,  // challenge = always chasing
+    ballsLimit: fmt.balls,
+    maxWkts: fmt.wkts,
+    innings: 1,
+    myBatting: setup.batFirst,
     balls: 0, wickets: 0,
     myScore: 0, myWkts: 0,
-    oppScore: isChallenge ? challenge.score : 0,
-    oppWkts: isChallenge ? null : 0,
+    oppScore: 0, oppWkts: 0,
     sixesThisInnings: 0,
-    target: isChallenge ? challenge.score + 1 : null,
+    target: null,
     over: false,
     log: [],
-    batters: batters(),
-    oppBatters: rosterFor(opp).slice(0, 3).map(p => p.name),
+    batters: battingLineup(),
+    oppBatters: squadBat(opp).slice(0, 5).map(p => p.name),
+    myBowler: myBowlerName(),
+    oppBowler: squadBowl(opp)[0].name,
   };
-  match.myBowler = pickBowler(setup.myTeam, match.batters);
-  match.oppBowler = pickBowler(opp, match.oppBatters);
 
   const st = stadium(setup.stadium);
   $('match-stadium').textContent = `${st.icon} ${st.name}, ${st.city}`;
   $('match-stage').textContent =
-    setup.mode === 'cup' ? CUP_ROUNDS[cup.round]
-    : setup.mode === 'quick' ? 'QUICK MATCH'
-    : setup.mode === 'friend' ? 'FRIENDLY · PASS & PLAY'
-    : 'FRIEND CHALLENGE';
+    (setup.mode === 'cup' ? CUP_ROUNDS[cup.round] : 'QUICK MATCH') + ' · ' + fmt.label;
 
   $('sb-flag-a').textContent = team(setup.myTeam).flag;
   $('sb-name-a').textContent = setup.myTeam;
   $('sb-flag-b').textContent = team(opp).flag;
   $('sb-name-b').textContent = team(opp).code;
 
-  if (isChallenge) {
-    setCommentary(`Your friend's ${team(opp).code} scored ${challenge.score}. Beat it! Spin to bat! 🏏`);
-    $('btn-spin').textContent = '🏏 SPIN TO CHASE!';
-  } else if (setup.mode === 'friend') {
-    const first = match.myBatting ? 'Player 1' : 'Player 2';
-    setCommentary(`${first} bats first at ${st.name}. ${first}, spin away! 📱`);
-    $('btn-spin').textContent = `🎡 ${match.myBatting ? 'P1' : 'P2'} SPIN!`;
-  } else {
-    setCommentary(match.myBatting
-      ? `You're batting first at ${st.name}. Spin to face the first ball!`
-      : `${team(opp).name} bat first. Spin to bowl the first ball!`);
-    $('btn-spin').textContent = match.myBatting ? '🏏 SPIN TO BAT!' : '🥎 SPIN TO BOWL!';
-  }
+  setCommentary(match.myBatting
+    ? `You're batting first at ${st.name}. Spin to face the first ball!`
+    : `${team(opp).name} bat first. Spin to bowl the first ball!`);
+  $('btn-spin').textContent = match.myBatting ? '🏏 SPIN TO BAT!' : '🥎 SPIN TO BOWL!';
   refreshMatchUI();
   show('screen-match');
   drawWheel(wheelAngle);
 }
 
 function battingNow() {
-  // side A (you / player 1) bats when: innings 1 + batFirst, or innings 2 + !batFirst
   return match.innings === 1 ? match.myBatting : !match.myBatting;
 }
+
+function fmtOvers(balls) { return `${Math.floor(balls / 6)}.${balls % 6}`; }
+
+function batterIdx(wkts, lineup) { return Math.min(wkts, lineup.length - 1); }
 
 function sideStatus(isA) {
   if (match.over) return isA === (match.myScore > match.oppScore) ? '🏆 Winner' : '';
   const batting = isA ? battingNow() : !battingNow();
-  if (batting) return `⚪ Ball ${match.balls}/${BALLS_PER_INNINGS}`;
-  if (setup.mode === 'challenge') return '🎯 Target set';
+  if (batting) return `⚪ ${fmtOvers(match.balls)}/${match.ballsLimit / 6} ov`;
   return match.innings === 2 ? '✅ Innings done' : '🥎 Bowling';
 }
 
 function refreshMatchUI() {
   $('sb-score-a').textContent = `${match.myScore}/${match.myWkts}`;
-  $('sb-score-b').textContent = match.oppWkts === null ? `${match.oppScore}` : `${match.oppScore}/${match.oppWkts}`;
+  $('sb-score-b').textContent = `${match.oppScore}/${match.oppWkts}`;
   $('sb-team-a').classList.toggle('batting', battingNow() && !match.over);
   $('sb-team-b').classList.toggle('batting', !battingNow() && !match.over);
   $('sb-status-a').textContent = sideStatus(true);
   $('sb-status-b').textContent = sideStatus(false);
   $('sb-innings').textContent = match.over ? 'MATCH OVER'
-    : setup.mode === 'challenge' ? 'THE CHASE'
     : match.innings === 1 ? '1ST INNINGS' : '2ND INNINGS';
 
   if (match.target !== null && !match.over) {
-    const who = setup.mode === 'friend'
-      ? (battingNow() ? 'P1 need' : 'P2 need')
-      : (battingNow() ? 'You need' : `${team(match.opp).code} need`);
+    const who = battingNow() ? 'You need' : `${team(match.opp).code} need`;
     const scoreNow = battingNow() ? match.myScore : match.oppScore;
     const need = match.target - scoreNow;
-    const left = BALLS_PER_INNINGS - match.balls;
+    const left = match.ballsLimit - match.balls;
     $('sb-target').textContent = `${who} ${need} off ${left}`;
   } else {
     $('sb-target').textContent = '';
@@ -506,17 +537,22 @@ function refreshMatchUI() {
   const chip = $('batter-chip');
   if (!match.over) {
     const meBat = battingNow();
-    const batter = meBat ? match.batters[Math.min(match.myWkts, 2)]
-                         : match.oppBatters[Math.min(match.oppWkts ?? 0, 2)];
+    const batter = meBat ? match.batters[batterIdx(match.myWkts, match.batters)]
+                         : match.oppBatters[batterIdx(match.oppWkts, match.oppBatters)];
     const bowler = meBat ? match.oppBowler : match.myBowler;
     chip.textContent = `🏏 ${batter}  ·  ⚡ ${bowler} bowling`;
   } else {
     chip.textContent = '';
   }
 
+  // current over's six balls
+  const totalOvers = match.ballsLimit / 6;
+  const overIdx = match.balls === 0 ? 0 : Math.floor((match.balls - 1) / 6);
+  $('over-label').textContent = totalOvers > 1 ? `OVER ${overIdx + 1} OF ${totalOvers}` : '';
+  const start = overIdx * 6;
   const row = $('balls-row');
   row.innerHTML = '';
-  for (let i = 0; i < BALLS_PER_INNINGS; i++) {
+  for (let i = start; i < start + 6; i++) {
     const d = document.createElement('div');
     d.className = 'ball-dot';
     const r = match.log[i];
@@ -597,14 +633,9 @@ function shade(hex, amt) {
   return `rgb(${r},${g},${b})`;
 }
 
-/* Quietly weighted segment pick. Friend matches and challenge
-   chases always use the fair wheel. */
 function pickSegment() {
-  let weights = {};
-  if (setup.mode === 'quick' || setup.mode === 'cup') {
-    const diff = DIFFICULTY[currentDifficulty()];
-    weights = battingNow() ? diff.bat : diff.bowl;
-  }
+  const diff = DIFFICULTY[setup.difficulty || 'medium'];
+  const weights = battingNow() ? diff.bat : diff.bowl;
   const w = SEGMENTS.map(s => weights[s.runs] ?? 1);
   const total = w.reduce((a, b) => a + b, 0);
   let r = Math.random() * total;
@@ -633,6 +664,7 @@ function spin() {
   let lastTickSeg = -1;
 
   function frame(now) {
+    if (!match) { spinning = false; return; }  // player quit mid-spin
     const t = Math.min(1, (now - t0) / dur);
     const eased = 1 - Math.pow(1 - t, 3);
     wheelAngle = startAngle + delta * eased;
@@ -653,34 +685,32 @@ function spin() {
 
 /* ---------------- ball outcome ---------------- */
 function resolveBall(result) {
+  if (!match || match.over) return;
   const meBatting = battingNow();
-  const friendly = setup.mode === 'friend';
-  const sideName = friendly ? (meBatting ? 'P1' : 'P2') : null;
   match.balls++;
   match.log.push(result);
 
   const batterName = meBatting
-    ? match.batters[Math.min(match.myWkts, 2)]
-    : match.oppBatters[Math.min(match.oppWkts ?? 0, 2)];
+    ? match.batters[batterIdx(match.myWkts, match.batters)]
+    : match.oppBatters[batterIdx(match.oppWkts, match.oppBatters)];
   const bowlerName = meBatting ? match.oppBowler : match.myBowler;
 
   if (result === 'W') {
     match.wickets++;
-    if (meBatting) match.myWkts++; else if (match.oppWkts !== null) match.oppWkts++;
+    if (meBatting) match.myWkts++; else match.oppWkts++;
     sfx.wicket();
-    if (meBatting && !friendly) document.body.classList.add('shake');
+    if (meBatting) document.body.classList.add('shake');
     setTimeout(() => document.body.classList.remove('shake'), 500);
-    const wLine = pickLine([
+    setCommentary(pickLine([
       `${batterName} is GONE! ${bowlerName} strikes! 😱`,
       `${bowlerName} cleans up ${batterName}! TIMBER! 🎯`,
       `Edged and TAKEN! ${bowlerName} sends ${batterName} packing! 🙌`,
-    ]);
-    setCommentary(friendly ? `${sideName}: ${wLine}` : wLine);
+    ]));
   } else {
     if (meBatting) { match.myScore += result; if (result === 6) match.sixesThisInnings++; }
     else match.oppScore += result;
 
-    if (result === 6) { sfx.six(); burstConfetti(meBatting || friendly ? 26 : 8); }
+    if (result === 6) { sfx.six(); burstConfetti(meBatting ? 26 : 8); }
     else if (result === 4 || result === 5) sfx.four();
     else if (result === 0) sfx.dot();
     else sfx.run();
@@ -694,15 +724,14 @@ function resolveBall(result) {
       5: [`FIVE! Overthrows — total chaos in the field! 🤪`, `Five runs! Wild throw and ${batterName} just keeps running! 😵`],
       6: [`SIX! ${batterName} sends it OUT of the ground! 💥`, `MAXIMUM! ${batterName} deposits it into the second tier! 🚀`],
     };
-    const line = pickLine(lines[result]);
-    setCommentary(friendly ? `${sideName}: ${line}` : line);
+    setCommentary(pickLine(lines[result]));
   }
 
   refreshMatchUI();
 
   const batScore = meBatting ? match.myScore : match.oppScore;
   const chaseDone = match.target !== null && batScore >= match.target;
-  const inningsDone = match.balls >= BALLS_PER_INNINGS || match.wickets >= WICKETS_PER_INNINGS || chaseDone;
+  const inningsDone = match.balls >= match.ballsLimit || match.wickets >= match.maxWkts || chaseDone;
 
   if (chaseDone || (match.innings === 2 && inningsDone)) {
     setTimeout(endMatch, 1100);
@@ -714,96 +743,37 @@ function resolveBall(result) {
 function pickLine(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 function switchInnings() {
+  if (!match) return;
   match.innings = 2;
   match.target = (match.myBatting ? match.myScore : match.oppScore) + 1;
   match.balls = 0; match.wickets = 0; match.log = [];
   if (battingNow()) match.sixesThisInnings = 0;
 
   const meBatting = battingNow();
-  if (setup.mode === 'friend') {
-    const next = meBatting ? 'Player 1' : 'Player 2';
-    setCommentary(`📱 Hand the phone over! ${next} need ${match.target} to win. Spin away!`);
-    $('btn-spin').textContent = `🎡 ${meBatting ? 'P1' : 'P2'} SPIN!`;
-  } else {
-    setCommentary(meBatting
-      ? `Chase time! You need ${match.target} runs to win. Spin to bat! 🏏`
-      : `You set ${team(match.opp).code} a target of ${match.target}. Spin to bowl! 🥎`);
-    $('btn-spin').textContent = meBatting ? '🏏 SPIN TO BAT!' : '🥎 SPIN TO BOWL!';
-  }
+  setCommentary(meBatting
+    ? `Chase time! You need ${match.target} runs to win. Spin to bat! 🏏`
+    : `You set ${team(match.opp).code} a target of ${match.target}. Spin to bowl! 🥎`);
+  $('btn-spin').textContent = meBatting ? '🏏 SPIN TO BAT!' : '🥎 SPIN TO BOWL!';
   refreshMatchUI();
 }
 
 /* ---------------- match end & rewards ---------------- */
 function endMatch() {
+  if (!match) return;
   match.over = true;
   refreshMatchUI();
   const iWon = match.myScore > match.oppScore;
   const tie = match.myScore === match.oppScore;
-  const m = setup.mode;
 
   if (match.sixesThisInnings >= 3) profile.threeSixes = true;
 
-  /* ----- friendly: no points, bragging rights only ----- */
-  if (m === 'friend') {
-    if (tie) {
-      sfx.lose();
-      showResult({
-        emoji: '🤯', title: 'TIED!', lose: false,
-        sub: 'Dead level! Settle it with a rematch.',
-        score: scoreLine(), rewards: [],
-        nextLabel: '⚔️ REMATCH', next: () => startMatch(), challengeBtn: false,
-      });
-      return;
-    }
-    sfx.win(); burstConfetti(70);
-    const winner = iWon ? 'PLAYER 1' : 'PLAYER 2';
-    const winTeam = iWon ? setup.myTeam : match.opp;
-    showResult({
-      emoji: '🏅', title: `${winner} WINS!`, lose: false,
-      sub: `${team(winTeam).name} ${team(winTeam).flag} take the bragging rights! (Friendly — no points)`,
-      score: scoreLine(), rewards: [],
-      nextLabel: '⚔️ REMATCH', next: () => startMatch(), challengeBtn: false,
-    });
-    return;
-  }
-
-  /* ----- challenge: beat the score or bust (tie = challenger keeps it) ----- */
-  if (m === 'challenge') {
-    if (iWon) {
-      profile.wins++; profile.streak++;
-      profile.bestStreak = Math.max(profile.bestStreak, profile.streak);
-      profile.points += POINTS_PER_WIN;
-      saveProfile(); checkBadges();
-      sfx.win(); burstConfetti(90);
-      showResult({
-        emoji: '🎯', title: 'CHALLENGE WON!', lose: false,
-        sub: `You beat your friend's ${challenge.score}! Send them a code back. 😏`,
-        score: scoreLine(),
-        rewards: [`+${POINTS_PER_WIN} ⭐ points`, '🎯 Challenge conquered'],
-        nextLabel: '🏠 HOME', next: () => goHome(), challengeBtn: false,
-      });
-    } else {
-      profile.streak = 0;
-      saveProfile(); checkBadges();
-      sfx.lose();
-      showResult({
-        emoji: '😤', title: tie ? 'SO CLOSE — TIED!' : 'CHALLENGE LOST', lose: true,
-        sub: tie ? 'A tie isn\'t enough — the challenger keeps the crown!' : `Your friend's ${challenge.score} stands. One more go?`,
-        score: scoreLine(), rewards: [],
-        nextLabel: '🔁 TRY AGAIN', next: () => startMatch(), challengeBtn: false,
-      });
-    }
-    return;
-  }
-
-  /* ----- vs bot (quick / cup) ----- */
   if (tie) {
     sfx.lose();
     showResult({
       emoji: '🤯', title: 'TIED!', lose: false,
-      sub: 'Unbelievable scenes! A super-over rematch is needed.',
+      sub: 'Unbelievable scenes! A rematch is needed.',
       score: scoreLine(), rewards: [],
-      nextLabel: '⚔️ REMATCH', next: () => startMatch(), challengeBtn: false,
+      nextLabel: '⚔️ REMATCH', next: () => startMatch(),
     });
     return;
   }
@@ -819,13 +789,12 @@ function endMatch() {
     const unlocked = STADIUMS.find(s => s.unlock === profile.wins);
     if (unlocked) rewards.push(`🔓 ${unlocked.name} unlocked!`);
 
-    if (m === 'cup') {
+    if (setup.mode === 'cup') {
       const isFinal = cup.round === CUP_ROUNDS.length - 1;
       if (isFinal) {
         profile.trophies++;
         pts += CHAMPION_BONUS;
         rewards.push(`+${CHAMPION_BONUS} ⭐ champion bonus`, '🏆 WORLD CUP WON!');
-        if (profile.trophies === BATSMEN_UNLOCK_CUPS) rewards.push('🧢 UNLOCKED: pick your batsmen!');
         if (profile.trophies === CUSTOM_TEAM_UNLOCK_CUPS) rewards.push('🛠️ UNLOCKED: create your own team!');
         profile.points += pts;
         saveProfile(); checkBadges();
@@ -834,7 +803,7 @@ function endMatch() {
           emoji: '🏆', title: 'WORLD CHAMPIONS!', lose: false,
           sub: `${team(setup.myTeam).name} lift the Cricket World Cup! ${team(setup.myTeam).flag}`,
           score: scoreLine(), rewards,
-          nextLabel: '🏆 PLAY ANOTHER CUP', next: () => { cup = null; startSetup('cup'); }, challengeBtn: true,
+          nextLabel: '🏆 PLAY ANOTHER CUP', next: () => { cup = null; startSetup('cup'); },
         });
         return;
       }
@@ -847,7 +816,7 @@ function endMatch() {
         emoji: '✅', title: 'YOU WIN!', lose: false,
         sub: `Through to the ${nextRound.toLowerCase()}! Next up: ${nextOpp.name} ${nextOpp.flag}`,
         score: scoreLine(), rewards,
-        nextLabel: `▶ PLAY ${nextRound}`, next: () => { cup.round++; startMatch(); }, challengeBtn: true,
+        nextLabel: `▶ PLAY ${nextRound}`, next: () => { cup.round++; startMatch(); },
       });
       return;
     }
@@ -859,16 +828,16 @@ function endMatch() {
       emoji: '🎉', title: 'YOU WIN!', lose: false,
       sub: `${team(setup.myTeam).name} beat ${team(match.opp).name}!`,
       score: scoreLine(), rewards,
-      nextLabel: '⚡ PLAY AGAIN', next: () => startMatch(), challengeBtn: true,
+      nextLabel: '⚡ PLAY AGAIN', next: () => startMatch(),
     });
     return;
   }
 
-  // loss vs bot
+  // loss
   profile.streak = 0;
   saveProfile(); checkBadges();
   sfx.lose();
-  const knockedOut = m === 'cup';
+  const knockedOut = setup.mode === 'cup';
   showResult({
     emoji: '😭', title: knockedOut ? 'KNOCKED OUT' : 'YOU LOSE', lose: true,
     sub: knockedOut
@@ -877,17 +846,15 @@ function endMatch() {
     score: scoreLine(), rewards: [],
     nextLabel: knockedOut ? '🔁 NEW CUP RUN' : '🔁 REMATCH',
     next: knockedOut ? () => { cup = null; startSetup('cup'); } : () => startMatch(),
-    challengeBtn: true,
   });
 }
 
 function scoreLine() {
-  const oppBit = match.oppWkts === null ? `${match.oppScore}` : `${match.oppScore}/${match.oppWkts}`;
-  return `${team(setup.myTeam).flag} ${match.myScore}/${match.myWkts} — ${oppBit} ${team(match.opp).flag}`;
+  return `${team(setup.myTeam).flag} ${match.myScore}/${match.myWkts} — ${match.oppScore}/${match.oppWkts} ${team(match.opp).flag}`;
 }
 
 let nextActionFn = null;
-function showResult({ emoji, title, lose, sub, score, rewards, nextLabel, next, challengeBtn }) {
+function showResult({ emoji, title, lose, sub, score, rewards, nextLabel, next }) {
   $('result-emoji').textContent = emoji;
   const t = $('result-title');
   t.textContent = title;
@@ -897,48 +864,10 @@ function showResult({ emoji, title, lose, sub, score, rewards, nextLabel, next, 
   $('result-rewards').innerHTML = rewards.map((r, i) =>
     `<span class="reward-pill" style="animation-delay:${.15 + i * .12}s">${r}</span>`).join('');
   $('btn-next').textContent = nextLabel;
-  $('btn-challenge').style.display = challengeBtn ? '' : 'none';
   nextActionFn = next;
   show('screen-result');
 }
 function nextAction() { sfx.pick(); if (nextActionFn) nextActionFn(); }
-
-/* ---------------- share & friend challenges ---------------- */
-function makeChallengeCode() {
-  const stIdx = Math.max(0, STADIUMS.findIndex(s => s.id === setup.stadium));
-  return `CWC-${setup.myTeam}-${match.myScore}-${stIdx}`;
-}
-
-function shareChallenge() {
-  const code = makeChallengeCode();
-  const text = `🏏 I scored ${match.myScore}/${match.myWkts} in Cricket World Cup. ` +
-    `Think you can beat me? Open the game, tap 🎯 Enter Code and type: ${code}`;
-  if (navigator.share) navigator.share({ text }).catch(() => {});
-  else navigator.clipboard?.writeText(text)
-    .then(() => toast(`📋 Challenge copied! Code: ${code}`))
-    .catch(() => toast(`Your code: ${code}`, 6000));
-}
-
-function openChallengeModal() {
-  sfx.pick();
-  $('ch-code').value = '';
-  openModal('modal-challenge');
-}
-
-function acceptChallenge() {
-  const raw = $('ch-code').value.trim().toUpperCase();
-  const mres = raw.match(/^CWC-([A-Z]{2,3})-(\d{1,2})-(\d)$/);
-  if (!mres) { toast('Hmm, that code doesn\'t look right. Format: CWC-IND-14-1'); return; }
-  const [, oppCode, score, stIdx] = mres;
-  challenge = {
-    oppCode,
-    score: parseInt(score, 10),
-    stadiumId: (STADIUMS[parseInt(stIdx, 10)] || STADIUMS[0]).id,
-  };
-  closeModal('modal-challenge');
-  startSetup('challenge');
-  toast(`🎯 Challenge accepted! Beat ${challenge.score} by ${team(oppCode).code}.`, 3500);
-}
 
 function shareResult() {
   const st = stadium(setup.stadium);
