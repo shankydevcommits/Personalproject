@@ -997,6 +997,20 @@ function burstConfetti(n) {
   }
 }
 
+(function initFloaters() {
+  const layer = $('bg-float');
+  const icons = ['🏏', '🥎', '🏆', '⭐', '🧢', '🏏', '🥎'];
+  for (let i = 0; i < 10; i++) {
+    const f = document.createElement('i');
+    f.textContent = icons[i % icons.length];
+    f.style.left = (4 + Math.random() * 92) + 'vw';
+    f.style.fontSize = (16 + Math.random() * 22) + 'px';
+    f.style.animationDuration = (16 + Math.random() * 18) + 's';
+    f.style.animationDelay = (-Math.random() * 30) + 's'; // start mid-flight
+    layer.appendChild(f);
+  }
+})();
+
 (function initStars() {
   const s = $('stars');
   for (let i = 0; i < 40; i++) {

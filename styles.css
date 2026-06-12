@@ -28,6 +28,31 @@ body {
   -webkit-user-select: none;
 }
 
+/* slow aurora sweep behind everything */
+body::before {
+  content: ''; position: fixed; inset: -40%; z-index: 0; pointer-events: none;
+  background: conic-gradient(from 0deg at 50% 50%,
+    transparent 0deg, rgba(47,123,255,.10) 70deg, transparent 140deg,
+    rgba(255,200,61,.07) 220deg, transparent 290deg, rgba(124,77,255,.09) 330deg, transparent 360deg);
+  animation: aurora 36s linear infinite;
+}
+@keyframes aurora { to { transform: rotate(360deg); } }
+
+/* floating cricket gear drifting up the screen */
+#bg-float { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+#bg-float i {
+  position: absolute; bottom: -60px; font-style: normal; opacity: 0;
+  animation: floatUp linear infinite;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.35));
+}
+@keyframes floatUp {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  8%   { opacity: .14; }
+  50%  { transform: translateY(-55vh) translateX(4vw) rotate(160deg); opacity: .14; }
+  92%  { opacity: .12; }
+  100% { transform: translateY(-112vh) translateX(-3vw) rotate(340deg); opacity: 0; }
+}
+
 /* twinkling stadium-light stars */
 #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 #stars i {
@@ -70,7 +95,13 @@ body {
   background: linear-gradient(180deg, var(--gold) 15%, var(--gold-deep) 90%);
   -webkit-background-clip: text; background-clip: text;
 }
-.logo-tag { margin-top: 12px; font-size: 12px; letter-spacing: 3px; opacity: .75; font-weight: 600; }
+.logo-year {
+  font-family: 'Bungee', cursive; font-size: 26px; letter-spacing: 8px; margin-top: 6px;
+  color: var(--gold); text-shadow: 0 0 18px rgba(255,200,61,.65), 0 3px 0 rgba(0,0,0,.4);
+  animation: yearPulse 2.4s ease-in-out infinite;
+}
+@keyframes yearPulse { 50% { text-shadow: 0 0 34px rgba(255,200,61,.95), 0 3px 0 rgba(0,0,0,.4); transform: scale(1.04); } }
+.logo-tag { margin-top: 10px; font-size: 12px; letter-spacing: 3px; opacity: .75; font-weight: 600; }
 
 .stat-strip { display: flex; gap: 10px; margin: 4.5vh 0 3vh; z-index: 1; }
 .stat-chip {
