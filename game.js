@@ -595,6 +595,7 @@ function startMatch() {
     myBowlers: myBowlerNames,
     oppBowlers: oppBowlerNames,
     crease: { striker: 0, nonStriker: 1, nextIn: 2 },
+    thisOver: [], newOver: false,   // deliveries in the current over (incl. extras)
   };
   track(`match-start-${setup.mode}-${setup.overs}ov-${setup.difficulty}`);
 
@@ -669,22 +670,31 @@ function refreshMatchUI() {
     chip.textContent = '';
   }
 
-  // current over's six balls
+  // current over: shows every delivery incl. extras, so it can exceed 6 balls
   const totalOvers = match.ballsLimit / 6;
   const overIdx = match.balls === 0 ? 0 : Math.floor((match.balls - 1) / 6);
   $('over-label').textContent = totalOvers > 1 ? `OVER ${overIdx + 1} OF ${totalOvers}` : '';
-  const start = overIdx * 6;
   const row = $('balls-row');
   row.innerHTML = '';
-  for (let i = start; i < start + 6; i++) {
+  const deliveries = match.thisOver && match.thisOver.length ? match.thisOver : new Array(6).fill(null);
+  deliveries.forEach(dlv => {
     const d = document.createElement('div');
     d.className = 'ball-dot';
-    const r = match.log[i];
-    if (r !== undefined) {
-      d.classList.add('filled');
-      d.textContent = r === 'W' ? 'W' : r;
-      d.classList.add(r === 'W' ? 'bW' : r === 6 ? 'b6' : r === 4 ? 'b4' : 'bR');
+    if (dlv == null) { row.appendChild(d); return; }
+    d.classList.add('filled');
+    if (dlv === 'WD' || dlv === 'NB') {
+      d.textContent = dlv === 'WD' ? 'Wd' : 'Nb';
+      d.classList.add('bX');
+    } else {
+      d.textContent = dlv === 'W' ? 'W' : dlv;
+      d.classList.add(dlv === 'W' ? 'bW' : dlv === 6 ? 'b6' : dlv === 4 ? 'b4' : 'bR');
     }
+    row.appendChild(d);
+  });
+  // pad with empty dots up to at least 6 so the row keeps its shape early on
+  for (let i = deliveries.length; i < 6; i++) {
+    const d = document.createElement('div');
+    d.className = 'ball-dot';
     row.appendChild(d);
   }
 }
@@ -816,9 +826,13 @@ function resolveBall(result) {
   const batterName = lineup[crease.striker];
   const bowlerName = bowlerForOver(Math.floor(match.balls / 6)); // this ball's bowler
 
+  // a new over has begun → start a fresh delivery row
+  if (match.newOver) { match.thisOver = []; match.newOver = false; }
+
   // EXTRAS: Wide / No-ball — +1 run, NOT a legal ball, so re-bowl (spin again)
   if (result === 'WD' || result === 'NB') {
     if (meBatting) match.myScore += 1; else match.oppScore += 1;
+    match.thisOver.push(result);
     sfx.run();
     setCommentary(result === 'WD'
       ? pickLine([`Wide! +1 run — ${bowlerName} must bowl it again. 🎯`, `${bowlerName} strays down the side — Wide! +1, extra ball. 😅`])
@@ -832,6 +846,7 @@ function resolveBall(result) {
 
   match.balls++;
   match.log.push(result);
+  match.thisOver.push(result);
 
   if (result === 'W') {
     match.wickets++;
@@ -880,6 +895,7 @@ function resolveBall(result) {
   // end of the over: batsmen change ends, the next bowler comes on
   if (!inningsDone && match.balls % 6 === 0) {
     [crease.striker, crease.nonStriker] = [crease.nonStriker, crease.striker];
+    match.newOver = true;   // next delivery starts a fresh over row
     const nextBowler = bowlerForOver(Math.floor(match.balls / 6));
     toast(`🔄 End of the over — batsmen cross, ${nextBowler} comes on to bowl`, 2800);
   }
@@ -901,6 +917,7 @@ function switchInnings() {
   match.target = (match.myBatting ? match.myScore : match.oppScore) + 1;
   match.balls = 0; match.wickets = 0; match.log = [];
   match.crease = { striker: 0, nonStriker: 1, nextIn: 2 };
+  match.thisOver = []; match.newOver = false;
   if (battingNow()) match.sixesThisInnings = 0;
 
   const meBatting = battingNow();

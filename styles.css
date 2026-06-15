@@ -265,7 +265,7 @@ body::before {
 .sb-target { font-size: 11px; font-weight: 600; color: var(--green); margin-top: 2px; min-height: 14px; }
 
 .over-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: var(--gold); margin-top: 8px; }
-.balls-row { display: flex; gap: 7px; margin-top: 6px; min-height: 30px; justify-content: center; }
+.balls-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; min-height: 30px; justify-content: center; }
 .ball-dot {
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -278,6 +278,7 @@ body::before {
 .ball-dot.b4 { background: var(--blue); color: #fff; border-color: var(--blue); }
 .ball-dot.bW { background: var(--red); color: #fff; border-color: var(--red); }
 .ball-dot.bR { background: rgba(255,255,255,.22); color: #fff; }
+.ball-dot.bX { background: #5bc8c8; color: #06222a; border-color: #5bc8c8; font-size: 10px; }
 
 /* ---------- wheel ---------- */
 .wheel-zone {
