@@ -433,6 +433,21 @@ body::before {
 }
 .lb-row.top3 .lb-rank { opacity: 1; }
 
+.lb-foot {
+  width: 100%; max-width: 460px; margin-top: 16px; display: flex;
+  align-items: center; justify-content: space-between; gap: 10px;
+}
+#lb-youas { font-size: 12px; opacity: .8; }
+#lb-youas b { color: var(--gold); }
+.lb-change { color: var(--gold); text-decoration: underline; cursor: pointer; }
+.lb-refresh { padding: 8px 14px; font-size: 13px; }
+.lb-msg {
+  width: 100%; max-width: 460px; text-align: center; padding: 24px 14px;
+  font-size: 14px; opacity: .8; line-height: 1.5;
+}
+.lb-msg .spin { display: inline-block; animation: spin360 1s linear infinite; }
+@keyframes spin360 { to { transform: rotate(360deg); } }
+
 .coming-soon {
   margin-top: 16px; width: 100%; max-width: 460px; text-align: center;
   border: 1px dashed rgba(255,200,61,.5); color: var(--gold);

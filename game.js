@@ -134,7 +134,69 @@ const DEFAULT_PROFILE = {
   points: 0, trophies: 0, wins: 0, streak: 0, bestStreak: 0,
   threeSixes: false, customTeam: null, batsmen: [], bowler: null,
   quizPoints: 0, quizBest: [],  // quizBest[level-1] = best number of correct answers
+  playerName: null,             // name shown on the global leaderboard
 };
+
+/* ============================================================
+   GLOBAL LEADERBOARD — Supabase (anon key is public by design,
+   protected by Row Level Security on Supabase's side)
+   Table: scores  ·  columns: name (text), score (int)
+   ============================================================ */
+const SUPA_URL = 'https://tgeuugzvfrfxprscbinj.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZXV1Z3p2ZnJmeHByc2NiaW5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NzEzMTMsImV4cCI6MjA5NzA0NzMxM30.j6fn5xm46k2RH7MohuEWlNXUttV2RbDLO-wVae4XOco';
+const SUPA_HEADERS = { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' };
+
+async function postScore() {
+  if (!profile.playerName) return;
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/scores`, {
+      method: 'POST',
+      headers: { ...SUPA_HEADERS, Prefer: 'return=minimal' },
+      body: JSON.stringify({ name: profile.playerName, score: profile.points }),
+    });
+  } catch (e) { /* offline — score stays local, nothing breaks */ }
+}
+
+async function fetchTopScores() {
+  // pull a generous window ordered high→low, then keep each player's best
+  const res = await fetch(
+    `${SUPA_URL}/rest/v1/scores?select=name,score&order=score.desc&limit=200`,
+    { headers: SUPA_HEADERS });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const rows = await res.json();
+  const seen = new Set(), top = [];
+  for (const r of rows) {
+    const n = (r.name || 'Anonymous').trim();
+    if (seen.has(n.toLowerCase())) continue;
+    seen.add(n.toLowerCase());
+    top.push({ name: n, score: r.score });
+    if (top.length >= 10) break;
+  }
+  return top;
+}
+
+/* called whenever a game (match or quiz level) ends */
+let pendingScorePost = false;
+function recordGameEnd() {
+  if (profile.playerName) postScore();
+  else { pendingScorePost = true; openNameModal(); }
+}
+function openNameModal() {
+  $('pname-input').value = profile.playerName || '';
+  openModal('modal-name');
+  setTimeout(() => $('pname-input').focus(), 100);
+}
+function saveName() {
+  const n = $('pname-input').value.trim().replace(/\s+/g, ' ').slice(0, 20);
+  if (n.length < 2) { toast('Please enter at least 2 characters'); return; }
+  profile.playerName = n;
+  saveProfile();
+  closeModal('modal-name');
+  toast(`🌍 You'll appear as "${n}" on the leaderboard`);
+  if (pendingScorePost) { pendingScorePost = false; postScore(); }
+}
+function skipName() { pendingScorePost = false; closeModal('modal-name'); }
+function changeName() { openNameModal(); }
 let profile = loadProfile();
 
 function loadProfile() {
@@ -915,6 +977,7 @@ function showResult({ emoji, title, lose, sub, score, rewards, nextLabel, next }
   $('btn-next').textContent = nextLabel;
   nextActionFn = next;
   show('screen-result');
+  recordGameEnd();   // post the player's running total to the global board
 }
 function nextAction() { sfx.pick(); if (nextActionFn) nextActionFn(); }
 
@@ -928,26 +991,60 @@ function shareResult() {
     .catch(() => toast(text, 5000));
 }
 
-/* ---------------- leaderboard ---------------- */
-function showLeaderboard() {
-  sfx.pick();
-  const myFlag = profile.customTeam ? profile.customTeam.flag : '🫵';
-  const rows = [
-    ...LEGENDS.map(l => ({ ...l, me: false })),
-    { name: 'YOU', flag: myFlag, pts: profile.points, streak: profile.bestStreak, me: true },
-  ].sort((a, b) => b.pts - a.pts || (a.me ? -1 : 1));
+/* ---------------- global leaderboard ---------------- */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
 
-  $('lb-list').innerHTML = rows.map((r, i) => {
-    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
-    return `<div class="lb-row ${r.me ? 'me' : ''} ${i < 3 ? 'top3' : ''}">
-      <span class="lb-rank">${medal}</span>
-      <span class="lb-flag">${r.flag}</span>
-      <span class="lb-name">${r.name}</span>
-      <span class="lb-streak">🔥 ${r.streak}</span>
-      <span class="lb-pts">⭐ ${r.pts}</span>
-    </div>`;
-  }).join('');
+function renderYouAs() {
+  const el = $('lb-youas');
+  if (profile.playerName) {
+    el.innerHTML = `Playing as <b>${escapeHtml(profile.playerName)}</b> · ⭐ ${profile.points} — <span class="lb-change" onclick="changeName()">change</span>`;
+  } else {
+    el.innerHTML = `<span class="lb-change" onclick="changeName()">Set your name to join the board</span>`;
+  }
+}
+
+function renderLocalBoard() {
+  // offline fallback: legends + you, by points
+  const myName = profile.playerName || 'YOU';
+  const rows = [
+    ...LEGENDS.map(l => ({ name: l.name, score: l.pts, me: false })),
+    { name: myName, score: profile.points, me: true },
+  ].sort((a, b) => b.score - a.score).slice(0, 10);
+  $('lb-list').innerHTML = rows.map((r, i) => rowHtml(r, i, r.me)).join('');
+}
+
+function rowHtml(r, i, isMe) {
+  const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
+  return `<div class="lb-row ${isMe ? 'me' : ''} ${i < 3 ? 'top3' : ''}">
+    <span class="lb-rank">${medal}</span>
+    <span class="lb-name">${escapeHtml(r.name)}</span>
+    <span class="lb-pts">⭐ ${r.score}</span>
+  </div>`;
+}
+
+async function showLeaderboard() {
+  sfx.pick();
+  renderYouAs();
+  $('lb-status').textContent = 'Top 10 players worldwide · ⭐ 2 points per win or correct answer';
+  $('lb-list').innerHTML = `<div class="lb-msg"><span class="spin">🔄</span> Loading global rankings…</div>`;
   show('screen-leaderboard');
+
+  try {
+    const top = await fetchTopScores();
+    if (!top.length) {
+      $('lb-list').innerHTML = `<div class="lb-msg">No scores yet — finish a game to be the first on the board! 🏏</div>`;
+      return;
+    }
+    const myKey = (profile.playerName || '').toLowerCase();
+    $('lb-list').innerHTML = top.map((r, i) =>
+      rowHtml(r, i, myKey && r.name.toLowerCase() === myKey)).join('');
+  } catch (e) {
+    $('lb-status').textContent = '⚠️ Couldn\'t reach the global board — showing offline rankings';
+    renderLocalBoard();
+  }
 }
 
 /* ---------------- badges & trophy room ---------------- */
@@ -1268,6 +1365,7 @@ function finishQuizLevel() {
   else if (stars >= 1) { sfx.win(); burstConfetti(50); }
   else sfx.lose();
   show('screen-quiz-result');
+  recordGameEnd();   // post the player's running total to the global board
 }
 
 function quizResultNext() {

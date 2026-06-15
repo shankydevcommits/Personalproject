@@ -190,6 +190,7 @@
     <div class="result-rewards" id="result-rewards"></div>
     <div class="result-buttons">
       <button class="btn btn-gold btn-big" id="btn-next" onclick="nextAction()">NEXT ▶</button>
+      <button class="btn btn-ghost" onclick="showLeaderboard()">🌍 Global Leaderboard</button>
       <button class="btn btn-ghost" onclick="shareResult()">📣 Share Result</button>
       <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
     </div>
@@ -243,6 +244,7 @@
     <div class="result-rewards" id="quiz-result-rewards"></div>
     <div class="result-buttons">
       <button class="btn btn-gold btn-big" id="quiz-result-next" onclick="quizResultNext()">NEXT LEVEL ▶</button>
+      <button class="btn btn-ghost" onclick="showLeaderboard()">🌍 Global Leaderboard</button>
       <button class="btn btn-ghost" onclick="quizReplay()">🔁 Replay Level</button>
       <button class="btn btn-ghost" onclick="showQuizLevels()">🧠 All Levels</button>
     </div>
@@ -253,11 +255,14 @@
 <section id="screen-leaderboard" class="screen">
   <div class="setup-head">
     <button class="back-btn" onclick="goHome()">←</button>
-    <h2>🌍 WORLD RANKINGS</h2>
+    <h2>🌍 GLOBAL RANKINGS</h2>
   </div>
-  <p class="lb-hint">Earn ⭐ 2 points per win and climb past the legends!</p>
+  <p class="lb-hint" id="lb-status">Top 10 players worldwide · ⭐ 2 points per win or correct answer</p>
   <div class="lb-list" id="lb-list"></div>
-  <div class="coming-soon">🌐 Live leaderboards coming soon!</div>
+  <div class="lb-foot">
+    <span id="lb-youas"></span>
+    <button class="btn btn-ghost lb-refresh" onclick="showLeaderboard()">🔄 Refresh</button>
+  </div>
 </section>
 
 <!-- ============ TROPHY ROOM ============ -->
@@ -295,6 +300,20 @@
     <div class="modal-buttons">
       <button class="btn btn-ghost" onclick="quitMatch()">Yes, leave</button>
       <button class="btn btn-gold" onclick="closeModal('modal-quit')">▶ Keep playing</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PLAYER NAME MODAL ============ -->
+<div class="modal-backdrop" id="modal-name">
+  <div class="modal">
+    <h3>🌍 JOIN THE GLOBAL LEADERBOARD</h3>
+    <p class="modal-hint">Enter a name to post your score to the worldwide rankings. Choose wisely — it's public!</p>
+    <label>Your name</label>
+    <input type="text" id="pname-input" maxlength="20" placeholder="e.g. ShankySmash" autocomplete="off">
+    <div class="modal-buttons">
+      <button class="btn btn-gold" onclick="saveName()">SAVE &amp; POST</button>
+      <button class="btn btn-ghost" onclick="skipName()">Not now</button>
     </div>
   </div>
 </div>
