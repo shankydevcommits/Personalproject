@@ -34,6 +34,7 @@
   <div class="home-buttons">
     <button class="btn btn-gold btn-big" onclick="startSetup('cup')">🏆 PLAY WORLD CUP</button>
     <button class="btn btn-blue btn-big" onclick="startSetup('quick')">⚡ QUICK MATCH</button>
+    <button class="btn btn-trivia btn-big" onclick="showQuizLevels()">🧠 PLAY CRICKET TRIVIA</button>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="showLeaderboard()">🌍 Leaderboard</button>
       <button class="btn btn-ghost" onclick="showTrophyRoom()">🎖️ Trophy Room</button>
@@ -195,6 +196,59 @@
   </div>
 </section>
 
+<!-- ============ QUIZ: LEVEL SELECT ============ -->
+<section id="screen-quiz-levels" class="screen">
+  <div class="setup-head">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <h2>🧠 CRICKET TRIVIA</h2>
+  </div>
+  <p class="quiz-hint">10 levels · 10 questions each · ⭐ 2 points per correct answer. Difficulty rises as you climb!</p>
+  <div class="quiz-progress" id="quiz-progress"></div>
+  <div class="level-grid" id="level-grid"></div>
+</section>
+
+<!-- ============ QUIZ: PLAY ============ -->
+<section id="screen-quiz-play" class="screen">
+  <div class="match-head">
+    <button class="back-btn" onclick="confirmQuizQuit()">←</button>
+    <div class="stadium-banner">
+      <div class="stadium-name" id="quiz-level-name">LEVEL 1</div>
+      <div class="match-stage" id="quiz-diff-badge">EASY</div>
+    </div>
+  </div>
+
+  <div class="quiz-topbar">
+    <div class="quiz-qcount" id="quiz-qcount">Q 1 / 10</div>
+    <div class="quiz-score" id="quiz-live-score">⭐ 0</div>
+  </div>
+  <div class="quiz-bar"><div class="quiz-bar-fill" id="quiz-bar-fill"></div></div>
+
+  <div class="quiz-card">
+    <div class="quiz-q" id="quiz-question">Question?</div>
+    <div class="quiz-options" id="quiz-options"></div>
+  </div>
+
+  <div class="quiz-feedback" id="quiz-feedback"></div>
+  <button class="btn btn-gold btn-big" id="quiz-next-btn" onclick="quizNext()" style="display:none">NEXT ▶</button>
+</section>
+
+<!-- ============ QUIZ: RESULT ============ -->
+<section id="screen-quiz-result" class="screen">
+  <div class="result-card">
+    <div class="result-emoji" id="quiz-result-emoji">🏏</div>
+    <h2 class="result-title" id="quiz-result-title">LEVEL COMPLETE!</h2>
+    <p class="result-sub" id="quiz-result-sub"></p>
+    <div class="result-score" id="quiz-result-score"></div>
+    <div class="quiz-stars" id="quiz-result-stars"></div>
+    <div class="result-rewards" id="quiz-result-rewards"></div>
+    <div class="result-buttons">
+      <button class="btn btn-gold btn-big" id="quiz-result-next" onclick="quizResultNext()">NEXT LEVEL ▶</button>
+      <button class="btn btn-ghost" onclick="quizReplay()">🔁 Replay Level</button>
+      <button class="btn btn-ghost" onclick="showQuizLevels()">🧠 All Levels</button>
+    </div>
+  </div>
+</section>
+
 <!-- ============ LEADERBOARD ============ -->
 <section id="screen-leaderboard" class="screen">
   <div class="setup-head">
@@ -241,6 +295,18 @@
     <div class="modal-buttons">
       <button class="btn btn-ghost" onclick="quitMatch()">Yes, leave</button>
       <button class="btn btn-gold" onclick="closeModal('modal-quit')">▶ Keep playing</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ QUIZ QUIT CONFIRM MODAL ============ -->
+<div class="modal-backdrop" id="modal-quiz-quit">
+  <div class="modal">
+    <h3>🚪 LEAVE THIS LEVEL?</h3>
+    <p class="modal-hint">Are you sure? Your progress on this level will be lost.</p>
+    <div class="modal-buttons">
+      <button class="btn btn-ghost" onclick="quitQuiz()">Yes, leave</button>
+      <button class="btn btn-gold" onclick="closeModal('modal-quiz-quit')">▶ Keep playing</button>
     </div>
   </div>
 </div>

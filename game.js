@@ -133,6 +133,7 @@ const CUSTOM_TEAM_UNLOCK_CUPS = 10;
 const DEFAULT_PROFILE = {
   points: 0, trophies: 0, wins: 0, streak: 0, bestStreak: 0,
   threeSixes: false, customTeam: null, batsmen: [], bowler: null,
+  quizPoints: 0, quizBest: [],  // quizBest[level-1] = best number of correct answers
 };
 let profile = loadProfile();
 
@@ -997,14 +998,305 @@ function burstConfetti(n) {
   }
 }
 
+/* ============================================================
+   CRICKET TRIVIA — 100 pub-quiz questions
+   33 easy + 33 medium + 34 hard, ordered so difficulty rises.
+   10 levels of 10 questions. 2 points per correct answer.
+   ============================================================ */
+const QUIZ_QUESTIONS = [
+  // ---------- EASY (33) ----------
+  { q: 'How many players are in a cricket team on the field?', o: ['9', '10', '11', '12'], a: 2, d: 'e' },
+  { q: 'A boundary hit along the ground scores how many runs?', o: ['2', '3', '4', '6'], a: 2, d: 'e' },
+  { q: 'Hitting the ball over the boundary on the full scores how many runs?', o: ['4', '5', '6', '7'], a: 2, d: 'e' },
+  { q: 'How many legal balls are in a standard over?', o: ['4', '5', '6', '8'], a: 2, d: 'e' },
+  { q: 'What is a batsman scoring 100 runs called?', o: ['Fifty', 'Century', 'Double', 'Maiden'], a: 1, d: 'e' },
+  { q: 'Dismissing a batsman by hitting the stumps with the ball is called?', o: ['Caught', 'Bowled', 'Run out', 'LBW'], a: 1, d: 'e' },
+  { q: 'What colour is a traditional Test match ball?', o: ['White', 'Red', 'Pink', 'Yellow'], a: 1, d: 'e' },
+  { q: 'What colour clothing is traditionally worn in Test cricket?', o: ['Blue', 'White', 'Green', 'Red'], a: 1, d: 'e' },
+  { q: 'How many stumps are at each end of the pitch?', o: ['2', '3', '4', '5'], a: 1, d: 'e' },
+  { q: 'What sits on top of the stumps?', o: ['Bails', 'Pads', 'Seam', 'Gloves'], a: 0, d: 'e' },
+  { q: 'What is the strip in the middle where bowling happens called?', o: ['Field', 'Pitch', 'Crease', 'Boundary'], a: 1, d: 'e' },
+  { q: 'Which country is credited with inventing cricket?', o: ['India', 'Australia', 'England', 'South Africa'], a: 2, d: 'e' },
+  { q: 'A batsman dismissed for zero is said to have scored a...?', o: ['Duck', 'Goose', 'Swan', 'Hen'], a: 0, d: 'e' },
+  { q: 'How many innings does each team get in a Test match?', o: ['1', '2', '3', '4'], a: 1, d: 'e' },
+  { q: 'Taking 3 wickets in 3 consecutive balls is called a...?', o: ['Treble', 'Hat-trick', 'Triple', 'Maiden'], a: 1, d: 'e' },
+  { q: 'The Ashes is contested between England and which country?', o: ['India', 'Australia', 'New Zealand', 'South Africa'], a: 1, d: 'e' },
+  { q: 'What does LBW stand for?', o: ['Leg Behind Wicket', 'Leg Before Wicket', 'Long Boundary Wide', 'Left Bat Wide'], a: 1, d: 'e' },
+  { q: 'How many days is a Test match scheduled to last at most?', o: ['3', '4', '5', '6'], a: 2, d: 'e' },
+  { q: 'In T20 cricket, how many overs does each side face?', o: ['10', '20', '30', '50'], a: 1, d: 'e' },
+  { q: 'The on-field official who makes decisions is called the...?', o: ['Referee', 'Umpire', 'Judge', 'Marshal'], a: 1, d: 'e' },
+  { q: 'Batsmen wear protective gear on their legs called...?', o: ['Pads', 'Guards', 'Shields', 'Casts'], a: 0, d: 'e' },
+  { q: 'An ODI (One Day International) gives each team how many overs?', o: ['20', '40', '50', '60'], a: 2, d: 'e' },
+  { q: 'Running to the other end once scores how many runs?', o: ['1', '2', '3', '0'], a: 0, d: 'e' },
+  { q: 'The fielder who stands behind the stumps is the...?', o: ['Slip', 'Wicketkeeper', 'Gully', 'Mid-on'], a: 1, d: 'e' },
+  { q: 'Which body governs international cricket?', o: ['FIFA', 'ICC', 'BCCI', 'UEFA'], a: 1, d: 'e' },
+  { q: 'When all 10 wickets fall, the batting team is said to be...?', o: ['All out', 'Retired', 'Declared', 'Stumped'], a: 0, d: 'e' },
+  { q: 'A delivery bowled too wide for the batsman to reach is signalled as a...?', o: ['No-ball', 'Wide', 'Bye', 'Leg-bye'], a: 1, d: 'e' },
+  { q: 'Overstepping the crease when bowling results in a...?', o: ['Wide', 'No-ball', 'Dead ball', 'Bye'], a: 1, d: 'e' },
+  { q: 'The first two batsmen to bat in an innings are called the...?', o: ['Openers', 'Closers', 'Tail-enders', 'Stumpers'], a: 0, d: 'e' },
+  { q: "How often is the men's ODI Cricket World Cup held?", o: ['Every year', 'Every 2 years', 'Every 3 years', 'Every 4 years'], a: 3, d: 'e' },
+  { q: 'India won their first ODI World Cup in which year?', o: ['1975', '1983', '1992', '2011'], a: 1, d: 'e' },
+  { q: 'Which format of cricket is the shortest?', o: ['Test', 'ODI', 'T20', 'First-class'], a: 2, d: 'e' },
+  { q: 'What is the wooden tool used to hit the ball called?', o: ['Racquet', 'Bat', 'Club', 'Paddle'], a: 1, d: 'e' },
+  // ---------- MEDIUM (33) ----------
+  { q: 'Who captained India to the 1983 World Cup title?', o: ['Sunil Gavaskar', 'Kapil Dev', 'Mohinder Amarnath', 'Sourav Ganguly'], a: 1, d: 'm' },
+  { q: 'Who has scored the most runs in international cricket?', o: ['Ricky Ponting', 'Sachin Tendulkar', 'Kumar Sangakkara', 'Brian Lara'], a: 1, d: 'm' },
+  { q: 'Who holds the record for the most Test wickets?', o: ['Shane Warne', 'Muttiah Muralitharan', 'Anil Kumble', 'James Anderson'], a: 1, d: 'm' },
+  { q: 'What is the highest individual score in a Test innings?', o: ['375', '400 not out', '380', '334'], a: 1, d: 'm' },
+  { q: 'Which Australian leg-spinner took 708 Test wickets?', o: ['Glenn McGrath', 'Shane Warne', 'Nathan Lyon', 'Stuart MacGill'], a: 1, d: 'm' },
+  { q: "Who scored the first double century in men's ODI cricket?", o: ['Virender Sehwag', 'Sachin Tendulkar', 'Rohit Sharma', 'Chris Gayle'], a: 1, d: 'm' },
+  { q: "The 'Gabba' cricket ground is in which Australian city?", o: ['Sydney', 'Brisbane', 'Perth', 'Adelaide'], a: 1, d: 'm' },
+  { q: "Lord's cricket ground is in which city?", o: ['Manchester', 'London', 'Birmingham', 'Leeds'], a: 1, d: 'm' },
+  { q: 'Which country won the first T20 World Cup in 2007?', o: ['Pakistan', 'India', 'Australia', 'Sri Lanka'], a: 1, d: 'm' },
+  { q: "Which Indian batsman is nicknamed 'The Wall'?", o: ['VVS Laxman', 'Rahul Dravid', 'Cheteshwar Pujara', 'Gautam Gambhir'], a: 1, d: 'm' },
+  { q: "A left-arm wrist-spinner's stock delivery is nicknamed a...?", o: ['Doosra', 'Chinaman', 'Carrom ball', 'Flipper'], a: 1, d: 'm' },
+  { q: 'The Border-Gavaskar Trophy is played between Australia and...?', o: ['England', 'India', 'Sri Lanka', 'Pakistan'], a: 1, d: 'm' },
+  { q: "Sir Don Bradman's Test batting average was famously...?", o: ['89.78', '99.94', '95.14', '100.00'], a: 1, d: 'm' },
+  { q: 'Muttiah Muralitharan played for which country?', o: ['India', 'Sri Lanka', 'Pakistan', 'Bangladesh'], a: 1, d: 'm' },
+  { q: 'Yuvraj Singh hit six sixes in a 2007 T20 World Cup over off which bowler?', o: ['James Anderson', 'Stuart Broad', 'Andrew Flintoff', 'Ryan Sidebottom'], a: 1, d: 'm' },
+  { q: 'A score of 111 is superstitiously called a...?', o: ['Nelson', "Devil's number", 'Jimmy', 'Hoodoo'], a: 0, d: 'm' },
+  { q: "Who bowled the 'Ball of the Century' to Mike Gatting in 1993?", o: ['Abdul Qadir', 'Shane Warne', 'Anil Kumble', 'Muttiah Muralitharan'], a: 1, d: 'm' },
+  { q: 'Jacques Kallis played international cricket for which country?', o: ['Australia', 'South Africa', 'England', 'New Zealand'], a: 1, d: 'm' },
+  { q: 'Who has scored the most centuries in international cricket?', o: ['Virat Kohli', 'Sachin Tendulkar', 'Ricky Ponting', 'Kumar Sangakkara'], a: 1, d: 'm' },
+  { q: 'Eden Gardens stadium is in which Indian city?', o: ['Mumbai', 'Kolkata', 'Chennai', 'Delhi'], a: 1, d: 'm' },
+  { q: 'Which country won the 2019 ODI World Cup?', o: ['New Zealand', 'England', 'India', 'Australia'], a: 1, d: 'm' },
+  { q: 'AB de Villiers represented which country?', o: ['Australia', 'South Africa', 'West Indies', 'England'], a: 1, d: 'm' },
+  { q: 'Which fielding position is located next to the slips?', o: ['Gully', 'Point', 'Cover', 'Mid-wicket'], a: 0, d: 'm' },
+  { q: 'Wasim Akram and Waqar Younis, masters of reverse swing, played for...?', o: ['India', 'Pakistan', 'Sri Lanka', 'Bangladesh'], a: 1, d: 'm' },
+  { q: 'The system for reviewing umpire decisions is abbreviated...?', o: ['TRS', 'DRS', 'VAR', 'UDR'], a: 1, d: 'm' },
+  { q: "Which Indian captain is nicknamed 'Captain Cool'?", o: ['Virat Kohli', 'MS Dhoni', 'Sourav Ganguly', 'Rohit Sharma'], a: 1, d: 'm' },
+  { q: 'The MCC (Marylebone Cricket Club) is based at which ground?', o: ['The Oval', "Lord's", 'Old Trafford', 'Edgbaston'], a: 1, d: 'm' },
+  { q: 'The googly is a variation associated with which bowling type?', o: ['Fast bowling', 'Leg spin', 'Off spin', 'Medium pace'], a: 1, d: 'm' },
+  { q: 'Brian Lara played international cricket for...?', o: ['West Indies', 'South Africa', 'England', 'India'], a: 0, d: 'm' },
+  { q: 'Where was the first-ever Test match played in 1877?', o: ["Lord's", 'Melbourne', 'Sydney', 'The Oval'], a: 1, d: 'm' },
+  { q: "Rohit Sharma's batting nickname is...?", o: ['The Wall', 'Hitman', 'Captain Cool', 'Mr 360'], a: 1, d: 'm' },
+  { q: 'Glenn McGrath, a 563-Test-wicket bowler, played for...?', o: ['South Africa', 'Australia', 'England', 'New Zealand'], a: 1, d: 'm' },
+  { q: 'Sourav Ganguly captained which national team?', o: ['India', 'Bangladesh', 'Sri Lanka', 'Pakistan'], a: 0, d: 'm' },
+  // ---------- HARD (34) ----------
+  { q: "In which year was Sachin Tendulkar's first ODI double century scored?", o: ['2008', '2010', '2012', '2013'], a: 1, d: 'h' },
+  { q: "What is Sir Don Bradman's exact Test average?", o: ['99.94', '98.97', '100.00', '94.99'], a: 0, d: 'h' },
+  { q: 'Who holds the record for the highest individual ODI score (264)?', o: ['Virender Sehwag', 'Rohit Sharma', 'Martin Guptill', 'Chris Gayle'], a: 1, d: 'h' },
+  { q: 'Who took 10 wickets in a Test innings against Pakistan in 1999?', o: ['Harbhajan Singh', 'Anil Kumble', 'Jim Laker', 'Muttiah Muralitharan'], a: 1, d: 'h' },
+  { q: 'The highest team total in a Test innings (952/6) was made by...?', o: ['India', 'Sri Lanka', 'Australia', 'England'], a: 1, d: 'h' },
+  { q: 'Who scored the fastest ODI century, off just 31 balls?', o: ['Shahid Afridi', 'AB de Villiers', 'Corey Anderson', 'Chris Gayle'], a: 1, d: 'h' },
+  { q: 'In which year was the first Cricket World Cup held?', o: ['1971', '1975', '1979', '1983'], a: 1, d: 'h' },
+  { q: 'Which team won the inaugural 1975 Cricket World Cup?', o: ['Australia', 'West Indies', 'England', 'India'], a: 1, d: 'h' },
+  { q: "The 1939 'Timeless Test' was played between England and...?", o: ['Australia', 'South Africa', 'West Indies', 'India'], a: 1, d: 'h' },
+  { q: 'Who scored a record 974 runs in a single Test series (1930)?', o: ['Wally Hammond', 'Don Bradman', 'Len Hutton', 'Jack Hobbs'], a: 1, d: 'h' },
+  { q: 'Who was the first bowler to reach 800 Test wickets?', o: ['Shane Warne', 'Muttiah Muralitharan', 'Anil Kumble', 'Glenn McGrath'], a: 1, d: 'h' },
+  { q: 'The highest successful run-chase in Test history (418) was by West Indies against...?', o: ['England', 'Australia', 'India', 'South Africa'], a: 1, d: 'h' },
+  { q: 'Who hit the winning six in the 2011 World Cup final?', o: ['Yuvraj Singh', 'MS Dhoni', 'Gautam Gambhir', 'Virat Kohli'], a: 1, d: 'h' },
+  { q: 'Legendary batsman George Headley played for which team?', o: ['England', 'West Indies', 'Australia', 'South Africa'], a: 1, d: 'h' },
+  { q: "The 1932-33 'Bodyline' series was between England and...?", o: ['South Africa', 'Australia', 'India', 'New Zealand'], a: 1, d: 'h' },
+  { q: 'Who scored a record 673 runs at the 2003 World Cup?', o: ['Ricky Ponting', 'Sachin Tendulkar', 'Adam Gilchrist', 'Sourav Ganguly'], a: 1, d: 'h' },
+  { q: 'Who captained the dominant West Indies side of the late 1970s and 80s?', o: ['Viv Richards', 'Clive Lloyd', 'Gordon Greenidge', 'Michael Holding'], a: 1, d: 'h' },
+  { q: 'The first-ever ODI in 1971 was between Australia and...?', o: ['England', 'New Zealand', 'West Indies', 'India'], a: 0, d: 'h' },
+  { q: 'Garfield Sobers hit six sixes in an over in 1968 off which bowler?', o: ['Malcolm Nash', 'Tony Lock', 'Derek Underwood', 'Brian Close'], a: 0, d: 'h' },
+  { q: 'Who made the highest individual first-class score, 501 not out?', o: ['Hanif Mohammad', 'Brian Lara', 'Don Bradman', 'WG Grace'], a: 1, d: 'h' },
+  { q: 'Who holds the record for most catches by a fielder (non-keeper) in Tests?', o: ['Mahela Jayawardene', 'Rahul Dravid', 'Jacques Kallis', 'Ricky Ponting'], a: 1, d: 'h' },
+  { q: 'The Ranji Trophy is the premier domestic competition of which country?', o: ['Australia', 'India', 'England', 'Pakistan'], a: 1, d: 'h' },
+  { q: 'Sir Jack Hobbs, holder of most first-class runs and centuries, played for...?', o: ['Australia', 'England', 'South Africa', 'West Indies'], a: 1, d: 'h' },
+  { q: "Which country won the first Women's Cricket World Cup in 1973?", o: ['Australia', 'England', 'New Zealand', 'India'], a: 1, d: 'h' },
+  { q: 'Who scored a famous 281 against Australia in the 2001 Kolkata Test?', o: ['Rahul Dravid', 'VVS Laxman', 'Sourav Ganguly', 'Sachin Tendulkar'], a: 1, d: 'h' },
+  { q: "The 2018 'sandpaper' ball-tampering scandal involved which national team?", o: ['England', 'Australia', 'South Africa', 'India'], a: 1, d: 'h' },
+  { q: "Hanif Mohammad's marathon 337 in 1958 was played for which country?", o: ['India', 'Pakistan', 'Sri Lanka', 'England'], a: 1, d: 'h' },
+  { q: "Don Bradman's Test best of 334 was later equalled (334*) by which Australian?", o: ['Bill Ponsford', 'Mark Taylor', 'Matthew Hayden', 'Michael Clarke'], a: 1, d: 'h' },
+  { q: 'The first-ever day/night pink-ball Test (2015) was Australia vs...?', o: ['England', 'New Zealand', 'India', 'South Africa'], a: 1, d: 'h' },
+  { q: 'Sunil Gavaskar was the first batsman to reach how many Test runs?', o: ['8,000', '10,000', '12,000', '9,000'], a: 1, d: 'h' },
+  { q: 'Which country won the 1996 Cricket World Cup?', o: ['Australia', 'Sri Lanka', 'Pakistan', 'India'], a: 1, d: 'h' },
+  { q: 'Who scored a century in each innings of his 100th Test (2006)?', o: ['Steve Waugh', 'Ricky Ponting', 'Jacques Kallis', 'Sachin Tendulkar'], a: 1, d: 'h' },
+  { q: 'The Duckworth-Lewis-Stern method is used to do what?', o: ['Rank teams', 'Reset targets in rain-affected matches', 'Measure pitch speed', 'Decide the toss'], a: 1, d: 'h' },
+  { q: 'Sachin Tendulkar (1992) was the first batsman dismissed using which innovation?', o: ['Hawk-Eye', 'Third umpire (TV replay)', 'Snickometer', 'DRS'], a: 1, d: 'h' },
+];
+
+const QUIZ_LEVELS = 10;
+const QUIZ_PER_LEVEL = 10;
+const QUIZ_POINTS_PER_CORRECT = 2;
+const DIFF_LABEL = { e: 'EASY', m: 'MEDIUM', h: 'HARD' };
+const DIFF_CLASS = { e: 'diff-easy', m: 'diff-medium', h: 'diff-hard' };
+
+let quiz = null; // { level, qs, i, correct, answered }
+
+function levelQuestions(level) {
+  return QUIZ_QUESTIONS.slice((level - 1) * QUIZ_PER_LEVEL, level * QUIZ_PER_LEVEL);
+}
+function levelDifficulty(level) {
+  const counts = { e: 0, m: 0, h: 0 };
+  levelQuestions(level).forEach(q => counts[q.d]++);
+  return counts.h >= counts.m && counts.h >= counts.e ? 'h'
+       : counts.m >= counts.e ? 'm' : 'e';
+}
+function levelUnlocked(level) {
+  return level === 1 || typeof profile.quizBest[level - 2] === 'number';
+}
+function quizStars(correct) {
+  return correct >= QUIZ_PER_LEVEL ? 3 : correct >= 7 ? 2 : correct >= 5 ? 1 : 0;
+}
+function starString(n) { return '★★★☆☆☆'.slice(3 - n, 6 - n).padEnd(3, '☆').slice(0, 3); }
+
+function showQuizLevels() {
+  sfx.pick();
+  const done = profile.quizBest.filter(b => typeof b === 'number').length;
+  const totalStars = profile.quizBest.reduce((s, b) => s + (typeof b === 'number' ? quizStars(b) : 0), 0);
+  $('quiz-progress').textContent =
+    `Levels cleared: ${done}/${QUIZ_LEVELS}   ·   ⭐ ${profile.quizPoints} quiz points   ·   🌟 ${totalStars}/30 stars`;
+
+  const grid = $('level-grid');
+  grid.innerHTML = '';
+  for (let lv = 1; lv <= QUIZ_LEVELS; lv++) {
+    const unlocked = levelUnlocked(lv);
+    const best = profile.quizBest[lv - 1];
+    const played = typeof best === 'number';
+    const d = levelDifficulty(lv);
+    const card = document.createElement('button');
+    card.className = 'level-card' + (!unlocked ? ' locked' : '') + (played ? ' done' : '');
+    card.innerHTML =
+      `<span class="lv-no">Lv ${lv}</span>` +
+      `<span class="lv-diff ${DIFF_CLASS[d]}">${DIFF_LABEL[d]}</span>` +
+      (unlocked
+        ? `<div class="lv-stars">${played ? starString(quizStars(best)) : '☆☆☆'}</div>` +
+          `<div class="lv-best">${played ? `Best: ${best}/10` : 'Not played yet'}</div>`
+        : `<span class="lv-lock">🔒</span><div class="lv-best">Clear Level ${lv - 1} to unlock</div>`);
+    if (unlocked) card.onclick = () => startQuizLevel(lv);
+    else card.onclick = () => toast(`🔒 Clear Level ${lv - 1} first!`);
+    grid.appendChild(card);
+  }
+  show('screen-quiz-levels');
+}
+
+function startQuizLevel(level) {
+  sfx.pick();
+  quiz = { level, qs: levelQuestions(level), i: 0, correct: 0, answered: false };
+  const d = levelDifficulty(level);
+  $('quiz-level-name').textContent = `LEVEL ${level}`;
+  $('quiz-diff-badge').textContent = DIFF_LABEL[d];
+  renderQuizQuestion();
+  show('screen-quiz-play');
+}
+
+function renderQuizQuestion() {
+  quiz.answered = false;
+  const item = quiz.qs[quiz.i];
+  $('quiz-qcount').textContent = `Q ${quiz.i + 1} / ${QUIZ_PER_LEVEL}`;
+  $('quiz-live-score').textContent = `⭐ ${quiz.correct * QUIZ_POINTS_PER_CORRECT}`;
+  $('quiz-bar-fill').style.width = (quiz.i / QUIZ_PER_LEVEL * 100) + '%';
+  $('quiz-question').textContent = item.q;
+  $('quiz-feedback').textContent = '';
+  $('quiz-feedback').className = 'quiz-feedback';
+  $('quiz-next-btn').style.display = 'none';
+
+  const keys = ['A', 'B', 'C', 'D'];
+  const wrap = $('quiz-options');
+  wrap.innerHTML = '';
+  item.o.forEach((opt, idx) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt';
+    b.innerHTML = `<span class="opt-key">${keys[idx]}</span>${opt}`;
+    b.onclick = () => quizAnswer(idx, b);
+    wrap.appendChild(b);
+  });
+}
+
+function quizAnswer(idx, btn) {
+  if (quiz.answered) return;
+  quiz.answered = true;
+  const item = quiz.qs[quiz.i];
+  const opts = [...document.querySelectorAll('#quiz-options .quiz-opt')];
+  opts.forEach(o => o.classList.add('disabled'));
+  opts[item.a].classList.add('correct');
+
+  const fb = $('quiz-feedback');
+  if (idx === item.a) {
+    quiz.correct++;
+    sfx.four();
+    fb.textContent = `✅ Correct!  +${QUIZ_POINTS_PER_CORRECT} points`;
+    fb.className = 'quiz-feedback good';
+  } else {
+    btn.classList.add('wrong');
+    sfx.dot();
+    fb.textContent = `❌ Answer: ${item.o[item.a]}`;
+    fb.className = 'quiz-feedback bad';
+  }
+  $('quiz-live-score').textContent = `⭐ ${quiz.correct * QUIZ_POINTS_PER_CORRECT}`;
+  $('quiz-bar-fill').style.width = ((quiz.i + 1) / QUIZ_PER_LEVEL * 100) + '%';
+  $('quiz-next-btn').textContent = quiz.i + 1 < QUIZ_PER_LEVEL ? 'NEXT ▶' : 'SEE RESULTS 🏁';
+  $('quiz-next-btn').style.display = '';
+}
+
+function quizNext() {
+  sfx.pick();
+  quiz.i++;
+  if (quiz.i < QUIZ_PER_LEVEL) renderQuizQuestion();
+  else finishQuizLevel();
+}
+
+function finishQuizLevel() {
+  const lv = quiz.level;
+  const correct = quiz.correct;
+  const prevBest = typeof profile.quizBest[lv - 1] === 'number' ? profile.quizBest[lv - 1] : -1;
+  const improvement = Math.max(0, correct - Math.max(prevBest, 0));
+  const gained = improvement * QUIZ_POINTS_PER_CORRECT;
+  const firstClear = prevBest < 0;
+
+  if (correct > prevBest) profile.quizBest[lv - 1] = correct;
+  else if (prevBest < 0) profile.quizBest[lv - 1] = correct;
+  if (gained > 0) { profile.points += gained; profile.quizPoints += gained; }
+  saveProfile();
+  track(`quiz-level-${lv}-done`);
+
+  const stars = quizStars(correct);
+  $('quiz-result-emoji').textContent = stars === 3 ? '🏆' : stars >= 1 ? '🎉' : '🧠';
+  $('quiz-result-title').textContent = stars === 3 ? 'PERFECT LEVEL!' : stars >= 1 ? 'LEVEL COMPLETE!' : 'KEEP PRACTISING!';
+  $('quiz-result-title').classList.toggle('lose', stars === 0);
+  $('quiz-result-sub').textContent = `Level ${lv} · ${DIFF_LABEL[levelDifficulty(lv)]}`;
+  $('quiz-result-score').textContent = `${correct} / ${QUIZ_PER_LEVEL} correct`;
+  $('quiz-result-stars').textContent = starString(stars);
+
+  const rewards = [];
+  if (gained > 0) rewards.push(`+${gained} ⭐ to leaderboard`);
+  else if (!firstClear) rewards.push('No new points (beat your best to earn more)');
+  if (firstClear && lv < QUIZ_LEVELS) rewards.push(`🔓 Level ${lv + 1} unlocked!`);
+  if (correct === QUIZ_PER_LEVEL) rewards.push('💯 Flawless!');
+  $('quiz-result-rewards').innerHTML = rewards.map((r, i) =>
+    `<span class="reward-pill" style="animation-delay:${.15 + i * .12}s">${r}</span>`).join('');
+
+  const nextBtn = $('quiz-result-next');
+  if (lv < QUIZ_LEVELS) { nextBtn.style.display = ''; nextBtn.textContent = `LEVEL ${lv + 1} ▶`; }
+  else nextBtn.style.display = 'none';
+
+  if (stars === 3) { sfx.win(); burstConfetti(120); }
+  else if (stars >= 1) { sfx.win(); burstConfetti(50); }
+  else sfx.lose();
+  show('screen-quiz-result');
+}
+
+function quizResultNext() {
+  sfx.pick();
+  const lv = quiz ? quiz.level : 1;
+  if (lv < QUIZ_LEVELS) startQuizLevel(lv + 1);
+  else showQuizLevels();
+}
+function quizReplay() { if (quiz) startQuizLevel(quiz.level); }
+function confirmQuizQuit() { sfx.pick(); openModal('modal-quiz-quit'); }
+function quitQuiz() { closeModal('modal-quiz-quit'); quiz = null; showQuizLevels(); }
+
 (function initFloaters() {
   const layer = $('bg-float');
-  const icons = ['🏏', '🥎', '🏆', '⭐', '🧢', '🏏', '🥎'];
-  for (let i = 0; i < 10; i++) {
+  // a mix of hand-drawn red cricket balls (CSS) and cricket emoji
+  const emojis = ['🏏', '🏆', '⭐', '🧢'];
+  for (let i = 0; i < 11; i++) {
     const f = document.createElement('i');
-    f.textContent = icons[i % icons.length];
+    const size = 16 + Math.random() * 22;
+    if (i % 2 === 0) {
+      // leather cricket ball: red sphere with a seam
+      f.className = 'cb';
+      f.style.width = size + 'px';
+      f.style.height = size + 'px';
+    } else {
+      f.textContent = emojis[(i >> 1) % emojis.length];
+      f.style.fontSize = size + 'px';
+    }
     f.style.left = (4 + Math.random() * 92) + 'vw';
-    f.style.fontSize = (16 + Math.random() * 22) + 'px';
     f.style.animationDuration = (16 + Math.random() * 18) + 's';
     f.style.animationDelay = (-Math.random() * 30) + 's'; // start mid-flight
     layer.appendChild(f);
