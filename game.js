@@ -157,32 +157,41 @@ async function postScore() {
   } catch (e) { /* offline — score stays local, nothing breaks */ }
 }
 
-async function fetchTopScores() {
-  // pull a generous window ordered high→low, then keep each player's best
+async function fetchRankedScores() {
+  // pull a large window ordered high→low, then keep each player's best score
   const res = await fetch(
-    `${SUPA_URL}/rest/v1/scores?select=name,score&order=score.desc&limit=200`,
+    `${SUPA_URL}/rest/v1/scores?select=name,score&order=score.desc&limit=1000`,
     { headers: SUPA_HEADERS });
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const rows = await res.json();
-  const seen = new Set(), top = [];
+  const seen = new Set(), ranked = [];
   for (const r of rows) {
     const n = (r.name || 'Anonymous').trim();
-    if (seen.has(n.toLowerCase())) continue;
-    seen.add(n.toLowerCase());
-    top.push({ name: n, score: r.score });
-    if (top.length >= 10) break;
+    const k = n.toLowerCase();
+    if (seen.has(k)) continue;   // rows are score-desc, so first seen is the best
+    seen.add(k);
+    ranked.push({ name: n, score: r.score });
   }
-  return top;
+  return ranked; // already sorted high→low, one row per player
 }
 
 /* called whenever a game (match or quiz level) ends */
-let pendingScorePost = false;
-function recordGameEnd() {
-  if (profile.playerName) postScore();
-  else { pendingScorePost = true; openNameModal(); }
+function recordGameEnd() { postScore(); }
+
+/* ensure a name exists before playing; if missing, prompt then resume `action` */
+let pendingAction = null;
+function ensureName(action) {
+  if (profile.playerName) return true;
+  pendingAction = action;
+  openNameModal(true);   // required: no cancel
+  return false;
 }
-function openNameModal() {
+function openNameModal(required) {
   $('pname-input').value = profile.playerName || '';
+  $('pname-hint').textContent = required
+    ? 'Pick a name or nickname to start playing and join the global leaderboard. It\'s public!'
+    : 'Update the name shown on the global rankings.';
+  $('btn-skip-name').style.display = required ? 'none' : '';
   openModal('modal-name');
   setTimeout(() => $('pname-input').focus(), 100);
 }
@@ -192,11 +201,12 @@ function saveName() {
   profile.playerName = n;
   saveProfile();
   closeModal('modal-name');
-  toast(`🌍 You'll appear as "${n}" on the leaderboard`);
-  if (pendingScorePost) { pendingScorePost = false; postScore(); }
+  toast(`🏏 Welcome, ${n}!`);
+  const act = pendingAction; pendingAction = null;
+  if (act) act();
 }
-function skipName() { pendingScorePost = false; closeModal('modal-name'); }
-function changeName() { openNameModal(); }
+function skipName() { pendingAction = null; closeModal('modal-name'); }
+function changeName() { openNameModal(false); }
 let profile = loadProfile();
 
 function loadProfile() {
@@ -317,6 +327,7 @@ function quitMatch() {
    SETUP FLOW  — modes: quick | cup
    ============================================================ */
 function startSetup(mode) {
+  if (!ensureName(() => startSetup(mode))) return;
   sfx.pick();
   setup = {
     mode, myTeam: null, oppTeam: null, batFirst: null,
@@ -1033,14 +1044,23 @@ async function showLeaderboard() {
   show('screen-leaderboard');
 
   try {
-    const top = await fetchTopScores();
-    if (!top.length) {
+    const ranked = await fetchRankedScores();
+    if (!ranked.length) {
       $('lb-list').innerHTML = `<div class="lb-msg">No scores yet — finish a game to be the first on the board! 🏏</div>`;
       return;
     }
     const myKey = (profile.playerName || '').toLowerCase();
-    $('lb-list').innerHTML = top.map((r, i) =>
-      rowHtml(r, i, myKey && r.name.toLowerCase() === myKey)).join('');
+    const meIdx = myKey ? ranked.findIndex(r => r.name.toLowerCase() === myKey) : -1;
+
+    // top 10, with the player's row highlighted if they're in it
+    let html = ranked.slice(0, 10).map((r, i) => rowHtml(r, i, i === meIdx)).join('');
+
+    // if the player ranks outside the top 10, show their row as an 11th line
+    if (meIdx >= 10) {
+      html += `<div class="lb-sep">• • •</div>`;
+      html += rowHtml(ranked[meIdx], meIdx, true);
+    }
+    $('lb-list').innerHTML = html;
   } catch (e) {
     $('lb-status').textContent = '⚠️ Couldn\'t reach the global board — showing offline rankings';
     renderLocalBoard();
@@ -1232,6 +1252,7 @@ function quizStars(correct) {
 function starString(n) { return '★★★☆☆☆'.slice(3 - n, 6 - n).padEnd(3, '☆').slice(0, 3); }
 
 function showQuizLevels() {
+  if (!ensureName(() => showQuizLevels())) return;
   sfx.pick();
   const done = profile.quizBest.filter(b => typeof b === 'number').length;
   const totalStars = profile.quizBest.reduce((s, b) => s + (typeof b === 'number' ? quizStars(b) : 0), 0);

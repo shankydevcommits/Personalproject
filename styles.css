@@ -441,6 +441,7 @@ body::before {
 #lb-youas b { color: var(--gold); }
 .lb-change { color: var(--gold); text-decoration: underline; cursor: pointer; }
 .lb-refresh { padding: 8px 14px; font-size: 13px; }
+.lb-sep { text-align: center; color: rgba(255,255,255,.5); font-weight: 800; letter-spacing: 3px; padding: 4px 0; }
 .lb-msg {
   width: 100%; max-width: 460px; text-align: center; padding: 24px 14px;
   font-size: 14px; opacity: .8; line-height: 1.5;

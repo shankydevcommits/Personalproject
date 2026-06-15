@@ -307,13 +307,13 @@
 <!-- ============ PLAYER NAME MODAL ============ -->
 <div class="modal-backdrop" id="modal-name">
   <div class="modal">
-    <h3>🌍 JOIN THE GLOBAL LEADERBOARD</h3>
-    <p class="modal-hint">Enter a name to post your score to the worldwide rankings. Choose wisely — it's public!</p>
-    <label>Your name</label>
+    <h3>🏏 ENTER YOUR NAME</h3>
+    <p class="modal-hint" id="pname-hint">Pick a name or nickname to start playing and join the global leaderboard. It's public!</p>
+    <label>Your name / nickname</label>
     <input type="text" id="pname-input" maxlength="20" placeholder="e.g. ShankySmash" autocomplete="off">
     <div class="modal-buttons">
-      <button class="btn btn-gold" onclick="saveName()">SAVE &amp; POST</button>
-      <button class="btn btn-ghost" onclick="skipName()">Not now</button>
+      <button class="btn btn-gold" onclick="saveName()">LET'S GO! 🎡</button>
+      <button class="btn btn-ghost" id="btn-skip-name" onclick="skipName()" style="display:none">Cancel</button>
     </div>
   </div>
 </div>
