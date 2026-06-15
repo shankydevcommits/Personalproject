@@ -191,7 +191,7 @@ function openNameModal(required) {
   $('pname-hint').textContent = required
     ? 'Pick a name or nickname to start playing and join the global leaderboard. It\'s public!'
     : 'Update the name shown on the global rankings.';
-  $('btn-skip-name').style.display = required ? 'none' : '';
+  $('btn-skip-name').style.display = '';   // always allow an exit
   openModal('modal-name');
   setTimeout(() => $('pname-input').focus(), 100);
 }
@@ -312,6 +312,22 @@ function toast(msg, ms = 2400) {
 
 function openModal(id) { $(id).classList.add('open'); }
 function closeModal(id) { $(id).classList.remove('open'); }
+
+/* dismiss a modal via backdrop tap / Escape, treating it as a cancel */
+function dismissModal(id) {
+  if (id === 'modal-name') pendingAction = null;        // didn't enter a name → don't start
+  if (id === 'modal-quit' || id === 'modal-quiz-quit') { closeModal(id); return; }
+  closeModal(id);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const open = document.querySelector('.modal-backdrop.open');
+    if (open) dismissModal(open.id);
+  }
+});
+document.querySelectorAll('.modal-backdrop').forEach(bd => {
+  bd.addEventListener('click', e => { if (e.target === bd) dismissModal(bd.id); });
+});
 
 /* ---------------- quitting a match ---------------- */
 function confirmQuit() { sfx.pick(); openModal('modal-quit'); }
