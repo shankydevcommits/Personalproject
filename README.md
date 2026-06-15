@@ -53,9 +53,11 @@ Until that account exists, the tracking calls are simply ignored — the game is
 
 ## The wheel
 
-Every ball is one spin: `0, 1, 2, 3, 4, 5, 6` or `W` (wicket) — eight slices,
-every outcome exactly once, and whatever the pointer lands on is what happens.
-Run out of balls or wickets and the innings closes. Highest score wins.
+Every ball is one spin: `0, 1, 2, 3, 4, 5, 6`, `W` (wicket), plus `WD` (wide)
+and `NB` (no-ball). Whatever the pointer lands on is what happens. Wides and
+no-balls add 1 run and are **not** counted as a legal ball — the bowler re-bowls,
+so you spin again (just like real cricket). Run out of legal balls or wickets and
+the innings closes. Highest score wins.
 
 ## Gamification (the hooks)
 

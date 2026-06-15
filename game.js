@@ -25,16 +25,19 @@ const STADIUMS = [
   { id: 'galle',   icon: '🏰', name: 'Galle Fort Ground', city: 'Galle',     unlock: 10 },
 ];
 
-/* Wheel — 8 slices, every cricket outcome exactly once. */
+/* Wheel — 10 slices: runs, a wicket, plus Wide & No-ball extras.
+   Extras (WD/NB) add 1 run and are NOT counted as a legal ball. */
 const SEGMENTS = [
-  { label: '0', runs: 0,   color: '#f4793b' },
-  { label: '1', runs: 1,   color: '#2f7bff' },
-  { label: '2', runs: 2,   color: '#1fb6d4' },
-  { label: '3', runs: 3,   color: '#27d17f' },
-  { label: '4', runs: 4,   color: '#7c4dff' },
-  { label: '5', runs: 5,   color: '#ff7ad9' },
-  { label: '6', runs: 6,   color: '#ffc83d' },
-  { label: 'W', runs: 'W', color: '#ff4d6a' },
+  { label: '0',  runs: 0,    color: '#f4793b' },
+  { label: '1',  runs: 1,    color: '#2f7bff' },
+  { label: 'WD', runs: 'WD', color: '#5bc8c8' },
+  { label: '2',  runs: 2,    color: '#1fb6d4' },
+  { label: '6',  runs: 6,    color: '#ffc83d' },
+  { label: 'W',  runs: 'W',  color: '#ff4d6a' },
+  { label: '3',  runs: 3,    color: '#27d17f' },
+  { label: '4',  runs: 4,    color: '#7c4dff' },
+  { label: 'NB', runs: 'NB', color: '#e7a33e' },
+  { label: '5',  runs: 5,    color: '#ff7ad9' },
 ];
 const SEG_COUNT = SEGMENTS.length;
 const POINTS_PER_WIN = 2;
@@ -727,7 +730,7 @@ function drawWheel(angle) {
     ctx2d.rotate(i * arc);
     ctx2d.textAlign = 'center';
     ctx2d.textBaseline = 'middle';
-    ctx2d.font = `800 ${R * .22}px Rubik, sans-serif`;
+    ctx2d.font = `800 ${R * (SEGMENTS[i].label.length > 1 ? .15 : .22)}px Rubik, sans-serif`;
     ctx2d.fillStyle = SEGMENTS[i].runs === 6 ? '#1a1300' : '#ffffff';
     ctx2d.shadowColor = 'rgba(0,0,0,.4)';
     ctx2d.shadowBlur = 6;
@@ -812,6 +815,21 @@ function resolveBall(result) {
   const crease = match.crease;
   const batterName = lineup[crease.striker];
   const bowlerName = bowlerForOver(Math.floor(match.balls / 6)); // this ball's bowler
+
+  // EXTRAS: Wide / No-ball — +1 run, NOT a legal ball, so re-bowl (spin again)
+  if (result === 'WD' || result === 'NB') {
+    if (meBatting) match.myScore += 1; else match.oppScore += 1;
+    sfx.run();
+    setCommentary(result === 'WD'
+      ? pickLine([`Wide! +1 run — ${bowlerName} must bowl it again. 🎯`, `${bowlerName} strays down the side — Wide! +1, extra ball. 😅`])
+      : pickLine([`No ball! +1 run, and it doesn't count — ${bowlerName} bowls again. 🚫`, `Overstepped! No ball off ${bowlerName} — +1 and a free delivery. 😬`]));
+    refreshMatchUI();
+    // an extra run can still seal a chase
+    const sc = meBatting ? match.myScore : match.oppScore;
+    if (match.target !== null && sc >= match.target) setTimeout(endMatch, 1100);
+    return; // ball not counted toward the over — player spins again
+  }
+
   match.balls++;
   match.log.push(result);
 
