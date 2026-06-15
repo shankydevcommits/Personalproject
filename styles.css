@@ -283,7 +283,8 @@ body::before {
 /* ---------- wheel ---------- */
 .wheel-zone {
   position: relative; margin-top: 14px;
-  width: min(78vw, 340px); height: min(78vw, 340px);
+  /* square, but never taller than the viewport allows — fits phones & desktop */
+  width: min(80vw, 44vh, 360px); height: min(80vw, 44vh, 360px);
 }
 #wheel {
   width: 100%; height: 100%; border-radius: 50%; display: block;
@@ -558,4 +559,43 @@ body::before {
 @keyframes shake {
   20% { transform: translateX(-8px); } 40% { transform: translateX(8px); }
   60% { transform: translateX(-5px); } 80% { transform: translateX(5px); }
+}
+
+/* ---------- upcoming (yet-to-be-bowled) ball slot ---------- */
+.ball-dot.upcoming { border-style: dashed; border-color: rgba(255,255,255,.28); opacity: .65; }
+
+/* ============================================================
+   RESPONSIVE — adaptive for phones, tablets and desktop
+   The app is a centred column that scales to the screen.
+   ============================================================ */
+
+/* tablets & desktop: a touch more breathing room and a bigger wheel */
+@media (min-width: 640px) {
+  .screen { padding: 30px 20px 30px; }
+  .logo-title { font-size: 60px; }
+  .logo-block { margin-top: 4vh; }
+  .wheel-zone { width: min(58vw, 50vh, 380px); height: min(58vw, 50vh, 380px); }
+  .home-buttons { width: 360px; }
+}
+
+/* large displays: vertically centre the lighter screens so they don't hug the top */
+@media (min-width: 700px) and (min-height: 720px) {
+  #screen-home.active { justify-content: center; }
+  #screen-home .logo-block { margin-top: 0; }
+  #screen-result.active { justify-content: center; }
+}
+
+/* very small phones: shrink a little so nothing overflows */
+@media (max-width: 360px) {
+  .wheel-zone { width: 86vw; height: 86vw; }
+  .team-grid { gap: 6px; }
+  .team-card .flag { font-size: 22px; }
+  .btn-big { font-size: 16px; padding: 15px 18px; }
+  .stat-chip { min-width: 78px; padding: 9px 12px; }
+}
+
+/* landscape phones: keep the wheel from forcing too much scroll */
+@media (max-height: 520px) {
+  .wheel-zone { width: min(70vw, 40vh, 300px); height: min(70vw, 40vh, 300px); }
+  .logo-ball { font-size: 44px; }
 }

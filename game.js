@@ -612,7 +612,7 @@ function startMatch() {
   setCommentary(match.myBatting
     ? `You're batting first at ${st.name}. Spin to face the first ball!`
     : `${team(opp).name} bat first. Spin to bowl the first ball!`);
-  $('btn-spin').textContent = match.myBatting ? '🏏 SPIN TO BAT!' : '🥎 SPIN TO BOWL!';
+  $('btn-spin').textContent = match.myBatting ? '🏏 SPIN TO BAT!' : '🔴 SPIN TO BOWL!';
   refreshMatchUI();
   show('screen-match');
   drawWheel(wheelAngle);
@@ -635,7 +635,7 @@ function sideStatus(isA) {
   if (match.over) return isA === (match.myScore > match.oppScore) ? '🏆 Winner' : '';
   const batting = isA ? battingNow() : !battingNow();
   if (batting) return `⚪ ${fmtOvers(match.balls)}/${match.ballsLimit / 6} ov`;
-  return match.innings === 2 ? '✅ Innings done' : '🥎 Bowling';
+  return match.innings === 2 ? '✅ Innings done' : '🔴 Bowling';
 }
 
 function refreshMatchUI() {
@@ -676,25 +676,27 @@ function refreshMatchUI() {
   $('over-label').textContent = totalOvers > 1 ? `OVER ${overIdx + 1} OF ${totalOvers}` : '';
   const row = $('balls-row');
   row.innerHTML = '';
-  const deliveries = match.thisOver && match.thisOver.length ? match.thisOver : new Array(6).fill(null);
-  deliveries.forEach(dlv => {
+  const bowled = match.thisOver || [];
+  // each wide/no-ball adds one extra delivery to this over, so the over needs
+  // 6 legal balls + 1 slot per extra — empty slots show the balls still to come
+  const extras = bowled.filter(d => d === 'WD' || d === 'NB').length;
+  const totalSlots = 6 + extras;
+  for (let i = 0; i < totalSlots; i++) {
     const d = document.createElement('div');
     d.className = 'ball-dot';
-    if (dlv == null) { row.appendChild(d); return; }
-    d.classList.add('filled');
-    if (dlv === 'WD' || dlv === 'NB') {
-      d.textContent = dlv === 'WD' ? 'Wd' : 'Nb';
-      d.classList.add('bX');
+    const dlv = bowled[i];
+    if (dlv !== undefined) {
+      d.classList.add('filled');
+      if (dlv === 'WD' || dlv === 'NB') {
+        d.textContent = dlv === 'WD' ? 'Wd' : 'Nb';
+        d.classList.add('bX');
+      } else {
+        d.textContent = dlv === 'W' ? 'W' : dlv;
+        d.classList.add(dlv === 'W' ? 'bW' : dlv === 6 ? 'b6' : dlv === 4 ? 'b4' : 'bR');
+      }
     } else {
-      d.textContent = dlv === 'W' ? 'W' : dlv;
-      d.classList.add(dlv === 'W' ? 'bW' : dlv === 6 ? 'b6' : dlv === 4 ? 'b4' : 'bR');
+      d.classList.add('upcoming');  // empty slot = a ball still to be bowled
     }
-    row.appendChild(d);
-  });
-  // pad with empty dots up to at least 6 so the row keeps its shape early on
-  for (let i = deliveries.length; i < 6; i++) {
-    const d = document.createElement('div');
-    d.className = 'ball-dot';
     row.appendChild(d);
   }
 }
@@ -923,8 +925,8 @@ function switchInnings() {
   const meBatting = battingNow();
   setCommentary(meBatting
     ? `Chase time! You need ${match.target} runs to win. Spin to bat! 🏏`
-    : `You set ${team(match.opp).code} a target of ${match.target}. Spin to bowl! 🥎`);
-  $('btn-spin').textContent = meBatting ? '🏏 SPIN TO BAT!' : '🥎 SPIN TO BOWL!';
+    : `You set ${team(match.opp).code} a target of ${match.target}. Spin to bowl! 🔴`);
+  $('btn-spin').textContent = meBatting ? '🏏 SPIN TO BAT!' : '🔴 SPIN TO BOWL!';
   refreshMatchUI();
 }
 
