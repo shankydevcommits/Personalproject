@@ -175,6 +175,77 @@ body {
 
 .res-buttons { display:flex; flex-direction:column; gap:9px; }
 
+/* ============ QUIZ STYLES ============ */
+.quiz-hint-bar { font-size:12px; opacity:.68; margin:4px 0 12px; max-width:460px;
+  line-height:1.5; text-align:center; }
+.quiz-progress-bar { width:100%; max-width:460px; font-size:12px; font-weight:700;
+  color:var(--gold); margin-bottom:10px; text-align:center; letter-spacing:.5px; }
+.level-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px;
+  width:100%; max-width:460px; }
+.level-card { position:relative; text-align:left; cursor:pointer; color:var(--white);
+  background:rgba(255,255,255,.06); border:2px solid rgba(255,255,255,.12);
+  border-radius:18px; padding:14px 16px; font-family:'Rubik',sans-serif;
+  transition:transform .12s ease, border-color .15s ease; }
+.level-card:active { transform:scale(.96); }
+.level-card.locked { opacity:.42; }
+.level-card.done { border-color:rgba(39,209,127,.5); background:rgba(39,209,127,.08); }
+.lv-no { font-family:'Bungee',cursive; font-size:20px; }
+.lv-diff { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.7; display:block; margin-top:2px; }
+.lv-stars { font-size:14px; margin-top:8px; letter-spacing:2px; }
+.lv-best { font-size:11px; opacity:.68; margin-top:2px; }
+.lv-lock { position:absolute; top:14px; right:14px; font-size:18px; }
+.diff-easy   { color:#27d17f !important; opacity:1 !important; }
+.diff-medium { color:#ffc83d !important; opacity:1 !important; }
+.diff-hard   { color:#ff4d6a !important; opacity:1 !important; }
+
+.quiz-topbar { display:flex; justify-content:space-between; align-items:center;
+  width:100%; max-width:460px; margin-top:10px; font-weight:800; font-size:14px; }
+.quiz-pts { color:var(--gold); }
+.quiz-progress-line { width:100%; max-width:460px; height:8px; border-radius:999px;
+  background:rgba(255,255,255,.1); overflow:hidden; margin-top:8px; }
+.quiz-progress-fill { height:100%; width:0; border-radius:999px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2)); transition:width .3s ease; }
+.quiz-card { width:100%; max-width:460px; margin-top:14px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
+  border-radius:22px; padding:20px 18px; backdrop-filter:blur(6px); }
+.quiz-q { font-size:17px; font-weight:700; line-height:1.4; text-align:center;
+  min-height:56px; display:flex; align-items:center; justify-content:center; }
+.quiz-opts { display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+.quiz-opt { text-align:left; cursor:pointer; color:var(--white); font-family:'Rubik',sans-serif;
+  background:rgba(255,255,255,.07); border:2px solid rgba(255,255,255,.16);
+  border-radius:14px; padding:13px 16px; font-size:14px; font-weight:600;
+  transition:transform .1s, background .15s, border-color .15s; }
+.quiz-opt:active { transform:scale(.98); }
+.quiz-opt.correct { border-color:var(--green); background:rgba(39,209,127,.22); }
+.quiz-opt.wrong   { border-color:var(--red); background:rgba(255,77,106,.2); }
+.quiz-opt.disabled { pointer-events:none; }
+.opt-key { display:inline-block; width:22px; font-weight:800; color:var(--gold); }
+.quiz-feedback { min-height:24px; margin-top:12px; font-size:14px; font-weight:700;
+  text-align:center; }
+.quiz-feedback.good { color:var(--green); }
+.quiz-feedback.bad  { color:var(--red); }
+#qnext-btn { width:min(300px,80vw); margin-top:8px; }
+
+.quiz-result-card { width:min(420px,92vw); background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.16); border-radius:24px; padding:28px 22px 24px;
+  backdrop-filter:blur(10px); text-align:center; }
+.qr-emoji { font-size:68px; animation:trophyPop .6s cubic-bezier(.2,1.6,.4,1) both; }
+.qr-title { font-family:'Bungee',cursive; font-size:28px; margin-top:8px;
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.qr-title.lose { background:linear-gradient(180deg,#b9c6e8,#6d7da6);
+  -webkit-background-clip:text; background-clip:text; }
+.qr-sub { font-size:13px; opacity:.75; margin-top:4px; }
+.qr-score { font-size:20px; font-weight:800; margin:12px 0 4px; }
+.qr-stars { font-size:30px; letter-spacing:6px; margin:8px 0; }
+.qr-rewards { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:10px 0; }
+.reward-pill { background:rgba(255,200,61,.14); border:1px solid rgba(255,200,61,.45);
+  color:var(--gold); border-radius:999px; padding:5px 13px; font-size:12px; font-weight:700;
+  animation:fadeIn .4s ease both; }
+.qr-buttons { display:flex; flex-direction:column; gap:9px; margin-top:18px; }
+
+@keyframes confFall { to { transform:translateY(110vh) rotate(720deg); opacity:.9; } }
+
 /* ---- TOAST ---- */
 #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(60px);
   background:rgba(6,13,36,.96); border:1px solid rgba(255,200,61,.5); color:var(--white);
@@ -211,6 +282,12 @@ body {
   <p class="section-label">Pick your club</p>
   <div class="club-grid" id="club-grid"></div>
   <button class="btn btn-gold" id="start-btn" disabled onclick="startGame()">KICK OFF! 🏉</button>
+  <button class="btn" onclick="showQuizLevels()"
+    style="width:100%;max-width:460px;margin-top:8px;font-size:17px;padding:16px;
+    background:linear-gradient(180deg,#b98cff,#7c4dff 50%,#5a23d6);color:#fff;
+    box-shadow:0 6px 0 #3d1a96,0 14px 30px rgba(124,77,255,.32);">
+    🧠 AFL TRIVIA — 10 LEVELS
+  </button>
   <a class="btn-ghost-a" href="index.html" style="width:100%;max-width:460px;margin-top:8px;font-size:14px;padding:11px">
     🏏 Back to Cricket Game
   </a>
@@ -289,6 +366,68 @@ body {
     </div>
   </div>
 </section>
+
+<!-- ============ QUIZ: LEVEL SELECT ============ -->
+<section id="screen-quiz-levels" class="screen">
+  <div style="display:flex;align-items:center;gap:14px;width:100%;max-width:460px;margin-bottom:8px">
+    <button class="back-btn" onclick="showScreen('screen-club')">←</button>
+    <h2 style="font-family:'Bungee',cursive;font-size:22px;letter-spacing:1px">🧠 AFL TRIVIA</h2>
+  </div>
+  <p class="quiz-hint-bar">10 levels · 10 questions each · ⭐ 2 pts per correct answer · Difficulty rises as you climb!</p>
+  <div class="quiz-progress-bar" id="ql-progress"></div>
+  <div class="level-grid" id="ql-grid"></div>
+</section>
+
+<!-- ============ QUIZ: PLAY ============ -->
+<section id="screen-quiz-play" class="screen">
+  <div style="display:flex;gap:10px;width:100%;max-width:460px;align-items:stretch;margin-bottom:4px">
+    <button class="back-btn" onclick="confirmQuizQuit()">←</button>
+    <div style="flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 16px;text-align:center">
+      <div style="font-weight:800;font-size:15px" id="ql-levelname">LEVEL 1</div>
+      <div style="font-size:10px;letter-spacing:3px;color:var(--gold);font-weight:800;margin-top:2px" id="ql-diffbadge">EASY</div>
+    </div>
+  </div>
+  <div class="quiz-topbar">
+    <div id="ql-qcount">Q 1 / 10</div>
+    <div class="quiz-pts" id="ql-livescore">⭐ 0</div>
+  </div>
+  <div class="quiz-progress-line"><div class="quiz-progress-fill" id="ql-fill"></div></div>
+  <div class="quiz-card">
+    <div class="quiz-q" id="ql-question">Loading…</div>
+    <div class="quiz-opts" id="ql-opts"></div>
+  </div>
+  <div class="quiz-feedback" id="ql-feedback"></div>
+  <button class="btn btn-gold" id="qnext-btn" onclick="quizNext()" style="display:none">NEXT ▶</button>
+</section>
+
+<!-- ============ QUIZ: RESULT ============ -->
+<section id="screen-quiz-result" class="screen" style="justify-content:center">
+  <div class="quiz-result-card">
+    <div class="qr-emoji" id="qr-emoji">🏉</div>
+    <h2 class="qr-title" id="qr-title">LEVEL COMPLETE!</h2>
+    <p class="qr-sub" id="qr-sub"></p>
+    <div class="qr-score" id="qr-score"></div>
+    <div class="qr-stars" id="qr-stars"></div>
+    <div class="qr-rewards" id="qr-rewards"></div>
+    <div class="qr-buttons">
+      <button class="btn btn-gold" id="qr-next" onclick="quizResultNext()" style="font-size:17px;padding:15px">NEXT LEVEL ▶</button>
+      <button class="btn btn-ghost" onclick="quizReplay()">🔁 Replay Level</button>
+      <button class="btn btn-ghost" onclick="showQuizLevels()">🧠 All Levels</button>
+      <button class="btn btn-ghost" onclick="showScreen('screen-club')">🏠 Home</button>
+    </div>
+  </div>
+</section>
+
+<div id="modal-quiz-quit" style="display:none;position:fixed;inset:0;z-index:40;align-items:center;justify-content:center;background:rgba(3,8,24,.78);backdrop-filter:blur(4px)">
+  <div style="width:min(360px,90vw);background:linear-gradient(180deg,#14245c,#0c183f);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:24px 22px">
+    <h3 style="font-family:'Bungee',cursive;font-size:18px;margin-bottom:10px">🚪 LEAVE THIS LEVEL?</h3>
+    <p style="font-size:13px;opacity:.75;margin-bottom:16px">Your progress on this level will be lost.</p>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" style="flex:1" onclick="quitQuiz()">Yes, leave</button>
+      <button class="btn btn-gold" style="flex:1" onclick="closeQuizModal()">▶ Keep playing</button>
+    </div>
+  </div>
+</div>
 
 <div id="toast"></div>
 
@@ -1112,6 +1251,310 @@ const needle = document.getElementById('meter-needle');
 
 // Initial draw (blank field)
 drawField({ dist:40, angle:0 }, null);
+
+// ================================================================
+//  AFL TRIVIA — 100 questions
+//  33 easy · 33 medium · 34 hard (ordered so difficulty rises per level)
+// ================================================================
+const AFL_Q = [
+// ---- EASY (33) ----
+{ q:'How many players does each team have on the field in AFL?', o:['16','18','20','22'], a:1, d:'e' },
+{ q:'How many points is a goal worth in AFL?', o:['3','4','6','9'], a:2, d:'e' },
+{ q:'How many points is a behind worth?', o:['1','2','3','4'], a:0, d:'e' },
+{ q:'How many quarters are played in an AFL game?', o:['2','3','4','5'], a:2, d:'e' },
+{ q:'What shape is an AFL football?', o:['Round','Oval','Square','Hexagonal'], a:1, d:'e' },
+{ q:'Where is the AFL Grand Final traditionally held?', o:['SCG','Optus Stadium','MCG','AAMI Park'], a:2, d:'e' },
+{ q:'What colour is the traditional AFL Sherrin football?', o:['Red-brown','White','Blue','Black'], a:0, d:'e' },
+{ q:'The Brownlow Medal is awarded to the AFL\'s best and fairest player. Who counts the votes?', o:['The coaches','The umpires','The players','The AFL CEO'], a:1, d:'e' },
+{ q:'How many AFL clubs are in the competition?', o:['14','16','18','20'], a:2, d:'e' },
+{ q:'Richmond Football Club\'s colours are?', o:['Blue and gold','Yellow and black','Red and blue','Green and gold'], a:1, d:'e' },
+{ q:'What state are the Collingwood Magpies based in?', o:['NSW','QLD','Victoria','WA'], a:2, d:'e' },
+{ q:'AFL stands for?', o:['American Football League','Australian Footy League','Australian Football League','Athletic Football League'], a:2, d:'e' },
+{ q:'A "speccy" in AFL is slang for?', o:['A disputed kick','A spectacular mark','A free kick','A goal from 50m'], a:1, d:'e' },
+{ q:'Hawthorn Football Club\'s colours are?', o:['Red and blue','Purple and white','Brown and gold','Black and white'], a:2, d:'e' },
+{ q:'How many posts make up the AFL goal posts at each end?', o:['2','3','4','6'], a:2, d:'e' },
+{ q:'What is a "mark" in AFL?', o:['A tackle','A kick over 50m','Catching the ball cleanly after a kick of 15+ metres','A score'], a:2, d:'e' },
+{ q:'Which team is known as "The Bombers"?', o:['Carlton','Essendon','Fremantle','Richmond'], a:1, d:'e' },
+{ q:'The Sydney Swans play their home games at?', o:['SCG','ANZ Stadium','CommBank Stadium','MCG'], a:0, d:'e' },
+{ q:'Who won the 2023 AFL Premiership?', o:['Collingwood','Brisbane','Carlton','GWS'], a:0, d:'e' },
+{ q:'Carlton Football Club\'s colours are?', o:['Red and blue','Navy blue and white','Black and white','Yellow and black'], a:1, d:'e' },
+{ q:'Which club is nicknamed "The Cats"?', o:['Adelaide','Richmond','Geelong','North Melbourne'], a:2, d:'e' },
+{ q:'Melbourne Demons\' traditional home ground is?', o:['Etihad Stadium','MCG','Marvel Stadium','AAMI Park'], a:1, d:'e' },
+{ q:'The AFL Grand Final is held in which month?', o:['August','September','October','November'], a:1, d:'e' },
+{ q:'Adelaide Crows play their home games at?', o:['Optus Stadium','Adelaide Oval','MCG','Mars Stadium'], a:1, d:'e' },
+{ q:'Which club is nicknamed "The Power"?', o:['GWS Giants','Gold Coast Suns','Port Adelaide','Essendon'], a:2, d:'e' },
+{ q:'The Norm Smith Medal is awarded to?', o:['Best young player','Best player in the Grand Final','Top goal scorer of season','Best defender'], a:1, d:'e' },
+{ q:'The Anzac Day AFL match is played between which two clubs?', o:['Melbourne and Collingwood','Essendon and Collingwood','Richmond and Carlton','Geelong and Hawthorn'], a:1, d:'e' },
+{ q:'How many competition points does a team earn for a win?', o:['2','3','4','6'], a:2, d:'e' },
+{ q:'Brisbane Lions play their home games at?', o:['Suncorp Stadium','The Gabba','ANZ Stadium','Carrara'], a:1, d:'e' },
+{ q:'Which club is nicknamed "The Saints"?', o:['Melbourne','St Kilda','Sydney','Adelaide'], a:1, d:'e' },
+{ q:'A "hand pass" in AFL is?', o:['Throwing the ball','A punch or tap of the ball with the fist','An underarm throw','A two-handed push'], a:1, d:'e' },
+{ q:'West Coast Eagles and Fremantle Dockers play at which stadium?', o:['Marvel Stadium','Adelaide Oval','Optus Stadium','Docklands'], a:2, d:'e' },
+{ q:'Which club is nicknamed "The Dockers"?', o:['North Melbourne','Gold Coast','Fremantle','Port Adelaide'], a:2, d:'e' },
+
+// ---- MEDIUM (33) ----
+{ q:'Who has kicked the most goals in AFL/VFL history?', o:['Jason Dunstall','Tony Lockett','Gary Ablett Sr','John Coleman'], a:1, d:'m' },
+{ q:'Gary Ablett Jr won how many Brownlow Medals?', o:['1','2','3','4'], a:1, d:'m' },
+{ q:'Nick Riewoldt played his entire AFL career at which club?', o:['Hawthorn','Geelong','St Kilda','Melbourne'], a:2, d:'m' },
+{ q:'Which coach led Richmond to their 2017 AFL Premiership after a 37-year drought?', o:['Kevin Sheedy','Damien Hardwick','Mick Malthouse','Paul Roos'], a:1, d:'m' },
+{ q:'Tony Lockett\'s career AFL goal tally (a record) was?', o:['1000','1250','1360','1100'], a:2, d:'m' },
+{ q:'Dustin Martin won how many Norm Smith Medals?', o:['1','2','3','4'], a:2, d:'m' },
+{ q:'Marcus Bontempelli plays for which club?', o:['Carlton','Geelong','Western Bulldogs','Melbourne'], a:2, d:'m' },
+{ q:'Richmond won back-to-back AFL Premierships in which years?', o:['2017 and 2018','2018 and 2019','2019 and 2020','2020 and 2021'], a:2, d:'m' },
+{ q:'Which player has won the most Brownlow Medals in history (3)?', o:['Gary Ablett Jr','One player holds it alone','Multiple players share the record of 3','Adam Cooney'], a:2, d:'m' },
+{ q:'In which year did the Western Bulldogs win their long-awaited AFL Premiership?', o:['2014','2015','2016','2017'], a:2, d:'m' },
+{ q:'What club does Patrick Dangerfield play for?', o:['Adelaide','GWS','Geelong','Richmond'], a:2, d:'m' },
+{ q:'Joel Selwood played his entire career at which club?', o:['Adelaide','West Coast','Geelong','Melbourne'], a:2, d:'m' },
+{ q:'The AFLW competition started in which year?', o:['2014','2015','2017','2019'], a:2, d:'m' },
+{ q:'Melbourne Demons last won a Premiership before their 2021 drought-breaking win in what year?', o:['1955','1960','1964','1967'], a:2, d:'m' },
+{ q:'Which player is known by the nickname "Buddy"?', o:['Patrick Dangerfield','Lance Franklin','Dustin Martin','Joel Selwood'], a:1, d:'m' },
+{ q:'"Buddy" Franklin played for which TWO AFL clubs?', o:['Hawthorn and Sydney','Adelaide and Sydney','West Coast and Hawthorn','Port Adelaide and GWS'], a:0, d:'m' },
+{ q:'Which famous VFL coach is known for the speech "Don\'t think! Do!"?', o:['Ron Barassi','Leigh Matthews','John Kennedy Sr','Norm Smith'], a:2, d:'m' },
+{ q:'Adam Goodes played his entire career at which club?', o:['Melbourne','Sydney Swans','GWS','Collingwood'], a:1, d:'m' },
+{ q:'Brisbane Lions won 3 consecutive AFL Premierships from which years?', o:['1999–2001','2001–2003','2003–2005','2000–2002'], a:1, d:'m' },
+{ q:'Hawthorn won 3 Premierships in a row (the "three-peat") from which years?', o:['2012–2014','2013–2015','2014–2016','2015–2017'], a:1, d:'m' },
+{ q:'"Captain Blood" was the nickname of which famous Richmond VFL player?', o:['John Kennedy Sr','Jack Dyer','Ron Barassi','Ted Whitten'], a:1, d:'m' },
+{ q:'Geelong\'s home ground is known as?', o:['AAMI Park','Mars Stadium','GMHBA Stadium','MCG'], a:2, d:'m' },
+{ q:'Peter Matera played for which club?', o:['Richmond','Carlton','West Coast Eagles','Adelaide'], a:2, d:'m' },
+{ q:'Chris Judd played for which TWO clubs?', o:['Richmond and Melbourne','West Coast Eagles and Carlton','Hawthorn and Geelong','Adelaide and Sydney'], a:1, d:'m' },
+{ q:'The AFL All-Australian team contains how many players?', o:['18','20','22','24'], a:2, d:'m' },
+{ q:'Who won the 2021 AFL Premiership after a 57-year drought?', o:['Richmond','Melbourne','Carlton','Brisbane Lions'], a:1, d:'m' },
+{ q:'Nic Naitanui is the star ruckman for which club?', o:['North Melbourne','Melbourne','West Coast Eagles','GWS Giants'], a:2, d:'m' },
+{ q:'Which club did "Lethal Leigh" Matthews play for and later coach to Premierships?', o:['Carlton','Melbourne','Hawthorn','Essendon'], a:2, d:'m' },
+{ q:'How many competition points are awarded for a draw in AFL?', o:['0','1','2','3'], a:2, d:'m' },
+{ q:'Which club did Michael Voss captain to three consecutive AFL Premierships?', o:['Richmond','Collingwood','Brisbane Lions','Melbourne'], a:2, d:'m' },
+{ q:'Matthew Pavlich played his entire career at which club?', o:['West Coast Eagles','Adelaide','Fremantle','GWS Giants'], a:2, d:'m' },
+{ q:'Patrick Dangerfield won the Brownlow Medal in which year?', o:['2014','2016','2018','2019'], a:1, d:'m' },
+{ q:'Which former club merged with Brisbane Bears to form the Brisbane Lions?', o:['South Melbourne','Fitzroy','St Kilda','Footscray'], a:1, d:'m' },
+
+// ---- HARD (34) ----
+{ q:'The VFL competition was renamed the AFL in which year?', o:['1987','1989','1990','1992'], a:2, d:'h' },
+{ q:'Who holds the record for most goals in a single VFL season (150 in 1971)?', o:['Jason Dunstall','Tony Lockett','Peter Hudson','Gary Ablett Sr'], a:2, d:'h' },
+{ q:'Who was the first Indigenous Australian to win the Brownlow Medal (1993)?', o:['Adam Goodes','Gavin Wanganeen','Michael O\'Loughlin','Nicky Winmar'], a:1, d:'h' },
+{ q:'Lachie Neale won the 2020 Brownlow Medal with a record-equalling vote count of?', o:['25','28','31','34'], a:2, d:'h' },
+{ q:'The first game of Australian football under written rules was played in which year?', o:['1855','1858','1861','1877'], a:1, d:'h' },
+{ q:'Ron Barassi famously played for Melbourne then joined which club as a player?', o:['Richmond','Carlton','North Melbourne','Hawthorn'], a:1, d:'h' },
+{ q:'Which coach led Hawthorn to four Premierships between 1986–1991?', o:['John Kennedy Sr','Allan Jeans','Leigh Matthews','Peter Knights'], a:2, d:'h' },
+{ q:'In 2007, Geelong beat Port Adelaide in the Grand Final by how many points?', o:['89','107','119','134'], a:2, d:'h' },
+{ q:'Who holds the AFL record for most games played (432)?', o:['Kevin Bartlett','Michael Tuck','Brent Harvey','Dustin Fletcher'], a:2, d:'h' },
+{ q:'Adelaide Crows won back-to-back Premierships in which years?', o:['1995 and 1997','1997 and 1998','1998 and 2000','1996 and 1997'], a:1, d:'h' },
+{ q:'Who won the first ever Brownlow Medal in 1924?', o:['Dick Reynolds','Haydn Bunton','Edward "Carji" Greeves','Gordon Coventry'], a:2, d:'h' },
+{ q:'Tony Lockett played for which TWO clubs?', o:['Richmond and Melbourne','St Kilda and Sydney','Hawthorn and Geelong','Adelaide and Port Adelaide'], a:1, d:'h' },
+{ q:'Which club won the very first AFL Grand Final in 1990?', o:['Collingwood','Essendon','Melbourne','Geelong'], a:0, d:'h' },
+{ q:'The MCG\'s approximate capacity is closest to?', o:['85,000','90,000','95,000','100,000'], a:3, d:'h' },
+{ q:'Collingwood won 4 consecutive VFL Premierships from 1927 to?', o:['1929','1930','1931','1932'], a:1, d:'h' },
+{ q:'Who coached Geelong to Premierships in 2009, 2011 AND 2022?', o:['Denis Pagan alone','Chris Scott alone','Mark Thompson (09,11) and Chris Scott (22)','Allan Jeans'], a:2, d:'h' },
+{ q:'The VFL first competed as an organised league in which year?', o:['1877','1897','1888','1901'], a:1, d:'h' },
+{ q:'Despite being one of the greatest VFL players ever, Gary Ablett Sr famously never won which individual award?', o:['Norm Smith Medal','Brownlow Medal','Best and Fairest','AFLPA MVP'], a:1, d:'h' },
+{ q:'In the 1989 Grand Final, Hawthorn beat Geelong by how many points?', o:['6','12','18','24'], a:0, d:'h' },
+{ q:'Adelaide Crows joined the then-VFL competition in which year?', o:['1986','1990','1991','1995'], a:2, d:'h' },
+{ q:'Alex Jesaulenko\'s famous "speccy of the century" was in the 1970 VFL Grand Final. Who did he play for?', o:['Essendon','Richmond','Carlton','Melbourne'], a:2, d:'h' },
+{ q:'Essendon\'s supplements saga was first publicly revealed in which year?', o:['2011','2012','2013','2014'], a:2, d:'h' },
+{ q:'Which Brisbane Lions player won the Norm Smith Medal in both 2001 and 2003?', o:['Jason Akermanis','Michael Voss','Jonathan Brown','Simon Black'], a:3, d:'h' },
+{ q:'Luke Hodge won how many AFL Premierships with Hawthorn?', o:['2','3','4','5'], a:2, d:'h' },
+{ q:'In 2010, an AFL Grand Final ended in a draw for the first time since 1977. The two clubs were?', o:['Hawthorn and Geelong','Collingwood and St Kilda','Richmond and Carlton','Geelong and Adelaide'], a:1, d:'h' },
+{ q:'Which player is known by the nickname "The Bont"?', o:['Patrick Dangerfield','Chris Judd','Marcus Bontempelli','Joel Selwood'], a:2, d:'h' },
+{ q:'The record for most VFL/AFL Brownlow Medals by one player is 3. Who was the FIRST player to achieve this?', o:['Bob Skilton','Dick Reynolds','Haydn Bunton','Ian Stewart'], a:2, d:'h' },
+{ q:'Matt Priddis (West Coast Eagles) won the Brownlow Medal in which year?', o:['2012','2014','2016','2018'], a:1, d:'h' },
+{ q:'The AFL announced a new team called the Tasmania Devils to enter the competition from which year?', o:['2025','2026','2027','2028'], a:3, d:'h' },
+{ q:'Hawthorn\'s 1971 VFL record goal-kicker Peter Hudson kicked 150 goals. He played how many games that season?', o:['16','19','22','24'], a:1, d:'h' },
+{ q:'Collingwood and St Kilda drew the 2010 Grand Final. In the replay, who won and by how many points?', o:['Collingwood by 56','Collingwood by 28','St Kilda by 14','It went to extra time'], a:0, d:'h' },
+{ q:'The record highest score in a single AFL home-and-away game is held by Geelong (2007 v). Their score in points was?', o:['186','211','239','252'], a:2, d:'h' },
+{ q:'Who coached the Western Bulldogs to their 2016 AFL Premiership?', o:['Paul Roos','Luke Beveridge','Matthew Nicks','Brendan McCartney'], a:1, d:'h' },
+{ q:'Which Indigenous AFL player became a Collingwood icon and made a famous gesture at Victoria Park in 1993?', o:['Adam Goodes','Michael O\'Loughlin','Nicky Winmar','Gavin Wanganeen'], a:2, d:'h' },
+];
+
+const AQ_LEVELS = 10;
+const AQ_PER_LEVEL = 10;
+const AQ_PTS = 2;
+const AQ_DIFF_LABEL = { e:'EASY', m:'MEDIUM', h:'HARD' };
+const AQ_DIFF_CLASS = { e:'diff-easy', m:'diff-medium', h:'diff-hard' };
+
+// Quiz save key in localStorage
+const AQ_SAVE = 'afl_quiz_best'; // array[10] of best correct counts
+
+let aqBest = loadQBest();
+let aqQuiz = null; // { level, qs, i, correct, answered }
+
+function loadQBest() {
+  try { return JSON.parse(localStorage.getItem(AQ_SAVE)) || []; } catch(e) { return []; }
+}
+function saveQBest() {
+  try { localStorage.setItem(AQ_SAVE, JSON.stringify(aqBest)); } catch(e) {}
+}
+
+function aqLevelQs(lv) { return AFL_Q.slice((lv-1)*AQ_PER_LEVEL, lv*AQ_PER_LEVEL); }
+function aqLevelDiff(lv) {
+  const c={e:0,m:0,h:0};
+  aqLevelQs(lv).forEach(q=>c[q.d]++);
+  return c.h>=c.m&&c.h>=c.e?'h':c.m>=c.e?'m':'e';
+}
+function aqUnlocked(lv) { return lv===1 || typeof aqBest[lv-2]==='number'; }
+function aqStars(correct) { return correct>=AQ_PER_LEVEL?3:correct>=7?2:correct>=5?1:0; }
+function starStr(n) { return '★★★☆☆☆'.slice(3-n,6-n).padEnd(3,'☆').slice(0,3); }
+
+// ---- Show quiz level screen ----
+function showQuizLevels() {
+  const done = aqBest.filter(b=>typeof b==='number').length;
+  const totalStars = aqBest.reduce((s,b)=>s+(typeof b==='number'?aqStars(b):0),0);
+  document.getElementById('ql-progress').textContent =
+    `Levels cleared: ${done}/${AQ_LEVELS}  ·  ⭐ ${done*AQ_PTS*AQ_PER_LEVEL} max pts  ·  🌟 ${totalStars}/30 stars`;
+
+  const grid = document.getElementById('ql-grid');
+  grid.innerHTML = '';
+  for (let lv=1; lv<=AQ_LEVELS; lv++) {
+    const unlocked = aqUnlocked(lv);
+    const best = aqBest[lv-1];
+    const played = typeof best==='number';
+    const d = aqLevelDiff(lv);
+    const card = document.createElement('button');
+    card.className = 'level-card'+((!unlocked)?' locked':'')+(played?' done':'');
+    card.innerHTML =
+      `<span class="lv-no">Lv ${lv}</span>` +
+      `<span class="lv-diff ${AQ_DIFF_CLASS[d]}">${AQ_DIFF_LABEL[d]}</span>` +
+      (unlocked
+        ? `<div class="lv-stars">${played?starStr(aqStars(best)):'☆☆☆'}</div>` +
+          `<div class="lv-best">${played?`Best: ${best}/10`:'Not played yet'}</div>`
+        : `<span class="lv-lock">🔒</span><div class="lv-best">Clear Level ${lv-1} to unlock</div>`);
+    if (unlocked) card.onclick = () => startQuizLevel(lv);
+    else card.onclick = () => toast(`🔒 Clear Level ${lv-1} first!`);
+    grid.appendChild(card);
+  }
+  showScreen('screen-quiz-levels');
+}
+
+// ---- Start a level ----
+function startQuizLevel(lv) {
+  aqQuiz = { level:lv, qs:aqLevelQs(lv), i:0, correct:0, answered:false };
+  const d = aqLevelDiff(lv);
+  document.getElementById('ql-levelname').textContent = `LEVEL ${lv}`;
+  document.getElementById('ql-diffbadge').textContent = AQ_DIFF_LABEL[d];
+  renderQQuestion();
+  showScreen('screen-quiz-play');
+}
+
+function renderQQuestion() {
+  aqQuiz.answered = false;
+  const item = aqQuiz.qs[aqQuiz.i];
+  document.getElementById('ql-qcount').textContent = `Q ${aqQuiz.i+1} / ${AQ_PER_LEVEL}`;
+  document.getElementById('ql-livescore').textContent = `⭐ ${aqQuiz.correct*AQ_PTS}`;
+  document.getElementById('ql-fill').style.width = (aqQuiz.i/AQ_PER_LEVEL*100)+'%';
+  document.getElementById('ql-question').textContent = item.q;
+  document.getElementById('ql-feedback').textContent = '';
+  document.getElementById('ql-feedback').className = 'quiz-feedback';
+  document.getElementById('qnext-btn').style.display = 'none';
+
+  const keys = ['A','B','C','D'];
+  const wrap = document.getElementById('ql-opts');
+  wrap.innerHTML = '';
+  item.o.forEach((opt,idx) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt';
+    b.innerHTML = `<span class="opt-key">${keys[idx]}</span>${opt}`;
+    b.onclick = () => quizAnswer(idx, b);
+    wrap.appendChild(b);
+  });
+}
+
+function quizAnswer(idx, btn) {
+  if (aqQuiz.answered) return;
+  aqQuiz.answered = true;
+  const item = aqQuiz.qs[aqQuiz.i];
+  const opts = [...document.querySelectorAll('#ql-opts .quiz-opt')];
+  opts.forEach(o => o.classList.add('disabled'));
+  opts[item.a].classList.add('correct');
+
+  const fb = document.getElementById('ql-feedback');
+  if (idx === item.a) {
+    aqQuiz.correct++;
+    fb.textContent = `✅ Correct! +${AQ_PTS} points`;
+    fb.className = 'quiz-feedback good';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = `❌ Answer: ${item.o[item.a]}`;
+    fb.className = 'quiz-feedback bad';
+  }
+  document.getElementById('ql-livescore').textContent = `⭐ ${aqQuiz.correct*AQ_PTS}`;
+  document.getElementById('ql-fill').style.width = ((aqQuiz.i+1)/AQ_PER_LEVEL*100)+'%';
+  const nextBtn = document.getElementById('qnext-btn');
+  nextBtn.textContent = aqQuiz.i+1 < AQ_PER_LEVEL ? 'NEXT ▶' : 'SEE RESULTS 🏁';
+  nextBtn.style.display = '';
+}
+
+function quizNext() {
+  aqQuiz.i++;
+  if (aqQuiz.i < AQ_PER_LEVEL) renderQQuestion();
+  else finishQuizLevel();
+}
+
+function finishQuizLevel() {
+  const lv = aqQuiz.level;
+  const correct = aqQuiz.correct;
+  const prevBest = typeof aqBest[lv-1]==='number' ? aqBest[lv-1] : -1;
+  const firstClear = prevBest < 0;
+  if (correct > prevBest) aqBest[lv-1] = correct;
+  else if (prevBest < 0) aqBest[lv-1] = correct;
+  saveQBest();
+
+  const stars = aqStars(correct);
+  document.getElementById('qr-emoji').textContent = stars===3?'🏆':stars>=1?'🎉':'🧠';
+  const titleEl = document.getElementById('qr-title');
+  titleEl.textContent = stars===3?'PERFECT LEVEL!':stars>=1?'LEVEL COMPLETE!':'KEEP STUDYING!';
+  titleEl.className = 'qr-title'+(stars===0?' lose':'');
+  document.getElementById('qr-sub').textContent = `Level ${lv} · ${AQ_DIFF_LABEL[aqLevelDiff(lv)]}`;
+  document.getElementById('qr-score').textContent = `${correct} / ${AQ_PER_LEVEL} correct`;
+  document.getElementById('qr-stars').textContent = starStr(stars);
+
+  const rewards = [];
+  if (correct > Math.max(0, prevBest)) rewards.push(`+${(correct - Math.max(0,prevBest))*AQ_PTS} ⭐ new points!`);
+  if (firstClear && lv < AQ_LEVELS) rewards.push(`🔓 Level ${lv+1} unlocked!`);
+  if (correct === AQ_PER_LEVEL) rewards.push('💯 Perfect score!');
+  if (correct < 5) rewards.push('📚 Study up for next time!');
+  document.getElementById('qr-rewards').innerHTML =
+    rewards.map((r,i)=>`<span class="reward-pill" style="animation-delay:${.1+i*.1}s">${r}</span>`).join('');
+
+  const nextBtn = document.getElementById('qr-next');
+  if (lv < AQ_LEVELS) { nextBtn.style.display=''; nextBtn.textContent=`LEVEL ${lv+1} ▶`; }
+  else nextBtn.style.display = 'none';
+
+  if (stars===3) burstConfetti(100);
+  else if (stars>=1) burstConfetti(40);
+
+  showScreen('screen-quiz-result');
+}
+
+function quizResultNext() {
+  const lv = aqQuiz ? aqQuiz.level : 1;
+  if (lv < AQ_LEVELS) startQuizLevel(lv+1);
+  else showQuizLevels();
+}
+function quizReplay() { if (aqQuiz) startQuizLevel(aqQuiz.level); }
+function confirmQuizQuit() {
+  document.getElementById('modal-quiz-quit').style.display = 'flex';
+}
+function closeQuizModal() {
+  document.getElementById('modal-quiz-quit').style.display = 'none';
+}
+function quitQuiz() {
+  closeQuizModal();
+  aqQuiz = null;
+  showQuizLevels();
+}
+
+// ---- Confetti ----
+function burstConfetti(count) {
+  const layer = document.body;
+  const colors = ['#ffc83d','#27d17f','#ff4d6a','#2f7bff','#ffffff','#b98cff'];
+  for (let i=0; i<count; i++) {
+    const c = document.createElement('div');
+    c.style.cssText = `position:fixed;top:-16px;width:10px;height:14px;border-radius:2px;pointer-events:none;z-index:50;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${Math.random()*100}vw;
+      animation:confFall ${1.5+Math.random()*1.5}s linear ${Math.random()*.5}s both`;
+    layer.appendChild(c);
+    setTimeout(()=>c.remove(), 3000);
+  }
+}
 </script>
 </body>
 </html>
