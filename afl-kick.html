@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#060d24">
+<title>Perfect Kick — AFL</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ---- BASE ---- */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+  --gold:#ffc83d; --gold2:#e8960c; --green:#27d17f; --red:#ff4d6a;
+  --blue:#2f7bff; --bg:#060d24; --navy:#0c1b45; --white:#f4f7ff;
+}
+html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--white);
+  font-family:'Rubik',sans-serif; user-select:none; -webkit-user-select:none; }
+body {
+  background:
+    radial-gradient(900px 500px at 50% -10%, #16307a 0%, transparent 60%),
+    radial-gradient(700px 400px at 80% 110%, #1a0f4d 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--navy) 100%);
+}
+
+/* ---- SCREENS ---- */
+.screen { position:fixed; inset:0; z-index:1; display:none; flex-direction:column;
+  align-items:center; overflow-y:auto; overflow-x:hidden;
+  padding:max(18px,env(safe-area-inset-top)) 16px 24px; }
+.screen.active { display:flex; animation:fadeIn .3s ease both; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } }
+
+/* ---- SHARED BUTTONS ---- */
+.btn { border:none; border-radius:16px; cursor:pointer; font-family:'Rubik',sans-serif;
+  font-weight:800; padding:14px 22px; font-size:16px; letter-spacing:.5px;
+  transition:transform .1s ease, filter .1s ease; }
+.btn:active { transform:scale(.96); }
+.btn-gold { background:linear-gradient(180deg,#ffe08a 0%,var(--gold) 45%,var(--gold2) 100%);
+  color:#1a1300; box-shadow:0 6px 0 #9c6206, 0 14px 30px rgba(232,150,12,.3); }
+.btn-ghost { background:rgba(255,255,255,.08); color:var(--white);
+  border:1px solid rgba(255,255,255,.18); }
+.btn-ghost-a { display:block; text-align:center; text-decoration:none; color:var(--white);
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+  border-radius:16px; padding:14px 22px; font-size:16px; font-weight:800; }
+.btn:disabled { filter:grayscale(.8) brightness(.6); cursor:not-allowed; }
+.back-btn { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  color:#fff; width:40px; height:40px; border-radius:12px; font-size:18px; cursor:pointer; flex-shrink:0; }
+
+/* ============ CLUB SELECT SCREEN ============ */
+#screen-club { gap:0; }
+.club-logo-area { text-align:center; margin-top:4vh; z-index:1; }
+.club-ball { font-size:56px; animation:bounce 2.2s ease-in-out infinite;
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.5)); }
+@keyframes bounce { 50% { transform:translateY(-14px) rotate(10deg); } }
+.club-title { font-family:'Bungee',cursive; font-size:clamp(32px,10vw,50px);
+  line-height:.9; letter-spacing:1px; margin-top:8px;
+  background:linear-gradient(180deg,#fff 20%,#b9ccff 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.club-title span { background:linear-gradient(180deg,var(--gold) 15%,var(--gold2) 90%);
+  -webkit-background-clip:text; background-clip:text; }
+.club-subtitle { font-size:11px; letter-spacing:3px; opacity:.6; font-weight:600; margin-top:6px; }
+
+.section-label { font-size:11px; letter-spacing:2.5px; text-transform:uppercase;
+  opacity:.6; font-weight:700; margin:18px 0 10px; }
+
+.club-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  width:100%; max-width:460px; }
+.club-card { background:rgba(255,255,255,.06); border:2px solid rgba(255,255,255,.12);
+  border-radius:14px; padding:10px 6px 8px; text-align:center; cursor:pointer;
+  transition:all .15s ease; }
+.club-card:active { transform:scale(.94); }
+.club-card .cc-emoji { font-size:22px; display:block; margin-bottom:4px; }
+.club-card .cc-name { font-size:10px; font-weight:700; letter-spacing:.5px; opacity:.9; display:block; }
+.club-card .cc-short { font-size:9px; font-weight:800; letter-spacing:1px; opacity:.6; display:block; margin-top:1px; }
+.club-card.selected { border-color:var(--gold); box-shadow:0 0 18px rgba(255,200,61,.4);
+  transform:scale(1.05); }
+
+#start-btn { width:100%; max-width:460px; margin-top:16px; font-size:18px; padding:18px; }
+
+/* ============ GAME SCREEN ============ */
+#screen-game { padding-top:max(12px,env(safe-area-inset-top)); gap:0; }
+
+.game-header { display:flex; align-items:center; gap:10px; width:100%; max-width:460px; margin-bottom:8px; }
+.game-club-badge { flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
+  border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:8px; }
+.gcb-emoji { font-size:20px; }
+.gcb-name { font-size:13px; font-weight:800; letter-spacing:.5px; }
+.game-score-mini { font-size:12px; font-weight:700; color:var(--gold); letter-spacing:.5px; }
+
+.kick-strip { width:100%; max-width:460px; display:flex; align-items:center;
+  justify-content:space-between; margin-bottom:8px; }
+.kick-num { font-family:'Bungee',cursive; font-size:18px; color:var(--gold); }
+.kick-dots { display:flex; gap:5px; }
+.kick-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.18); transition:all .3s; }
+.kick-dot.goal { background:var(--green); box-shadow:0 0 8px var(--green); }
+.kick-dot.behind { background:var(--gold); }
+.kick-dot.miss { background:var(--red); }
+.kick-dot.current { border:2px solid var(--gold); background:transparent; }
+
+#game-canvas { width:100%; max-width:460px; border-radius:14px; display:block;
+  box-shadow:0 8px 32px rgba(0,0,0,.5); }
+
+.scenario-strip { width:100%; max-width:460px; display:flex; gap:10px;
+  margin-top:8px; }
+.scenario-chip { flex:1; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+  border-radius:12px; padding:8px 12px; text-align:center; }
+.sc-label { font-size:9px; letter-spacing:2px; opacity:.55; font-weight:700; text-transform:uppercase; display:block; }
+.sc-val { font-size:17px; font-weight:800; color:var(--white); letter-spacing:.5px; }
+
+/* POWER METER */
+.meter-section { width:100%; max-width:460px; margin-top:10px; }
+.meter-header { display:flex; justify-content:space-between; font-size:11px;
+  font-weight:700; opacity:.6; margin-bottom:5px; letter-spacing:.5px; }
+.meter-header .perfect-pct { color:var(--gold); opacity:1; }
+.meter-track { position:relative; height:44px; background:rgba(255,255,255,.08);
+  border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,.14); cursor:pointer; }
+.meter-behind-l, .meter-behind-r { position:absolute; top:0; bottom:0;
+  background:rgba(255,200,61,.25); }
+.meter-goal { position:absolute; top:0; bottom:0;
+  background:linear-gradient(90deg,rgba(39,209,127,.25),rgba(39,209,127,.55),rgba(39,209,127,.25)); }
+.meter-goal-label { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(39,209,127,.9); pointer-events:none; }
+.meter-needle { position:absolute; top:3px; bottom:3px; width:4px;
+  background:linear-gradient(180deg,#fff,rgba(255,255,255,.8));
+  border-radius:2px; transform:translateX(-50%);
+  box-shadow:0 0 10px rgba(255,255,255,.8); transition:none; pointer-events:none; }
+.meter-needle.locked { background:var(--gold); box-shadow:0 0 14px var(--gold); }
+.meter-hint { text-align:center; font-size:12px; font-weight:700; opacity:.7;
+  margin-top:5px; letter-spacing:.5px; height:16px; }
+
+/* KICK BUTTON */
+#kick-btn { width:100%; max-width:460px; margin-top:10px; font-size:20px;
+  padding:18px; background:linear-gradient(180deg,#ffe08a,var(--gold) 45%,var(--gold2));
+  color:#1a1300; border-radius:18px; box-shadow:0 6px 0 #9c6206,0 14px 30px rgba(232,150,12,.3); }
+#kick-btn:active { transform:scale(.97); }
+#kick-btn.waiting { animation:kickPulse 1.2s ease-in-out infinite; }
+@keyframes kickPulse { 50% { box-shadow:0 6px 0 #9c6206,0 0 40px rgba(232,150,12,.6); } }
+#kick-btn.kicked { filter:brightness(.6); pointer-events:none; }
+
+/* RESULT FLASH */
+.result-flash { width:100%; max-width:460px; margin-top:8px; min-height:48px;
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  border-radius:14px; opacity:0; transition:opacity .25s; }
+.result-flash.show { opacity:1; animation:flashIn .35s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes flashIn { from { transform:scale(.6); } }
+.result-flash.goal { background:rgba(39,209,127,.18); border:1px solid rgba(39,209,127,.45); }
+.result-flash.behind { background:rgba(255,200,61,.15); border:1px solid rgba(255,200,61,.4); }
+.result-flash.miss { background:rgba(255,77,106,.15); border:1px solid rgba(255,77,106,.4); }
+.rf-result { font-family:'Bungee',cursive; font-size:22px; }
+.rf-detail { font-size:12px; font-weight:700; opacity:.8; line-height:1.5; text-align:right; }
+
+/* ============ RESULT SCREEN ============ */
+#screen-result { justify-content:center; }
+.result-card { width:min(440px,92vw); background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.16); border-radius:24px; padding:28px 22px 24px;
+  backdrop-filter:blur(10px); box-shadow:0 30px 80px rgba(0,0,0,.5); text-align:center; }
+.res-emoji { font-size:72px; animation:trophyPop .6s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes trophyPop { from { transform:scale(0) rotate(-20deg); } }
+.res-title { font-family:'Bungee',cursive; font-size:30px; margin-top:8px;
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.res-score { font-size:20px; font-weight:800; margin:12px 0 4px; }
+.res-sub { font-size:13px; opacity:.7; margin-bottom:14px; }
+
+.kick-history { display:flex; flex-direction:column; gap:5px; margin:14px 0 18px; }
+.kh-row { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.05);
+  border-radius:10px; padding:7px 10px; font-size:12px; }
+.kh-num { font-weight:800; color:var(--gold); width:18px; }
+.kh-badge { font-weight:800; font-size:11px; width:50px; }
+.kh-badge.goal { color:var(--green); }
+.kh-badge.behind { color:var(--gold); }
+.kh-badge.miss { color:var(--red); }
+.kh-meta { flex:1; opacity:.7; text-align:left; }
+.kh-pts { font-weight:800; color:var(--gold); width:28px; text-align:right; }
+.kh-acc { font-size:10px; opacity:.55; }
+
+.res-buttons { display:flex; flex-direction:column; gap:9px; }
+
+/* ---- TOAST ---- */
+#toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(60px);
+  background:rgba(6,13,36,.96); border:1px solid rgba(255,200,61,.5); color:var(--white);
+  padding:11px 18px; border-radius:12px; font-size:13px; font-weight:600;
+  z-index:60; transition:transform .3s; max-width:85vw; text-align:center; }
+#toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width:360px) {
+  .club-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
+  .club-card .cc-name { font-size:9px; }
+}
+@media (min-width:640px) {
+  .club-grid { grid-template-columns:repeat(6,1fr); }
+}
+@media (max-height:680px) {
+  .club-logo-area { margin-top:1vh; }
+  .club-ball { font-size:40px; }
+  .club-title { font-size:32px; }
+  .meter-track { height:36px; }
+  #kick-btn { padding:14px; font-size:17px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ CLUB SELECT ============ -->
+<section id="screen-club" class="screen active">
+  <div class="club-logo-area">
+    <div class="club-ball">🏉</div>
+    <h1 class="club-title">PERFECT<br><span>KICK</span></h1>
+    <p class="club-subtitle">AFL 2026 · SEASON MODE</p>
+  </div>
+  <p class="section-label">Pick your club</p>
+  <div class="club-grid" id="club-grid"></div>
+  <button class="btn btn-gold" id="start-btn" disabled onclick="startGame()">KICK OFF! 🏉</button>
+  <a class="btn-ghost-a" href="index.html" style="width:100%;max-width:460px;margin-top:8px;font-size:14px;padding:11px">
+    🏏 Back to Cricket Game
+  </a>
+</section>
+
+<!-- ============ GAME SCREEN ============ -->
+<section id="screen-game" class="screen">
+  <div class="game-header">
+    <button class="back-btn" onclick="confirmQuit()">←</button>
+    <div class="game-club-badge" id="game-club-badge">
+      <span class="gcb-emoji" id="gcb-emoji">🏉</span>
+      <span class="gcb-name" id="gcb-name">Club</span>
+    </div>
+    <div class="game-score-mini" id="game-score-mini">0.0 (0)</div>
+  </div>
+
+  <div class="kick-strip">
+    <div class="kick-num" id="kick-num">KICK 1</div>
+    <div class="kick-dots" id="kick-dots"></div>
+  </div>
+
+  <canvas id="game-canvas"></canvas>
+
+  <div class="scenario-strip">
+    <div class="scenario-chip">
+      <span class="sc-label">Distance</span>
+      <span class="sc-val" id="sc-dist">—</span>
+    </div>
+    <div class="scenario-chip">
+      <span class="sc-label">Angle</span>
+      <span class="sc-val" id="sc-angle">—</span>
+    </div>
+    <div class="scenario-chip">
+      <span class="sc-label">Difficulty</span>
+      <span class="sc-val" id="sc-diff">—</span>
+    </div>
+  </div>
+
+  <div class="meter-section">
+    <div class="meter-header">
+      <span>0%</span>
+      <span class="perfect-pct" id="meter-perfect-label">PERFECT: —</span>
+      <span>100%</span>
+    </div>
+    <div class="meter-track" id="meter-track" onclick="doKick()">
+      <div class="meter-behind-l" id="meter-behind-l"></div>
+      <div class="meter-behind-r" id="meter-behind-r"></div>
+      <div class="meter-goal" id="meter-goal">
+        <span class="meter-goal-label">GOAL ZONE</span>
+      </div>
+      <div class="meter-needle" id="meter-needle"></div>
+    </div>
+    <div class="meter-hint" id="meter-hint">TAP THE METER OR BUTTON TO KICK</div>
+  </div>
+
+  <button class="btn" id="kick-btn" onclick="doKick()">🏉 KICK!</button>
+
+  <div class="result-flash" id="result-flash">
+    <div class="rf-result" id="rf-result">GOAL!</div>
+    <div class="rf-detail" id="rf-detail"></div>
+  </div>
+</section>
+
+<!-- ============ RESULT SCREEN ============ -->
+<section id="screen-result" class="screen">
+  <div class="result-card">
+    <div class="res-emoji" id="res-emoji">🏉</div>
+    <h2 class="res-title" id="res-title">FULL TIME!</h2>
+    <div class="res-score" id="res-score"></div>
+    <p class="res-sub" id="res-sub"></p>
+    <div class="kick-history" id="kick-history"></div>
+    <div class="res-buttons">
+      <button class="btn btn-gold" onclick="restartGame()" style="font-size:18px;padding:16px">🔁 PLAY AGAIN</button>
+      <button class="btn btn-ghost" onclick="goHome()">🔄 Change Club</button>
+      <a class="btn-ghost-a" href="index.html">🏏 Cricket Game</a>
+    </div>
+  </div>
+</section>
+
+<div id="toast"></div>
+
+<script>
+// ================================================================
+//  PERFECT KICK — AFL  ·  game.js
+// ================================================================
+
+const CLUBS = [
+  { id:'ade', name:'Adelaide',       short:'ADE', c1:'#002b5c', c2:'#e21937', e:'🦅' },
+  { id:'bri', name:'Brisbane',       short:'BRI', c1:'#7b003c', c2:'#f4a828', e:'🦁' },
+  { id:'car', name:'Carlton',        short:'CAR', c1:'#0e1e2d', c2:'#4a90d9', e:'⚫' },
+  { id:'col', name:'Collingwood',    short:'COL', c1:'#111111', c2:'#ffffff', e:'🖤' },
+  { id:'ess', name:'Essendon',       short:'ESS', c1:'#cc2031', c2:'#111111', e:'🔴' },
+  { id:'fre', name:'Fremantle',      short:'FRE', c1:'#2c2b7c', c2:'#e32c2c', e:'💜' },
+  { id:'gee', name:'Geelong',        short:'GEE', c1:'#1c3c63', c2:'#ffffff', e:'🐱' },
+  { id:'gcs', name:'Gold Coast',     short:'GCS', c1:'#c01e23', c2:'#ffb81c', e:'☀️' },
+  { id:'gws', name:'GWS Giants',     short:'GWS', c1:'#f47920', c2:'#4d4d4f', e:'🧱' },
+  { id:'haw', name:'Hawthorn',       short:'HAW', c1:'#4d2004', c2:'#fbbf15', e:'🟤' },
+  { id:'mel', name:'Melbourne',      short:'MEL', c1:'#cc2031', c2:'#002b5c', e:'🏮' },
+  { id:'nor', name:'Nth Melbourne',  short:'NOR', c1:'#003087', c2:'#ffffff', e:'🔵' },
+  { id:'por', name:'Port Adelaide',  short:'POR', c1:'#008aab', c2:'#111111', e:'⚓' },
+  { id:'ric', name:'Richmond',       short:'RIC', c1:'#ffd200', c2:'#111111', e:'🐯' },
+  { id:'stk', name:'St Kilda',       short:'STK', c1:'#ed0f05', c2:'#111111', e:'⭐' },
+  { id:'syd', name:'Sydney',         short:'SYD', c1:'#e4002b', c2:'#ffffff', e:'🦢' },
+  { id:'wce', name:'West Coast',     short:'WCE', c1:'#003087', c2:'#f2a900', e:'🦅' },
+  { id:'wbd', name:'W. Bulldogs',    short:'WBD', c1:'#014896', c2:'#e31837', e:'🐶' },
+];
+
+const TOTAL_KICKS = 10;
+
+// ---- State ----
+let selectedClub = null;
+let kicks = [];
+let goals = 0, behinds = 0;
+let currentKick = 0;
+let currentScenario = null;
+
+// Meter animation
+let meterPos = 0;         // 0–100
+let meterDir = 1;
+let meterSpeed = 0.6;     // percent per frame
+let meterRAF = null;
+let meterLocked = false;
+let meterPerfect = 0;
+let goalBand = 0;
+let behindBand = 0;
+
+// Ball animation
+let ballRAF = null;
+let ballT = 0;
+let kickPhase = 'idle'; // 'idle'|'aiming'|'animating'|'showing'
+
+// Stars (pre-generate for canvas)
+const STARS = Array.from({length:28}, () => ({
+  x: Math.random(), y: Math.random() * 0.52,
+  r: 0.5 + Math.random() * 1.5,
+  a: 0.2 + Math.random() * 0.6,
+}));
+
+// ---- Canvas ----
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  const W = Math.min(window.innerWidth - 32, 460);
+  canvas.width = W;
+  canvas.height = Math.round(W * 0.58);
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ================================================================
+//  SCREEN MANAGEMENT
+// ================================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goHome() {
+  stopMeter();
+  stopBallAnim();
+  showScreen('screen-club');
+}
+
+function confirmQuit() {
+  if (confirm('Leave this match?')) goHome();
+}
+
+// ================================================================
+//  CLUB SELECT
+// ================================================================
+(function buildClubGrid() {
+  const grid = document.getElementById('club-grid');
+  CLUBS.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'club-card';
+    card.dataset.id = c.id;
+    card.innerHTML = `<span class="cc-emoji">${c.e}</span><span class="cc-name">${c.name}</span><span class="cc-short">${c.short}</span>`;
+    card.onclick = () => selectClub(c.id);
+    grid.appendChild(card);
+  });
+})();
+
+function selectClub(id) {
+  selectedClub = CLUBS.find(c => c.id === id);
+  document.querySelectorAll('.club-card').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id === id);
+  });
+  // Apply club colors to the selected card
+  const card = document.querySelector(`.club-card[data-id="${id}"]`);
+  if (card) {
+    card.style.borderColor = selectedClub.c2;
+    card.style.boxShadow = `0 0 18px ${selectedClub.c2}55`;
+  }
+  document.getElementById('start-btn').disabled = false;
+}
+
+// ================================================================
+//  GAME INIT
+// ================================================================
+function startGame() {
+  if (!selectedClub) return;
+  kicks = [];
+  goals = 0; behinds = 0;
+  currentKick = 0;
+
+  // Apply club color to kick button
+  const btn = document.getElementById('kick-btn');
+  btn.style.background = `linear-gradient(180deg, ${lighten(selectedClub.c2,20)}, ${selectedClub.c2}, ${darken(selectedClub.c2,20)})`;
+  btn.style.color = isDark(selectedClub.c2) ? '#ffffff' : '#1a1300';
+  btn.style.boxShadow = `0 6px 0 ${darken(selectedClub.c2,30)}, 0 14px 30px ${selectedClub.c2}44`;
+
+  document.getElementById('gcb-emoji').textContent = selectedClub.e;
+  document.getElementById('gcb-name').textContent = selectedClub.name;
+
+  buildKickDots();
+  showScreen('screen-game');
+  nextKick();
+}
+
+function buildKickDots() {
+  const dotsEl = document.getElementById('kick-dots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < TOTAL_KICKS; i++) {
+    const d = document.createElement('div');
+    d.className = 'kick-dot' + (i === 0 ? ' current' : '');
+    d.id = `dot-${i}`;
+    dotsEl.appendChild(d);
+  }
+}
+
+// ================================================================
+//  SCENARIO GENERATION
+// ================================================================
+function generateScenario(kickIndex) {
+  // Kicks 0-3: easy (short, slight angle)
+  // Kicks 4-6: medium
+  // Kicks 7-9: hard (long, steep angle)
+  const progress = kickIndex / (TOTAL_KICKS - 1); // 0–1
+
+  const minDist = 22 + progress * 12;  // 22–34m base min
+  const maxDist = 38 + progress * 18;  // 38–56m base max
+  const dist = parseFloat((minDist + Math.random() * (maxDist - minDist)).toFixed(1));
+
+  const maxAngle = 8 + progress * 38;  // 8°–46°
+  const angle = parseFloat(((Math.random() * 2 - 1) * maxAngle).toFixed(1));
+
+  // Perfect power: maps dist 22–56m → 38–78%
+  // Angle cost: extra power needed for angle
+  const distNorm = (dist - 22) / 34;
+  const angleFactor = Math.abs(angle) / 46;
+  const perfectPower = parseFloat((38 + distNorm * 40 + angleFactor * 7).toFixed(1));
+
+  // Zone bands: harder = narrower
+  const difficulty = distNorm * 0.55 + angleFactor * 0.45;
+  const gb = parseFloat((11 - difficulty * 8.5).toFixed(1));   // 11% → 2.5%
+  const bb = parseFloat((gb * 2.6).toFixed(1));
+
+  // Oscillation speed: harder = faster
+  const speed = 0.35 + difficulty * 0.9; // 0.35 → 1.25% per frame
+
+  const diffLabel = difficulty < 0.33 ? 'EASY' : difficulty < 0.66 ? 'MEDIUM' : 'HARD';
+  const diffStars = difficulty < 0.33 ? '★☆☆' : difficulty < 0.66 ? '★★☆' : '★★★';
+
+  return { dist, angle, perfectPower, goalBand: gb, behindBand: bb, speed, difficulty, diffLabel, diffStars };
+}
+
+// ================================================================
+//  KICK FLOW
+// ================================================================
+function nextKick() {
+  kickPhase = 'aiming';
+  meterLocked = false;
+
+  currentScenario = generateScenario(currentKick);
+  const s = currentScenario;
+
+  // Update UI labels
+  document.getElementById('kick-num').textContent = `KICK ${currentKick + 1}`;
+  document.getElementById('sc-dist').textContent = `${s.dist}m`;
+  const angleDir = s.angle > 0.5 ? 'RIGHT' : s.angle < -0.5 ? 'LEFT' : 'CENTER';
+  document.getElementById('sc-angle').textContent = Math.abs(s.angle) < 0.5 ? '0°' : `${Math.abs(s.angle).toFixed(1)}° ${angleDir}`;
+  document.getElementById('sc-diff').textContent = s.diffStars;
+  document.getElementById('meter-perfect-label').textContent = `PERFECT: ${s.perfectPower}%`;
+  document.getElementById('meter-hint').textContent = 'TAP THE METER OR BUTTON TO KICK';
+
+  // Active dot
+  document.querySelectorAll('.kick-dot').forEach((d, i) => d.classList.toggle('current', i === currentKick));
+
+  // Update meter zones
+  meterPerfect = s.perfectPower;
+  goalBand = s.goalBand;
+  behindBand = s.behindBand;
+  meterSpeed = s.speed;
+  updateMeterZones();
+
+  // Hide result flash
+  const rf = document.getElementById('result-flash');
+  rf.className = 'result-flash';
+  rf.style.display = 'none';
+
+  // Reset kick button
+  const btn = document.getElementById('kick-btn');
+  btn.textContent = '🏉 KICK!';
+  btn.classList.add('waiting');
+  btn.classList.remove('kicked');
+
+  // Draw initial field (static, no ball)
+  drawField(currentScenario, null);
+
+  // Start meter oscillation from a random edge
+  meterPos = Math.random() < 0.5 ? 0 : 100;
+  meterDir = meterPos === 0 ? 1 : -1;
+  startMeter();
+}
+
+function updateMeterZones() {
+  const s = currentScenario;
+  const pct = s.perfectPower;
+  const gb = s.goalBand;
+  const bb = s.behindBand;
+
+  // Behind-left zone
+  const blStart = Math.max(0, pct - bb);
+  const blEnd = Math.max(0, pct - gb);
+  setZone('meter-behind-l', blStart, blEnd);
+
+  // Behind-right zone
+  const brStart = Math.min(100, pct + gb);
+  const brEnd = Math.min(100, pct + bb);
+  setZone('meter-behind-r', brStart, brEnd);
+
+  // Goal zone
+  const gStart = Math.max(0, pct - gb);
+  const gEnd = Math.min(100, pct + gb);
+  setZone('meter-goal', gStart, gEnd);
+}
+
+function setZone(id, start, end) {
+  const el = document.getElementById(id);
+  el.style.left = start + '%';
+  el.style.width = (end - start) + '%';
+}
+
+// ================================================================
+//  METER ANIMATION
+// ================================================================
+function startMeter() {
+  stopMeter();
+  function tick() {
+    if (meterLocked) return;
+    meterPos += meterDir * meterSpeed;
+    if (meterPos >= 100) { meterPos = 100; meterDir = -1; }
+    if (meterPos <= 0) { meterPos = 0; meterDir = 1; }
+    document.getElementById('meter-needle').style.left = meterPos + '%';
+    meterRAF = requestAnimationFrame(tick);
+  }
+  meterRAF = requestAnimationFrame(tick);
+}
+
+function stopMeter() {
+  if (meterRAF) { cancelAnimationFrame(meterRAF); meterRAF = null; }
+}
+
+function stopBallAnim() {
+  if (ballRAF) { cancelAnimationFrame(ballRAF); ballRAF = null; }
+}
+
+// ================================================================
+//  KICK ACTION
+// ================================================================
+function doKick() {
+  if (kickPhase !== 'aiming' || meterLocked) return;
+
+  meterLocked = true;
+  stopMeter();
+  kickPhase = 'animating';
+
+  const tapped = parseFloat(meterPos.toFixed(1));
+  const delta = parseFloat((tapped - meterPerfect).toFixed(1));
+  const absDelta = Math.abs(delta);
+
+  let result, pts;
+  if (absDelta <= goalBand) {
+    result = 'goal'; pts = 6;
+  } else if (absDelta <= behindBand) {
+    result = 'behind'; pts = 1;
+  } else {
+    result = 'miss'; pts = 0;
+  }
+
+  // Lock needle style
+  const needle = document.getElementById('meter-needle');
+  needle.classList.add('locked');
+
+  // Update button
+  const btn = document.getElementById('kick-btn');
+  btn.textContent = '🏉 KICKING…';
+  btn.classList.remove('waiting');
+  btn.classList.add('kicked');
+
+  // Animate ball on canvas
+  animateBall(currentScenario, result, tapped, delta, () => {
+    showKickResult(result, pts, tapped, delta, absDelta);
+  });
+
+  // Record kick
+  kicks.push({
+    kick: currentKick + 1,
+    dist: currentScenario.dist,
+    angle: currentScenario.angle,
+    perfect: meterPerfect,
+    tapped,
+    delta,
+    result,
+    pts,
+    diffLabel: currentScenario.diffLabel,
+  });
+
+  if (result === 'goal') goals++;
+  else if (result === 'behind') behinds++;
+
+  updateMiniScore();
+  updateKickDot(currentKick, result);
+}
+
+function updateKickDot(idx, result) {
+  const dot = document.getElementById(`dot-${idx}`);
+  if (dot) {
+    dot.classList.remove('current');
+    dot.classList.add(result);
+  }
+}
+
+function updateMiniScore() {
+  const pts = goals * 6 + behinds;
+  document.getElementById('game-score-mini').textContent = `${goals}.${behinds} (${pts})`;
+}
+
+function showKickResult(result, pts, tapped, delta, absDelta) {
+  kickPhase = 'showing';
+
+  const rf = document.getElementById('result-flash');
+  const rfResult = document.getElementById('rf-result');
+  const rfDetail = document.getElementById('rf-detail');
+  rf.style.display = 'flex';
+
+  const ptsLabel = pts > 0 ? `+${pts} pts` : '';
+  const deltaSign = delta >= 0 ? '+' : '';
+  const accuracy = absDelta <= goalBand ? '💚 PERFECT' : absDelta <= goalBand * 1.5 ? '👍 CLOSE' : '';
+
+  if (result === 'goal') {
+    rfResult.textContent = '⚽ GOAL!';
+    rfResult.style.color = 'var(--green)';
+    rf.className = 'result-flash show goal';
+  } else if (result === 'behind') {
+    rfResult.textContent = '1️⃣ BEHIND';
+    rfResult.style.color = 'var(--gold)';
+    rf.className = 'result-flash show behind';
+  } else {
+    rfResult.textContent = '❌ MISS';
+    rfResult.style.color = 'var(--red)';
+    rf.className = 'result-flash show miss';
+  }
+
+  rfDetail.innerHTML =
+    `<b>${tapped}%</b> (needed ${meterPerfect}%)<br>` +
+    `δ ${deltaSign}${delta}% &nbsp; ${ptsLabel}`;
+
+  document.getElementById('meter-hint').textContent =
+    result === 'goal' ? `${accuracy} — ${absDelta.toFixed(1)}% off perfect` :
+    result === 'behind' ? `${absDelta.toFixed(1)}% off — just wide` :
+    `${absDelta.toFixed(1)}% off — missed entirely`;
+
+  // Update kick button to NEXT
+  const btn = document.getElementById('kick-btn');
+  if (currentKick < TOTAL_KICKS - 1) {
+    btn.textContent = 'NEXT KICK ▶';
+    btn.classList.remove('kicked', 'waiting');
+    btn.style.background = 'linear-gradient(180deg,#6a9fff,var(--blue),#1a4fc4)';
+    btn.style.color = '#fff';
+    btn.style.boxShadow = '0 6px 0 #123a96';
+    btn.onclick = advanceKick;
+  } else {
+    btn.textContent = 'FULL TIME! 🏆';
+    btn.classList.remove('kicked', 'waiting');
+    btn.style.background = 'linear-gradient(180deg,#ffe08a,var(--gold) 45%,var(--gold2))';
+    btn.style.color = '#1a1300';
+    btn.style.boxShadow = `0 6px 0 #9c6206`;
+    btn.onclick = showFinalResult;
+  }
+  btn.style.pointerEvents = 'auto';
+  btn.style.filter = 'none';
+}
+
+function advanceKick() {
+  currentKick++;
+  // Reset button styling to club color
+  const btn = document.getElementById('kick-btn');
+  btn.onclick = doKick;
+  btn.style.background = `linear-gradient(180deg, ${lighten(selectedClub.c2,20)}, ${selectedClub.c2}, ${darken(selectedClub.c2,20)})`;
+  btn.style.color = isDark(selectedClub.c2) ? '#ffffff' : '#1a1300';
+  btn.style.boxShadow = `0 6px 0 ${darken(selectedClub.c2,30)}, 0 14px 30px ${selectedClub.c2}44`;
+
+  // Unmark next dot
+  const nextDot = document.getElementById(`dot-${currentKick}`);
+  if (nextDot) nextDot.classList.add('current');
+
+  needle.classList.remove('locked');
+  nextKick();
+}
+
+// ================================================================
+//  BALL ANIMATION ON CANVAS
+// ================================================================
+function animateBall(scenario, result, tapped, delta, onDone) {
+  const W = canvas.width, H = canvas.height;
+  const horizon = H * 0.54;
+  const scale = 25 / scenario.dist;
+  const BASE = W * 0.18 * scale;
+  const shift = (scenario.angle / 45) * W * 0.22;
+  const cx = W / 2 - shift;
+
+  // Determine landing position based on result & delta
+  let landX, landY;
+  const absDelta = Math.abs(delta);
+  const overshoot = delta / 100; // how far from perfect (signed)
+
+  if (result === 'goal') {
+    // Land between the big posts, slightly toward the side delta pushed it
+    landX = cx + overshoot * BASE * 4;
+    landY = horizon - H * 0.20;
+  } else if (result === 'behind') {
+    // Just wide of a goal post, toward the behind post
+    const side = delta > 0 ? 1 : -1; // positive delta = over-hit = misses right
+    landX = cx + side * (BASE + BASE * 0.5);
+    landY = horizon - H * 0.12;
+  } else {
+    // Wide of behind posts
+    const side = delta > 0 ? 1 : -1;
+    landX = cx + side * (BASE * 2.5 + BASE * absDelta / 20);
+    landY = horizon - H * 0.06;
+  }
+
+  const startX = W / 2;
+  const startY = H * 0.96;
+  const duration = 1350; // ms
+  let startTime = null;
+  let trail = [];
+
+  function frame(ts) {
+    if (!startTime) startTime = ts;
+    ballT = Math.min((ts - startTime) / duration, 1);
+
+    // Draw field
+    drawField(scenario, null);
+
+    // Compute ball position (eased parabolic arc)
+    const t = easeInOut(ballT);
+    const bx = startX + (landX - startX) * t;
+    const arcH = H * 0.38;
+    const by = startY + (landY - startY) * t - arcH * 4 * t * (1 - t);
+
+    // Trail
+    trail.push({ x: bx, y: by, t: ballT });
+    if (trail.length > 12) trail.shift();
+    trail.forEach((pt, i) => {
+      const alpha = (i / trail.length) * 0.35;
+      const sz = 3 + (i / trail.length) * 4;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#ffb84a';
+      ctx.beginPath();
+      ctx.ellipse(pt.x, pt.y, sz, sz * 0.7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // Ball (AFL Sherrin — elongated oval)
+    const size = Math.max(4, (10 - ballT * 3) * (0.6 + scale * 0.4));
+    const spin = ballT * Math.PI * 6;
+    ctx.save();
+    ctx.translate(bx, by);
+    ctx.rotate(spin);
+
+    const ballGrad = ctx.createRadialGradient(-size * 0.25, -size * 0.2, 0, 0, 0, size);
+    ballGrad.addColorStop(0, '#e8824a');
+    ballGrad.addColorStop(0.5, '#c0551a');
+    ballGrad.addColorStop(1, '#7a2c06');
+    ctx.fillStyle = ballGrad;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, size, size * 0.72, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Sherrin stitching line
+    ctx.strokeStyle = 'rgba(255,200,140,0.7)';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(-size * 0.6, 0);
+    ctx.lineTo(size * 0.6, 0);
+    ctx.stroke();
+
+    ctx.restore();
+
+    if (ballT < 1) {
+      ballRAF = requestAnimationFrame(frame);
+    } else {
+      // Flash result on canvas
+      drawResultOverlay(scenario, result);
+      setTimeout(onDone, 280);
+    }
+  }
+
+  ballRAF = requestAnimationFrame(frame);
+}
+
+function drawResultOverlay(scenario, result) {
+  drawField(scenario, null);
+  const W = canvas.width, H = canvas.height;
+  const text = result === 'goal' ? 'GOAL!' : result === 'behind' ? 'BEHIND' : 'MISS';
+  const color = result === 'goal' ? '#27d17f' : result === 'behind' ? '#ffc83d' : '#ff4d6a';
+
+  ctx.save();
+  ctx.font = `bold ${Math.round(H * 0.16)}px 'Bungee', cursive`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.fillText(text, W / 2 + 2, H * 0.32 + 2);
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 18;
+  ctx.fillText(text, W / 2, H * 0.32);
+  ctx.restore();
+}
+
+// ================================================================
+//  CANVAS DRAWING — FIELD + GOAL POSTS
+// ================================================================
+function drawField(scenario, _unused) {
+  const W = canvas.width, H = canvas.height;
+  const horizon = H * 0.54;
+  ctx.clearRect(0, 0, W, H);
+
+  // Sky gradient
+  const sky = ctx.createLinearGradient(0, 0, 0, horizon);
+  sky.addColorStop(0, '#030d28');
+  sky.addColorStop(0.5, '#0a2050');
+  sky.addColorStop(1, '#0e3070');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, horizon);
+
+  // Stars
+  STARS.forEach(s => {
+    ctx.save();
+    ctx.globalAlpha = s.a;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
+
+  // Stadium silhouette (subtle arcs)
+  ctx.save();
+  ctx.globalAlpha = 0.12;
+  ctx.fillStyle = '#1a3070';
+  ctx.beginPath();
+  ctx.ellipse(W / 2, horizon, W * 0.85, H * 0.12, 0, Math.PI, 0);
+  ctx.fill();
+  ctx.restore();
+
+  // Ground
+  const ground = ctx.createLinearGradient(0, horizon, 0, H);
+  ground.addColorStop(0, '#0e5c0e');
+  ground.addColorStop(0.25, '#147014');
+  ground.addColorStop(0.6, '#0d5a0d');
+  ground.addColorStop(1, '#084008');
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, horizon, W, H - horizon);
+
+  // Grass stripes (alternating dark/light)
+  for (let i = 0; i < 5; i++) {
+    const stripeY = horizon + i * ((H - horizon) / 5);
+    const stripeH = (H - horizon) / 5;
+    if (i % 2 === 0) {
+      ctx.save();
+      ctx.globalAlpha = 0.04;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, stripeY, W, stripeH);
+      ctx.restore();
+    }
+  }
+
+  // Perspective grid lines on ground
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 1;
+  const vp = { x: W / 2, y: horizon };
+  for (let i = -4; i <= 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(vp.x + i * W * 0.16, H);
+    ctx.lineTo(vp.x, horizon);
+    ctx.stroke();
+  }
+  // Horizontal distance lines
+  for (let i = 1; i <= 3; i++) {
+    const lineY = horizon + (H - horizon) * (i / 4);
+    ctx.beginPath();
+    ctx.moveTo(0, lineY);
+    ctx.lineTo(W, lineY);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Goal square outline on ground (50m arc)
+  ctx.save();
+  ctx.globalAlpha = 0.15;
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 5]);
+  ctx.beginPath();
+  ctx.ellipse(W / 2, horizon, W * 0.28, H * 0.07, 0, 0, Math.PI);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Goal posts
+  drawGoalPosts(scenario);
+}
+
+function drawGoalPosts(scenario) {
+  const W = canvas.width, H = canvas.height;
+  const horizon = H * 0.54;
+
+  const scale = Math.max(0.3, Math.min(1.2, 25 / scenario.dist));
+  const BASE = W * 0.175 * scale;   // half-gap between big posts
+
+  // Angle shifts center: kicking from RIGHT → posts appear LEFT of center
+  const shift = (scenario.angle / 45) * W * 0.24;
+  const cx = W / 2 - shift;
+
+  // Post x positions (AFL: center gap 6.4m, behind posts another 6.4m each side)
+  const lgx = cx - BASE;               // left goal post
+  const rgx = cx + BASE;               // right goal post
+  const lbx = cx - BASE * 2;           // left behind post
+  const rbx = cx + BASE * 2;           // right behind post
+
+  const tallH = H * 0.38 * scale;
+  const shortH = tallH * 0.52;
+  const postW = Math.max(2, BASE * 0.12);
+
+  // Behind posts (shorter, dimmer)
+  ctx.save();
+  ctx.fillStyle = 'rgba(190,210,240,0.8)';
+  ctx.shadowColor = 'rgba(160,200,255,0.3)';
+  ctx.shadowBlur = 4;
+  ctx.fillRect(lbx - postW * 0.4, horizon - shortH, postW * 0.8, shortH);
+  ctx.fillRect(rbx - postW * 0.4, horizon - shortH, postW * 0.8, shortH);
+  ctx.restore();
+
+  // Goal posts (tall, bright)
+  ctx.save();
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = 'rgba(200,230,255,0.7)';
+  ctx.shadowBlur = 12 * scale;
+  ctx.fillRect(lgx - postW / 2, horizon - tallH, postW, tallH);
+  ctx.fillRect(rgx - postW / 2, horizon - tallH, postW, tallH);
+  ctx.restore();
+
+  // Post tops (small circles / caps)
+  ctx.save();
+  ctx.fillStyle = '#ffffcc';
+  ctx.shadowColor = '#ffffaa';
+  ctx.shadowBlur = 6;
+  const capR = Math.max(2, postW * 0.8);
+  ctx.beginPath(); ctx.arc(lgx, horizon - tallH, capR, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(rgx, horizon - tallH, capR, 0, Math.PI * 2); ctx.fill();
+  ctx.shadowBlur = 3;
+  ctx.fillStyle = '#ccddff';
+  const scapR = capR * 0.7;
+  ctx.beginPath(); ctx.arc(lbx, horizon - shortH, scapR, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(rbx, horizon - shortH, scapR, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  // Distance label in the goal area
+  ctx.save();
+  ctx.font = `bold ${Math.round(10 * scale)}px 'Rubik', sans-serif`;
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  ctx.textAlign = 'center';
+  ctx.fillText(`${scenario.dist}m`, cx, horizon - tallH * 0.35);
+  ctx.restore();
+}
+
+// ================================================================
+//  FINAL RESULT
+// ================================================================
+function showFinalResult() {
+  stopMeter();
+  stopBallAnim();
+
+  const pts = goals * 6 + behinds;
+  const maxPts = TOTAL_KICKS * 6;
+  const pct = pts / maxPts;
+
+  let emoji, title, sub;
+  if (pct >= 0.85)     { emoji = '🏆'; title = 'SUPERSTAR!'; sub = 'Incredible accuracy — Hall of Fame material.'; }
+  else if (pct >= 0.65){ emoji = '🌟'; title = 'CHAMPION!'; sub = 'You boot is legendary. Club legend!'; }
+  else if (pct >= 0.45){ emoji = '👍'; title = 'SOLID EFFORT'; sub = 'Good kick — but the coach wants more consistency.'; }
+  else if (pct >= 0.25){ emoji = '💪'; title = 'KEEP TRAINING'; sub = 'You\'ve got heart. The skills need more work.'; }
+  else                  { emoji = '😅'; title = 'HORROR GAME'; sub = 'The Sherrin didn\'t like you today. Try again!'; }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-score').textContent = `${goals}.${behinds} · ${pts} pts`;
+  document.getElementById('res-sub').textContent = sub;
+
+  // Kick history
+  const hist = document.getElementById('kick-history');
+  hist.innerHTML = '';
+  kicks.forEach(k => {
+    const dir = k.angle > 0.5 ? 'R' : k.angle < -0.5 ? 'L' : '–';
+    const deltaSign = k.delta >= 0 ? '+' : '';
+    hist.innerHTML += `
+      <div class="kh-row">
+        <span class="kh-num">${k.kick}</span>
+        <span class="kh-badge ${k.result}">${k.result.toUpperCase()}</span>
+        <span class="kh-meta">${k.dist}m · ${Math.abs(k.angle)}°${dir} · ${k.diffLabel}</span>
+        <span class="kh-acc">${k.tapped}% (${deltaSign}${k.delta}%)</span>
+        <span class="kh-pts">${k.pts > 0 ? '+'+k.pts : '—'}</span>
+      </div>`;
+  });
+
+  showScreen('screen-result');
+}
+
+function restartGame() {
+  // Re-use same club
+  showScreen('screen-game');
+  kicks = [];
+  goals = 0; behinds = 0;
+  currentKick = 0;
+  updateMiniScore();
+  buildKickDots();
+
+  // Reset button click handler
+  const btn = document.getElementById('kick-btn');
+  btn.onclick = doKick;
+  btn.style.background = `linear-gradient(180deg, ${lighten(selectedClub.c2,20)}, ${selectedClub.c2}, ${darken(selectedClub.c2,20)})`;
+  btn.style.color = isDark(selectedClub.c2) ? '#ffffff' : '#1a1300';
+  btn.style.boxShadow = `0 6px 0 ${darken(selectedClub.c2,30)}, 0 14px 30px ${selectedClub.c2}44`;
+
+  // Reset needle
+  const needle = document.getElementById('meter-needle');
+  needle.classList.remove('locked');
+
+  nextKick();
+}
+
+// ================================================================
+//  UTILITIES
+// ================================================================
+function easeInOut(t) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+}
+
+// Hex colour helpers (no library needed)
+function hexToRgb(hex) {
+  hex = hex.replace('#','');
+  if (hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
+  const n = parseInt(hex, 16);
+  return [(n>>16)&255, (n>>8)&255, n&255];
+}
+function rgbToHex(r,g,b) {
+  return '#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');
+}
+function lighten(hex, amt) {
+  const [r,g,b] = hexToRgb(hex);
+  return rgbToHex(r+amt, g+amt, b+amt);
+}
+function darken(hex, amt) {
+  const [r,g,b] = hexToRgb(hex);
+  return rgbToHex(r-amt, g-amt, b-amt);
+}
+function isDark(hex) {
+  const [r,g,b] = hexToRgb(hex);
+  return (0.299*r + 0.587*g + 0.114*b) < 128;
+}
+
+function toast(msg, dur=2000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+
+// Expose needle for advanceKick
+const needle = document.getElementById('meter-needle');
+
+// Initial draw (blank field)
+drawField({ dist:40, angle:0 }, null);
+</script>
+</body>
+</html>
