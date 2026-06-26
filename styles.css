@@ -153,6 +153,12 @@ body::before {
   background: linear-gradient(180deg, #b98cff 0%, #7c4dff 50%, #5a23d6 100%);
   color: #fff; box-shadow: 0 6px 0 #3d1a96, 0 14px 30px rgba(124,77,255,.32);
 }
+.btn-afl {
+  display: block; text-align: center; text-decoration: none;
+  background: linear-gradient(180deg, #7aff9e 0%, #27d17f 45%, #12a85e 100%);
+  color: #01250f; box-shadow: 0 6px 0 #0b7040, 0 14px 30px rgba(39,209,127,.3);
+  font-weight: 800; letter-spacing: .5px;
+}
 .btn-ghost {
   background: rgba(255,255,255,.08); color: var(--white);
   border: 1px solid rgba(255,255,255,.18); box-shadow: none; font-weight: 600;
