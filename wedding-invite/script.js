@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initEventTabs();
   initPetals();
   initBackToTop();
-  initRSVP();
   initChime();
 });
 
@@ -252,29 +251,6 @@ function initBackToTop(){
     btn.classList.toggle('show', window.scrollY > 600);
   }, { passive: true });
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-}
-
-// ---- RSVP FORM -------------------------------------------------------------------
-function initRSVP(){
-  const form = document.getElementById('rsvp-form');
-  const success = document.getElementById('rsvp-success');
-  if(!form) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form).entries());
-    data.events = [...form.querySelectorAll('input[name="events"]:checked')].map(i => i.value);
-
-    try {
-      const existing = JSON.parse(localStorage.getItem('rsvps') || '[]');
-      existing.push({ ...data, submittedAt: new Date().toISOString() });
-      localStorage.setItem('rsvps', JSON.stringify(existing));
-    } catch (err) { /* localStorage unavailable — no-op, still show success */ }
-
-    form.hidden = true;
-    success.hidden = false;
-    playChime('success');
-  });
 }
 
 // ---- TINY PROCEDURAL SOUND (no audio files needed) --------------------------------

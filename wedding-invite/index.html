@@ -45,10 +45,8 @@
     </button>
     <nav class="nav-links" id="nav-links">
       <a href="#hero" data-nav>Home</a>
-      <a href="#story" data-nav>Our Story</a>
       <a href="#events" data-nav>Events</a>
       <a href="#gallery" data-nav>Gallery</a>
-      <a href="#rsvp" data-nav>RSVP</a>
     </nav>
     <button class="chime-toggle" id="chime-toggle" title="Toggle sound" aria-pressed="true">
       <svg viewBox="0 0 24 24" class="icon-sound-on"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/><path d="M16.5 12a3.5 3.5 0 0 0-2-3.16v6.32A3.5 3.5 0 0 0 16.5 12z" fill="currentColor"/><path d="M15 5.14v2.1a6 6 0 0 1 0 9.52v2.1a8 8 0 0 0 0-13.72z" fill="currentColor"/></svg>
@@ -73,7 +71,36 @@
     </h1>
     <p class="hero-tag reveal">are tying the knot</p>
 
-    <div class="couple-stage reveal" id="couple-stage">
+    <div class="hero-photo-frame reveal" id="hero-photo-frame">
+      <img src="assets/couple-photo.jpg" alt="Shanky and Simran" class="hero-photo"
+           onerror="this.parentElement.classList.add('img-missing')">
+      <div class="hero-photo-missing-msg">
+        <span>Drop <code>couple-photo.jpg</code> into<br><code>/wedding-invite/assets/</code><br>to see it here</span>
+      </div>
+      <div class="sparkle s1" aria-hidden="true">&#10022;</div>
+      <div class="sparkle s2" aria-hidden="true">&#10022;</div>
+      <div class="sparkle s3" aria-hidden="true">&#10022;</div>
+    </div>
+
+    <div class="hero-countdown reveal" id="hero-countdown" aria-live="polite">
+      <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-label">days</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">hrs</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">min</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">sec</span></div>
+    </div>
+    <p class="cd-caption reveal">until we say &ldquo;I do&rdquo; &mdash; Ring Ceremony, <span id="wedding-year-label">5 Feb</span></p>
+
+    <a href="#events" class="scroll-cue" aria-label="Scroll down">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ===================== EVENTS ===================== -->
+  <section id="events" class="events">
+    <p class="eyebrow reveal center">Save the dates</p>
+    <h2 class="section-title reveal center">The Celebrations</h2>
+
+    <div class="couple-stage couple-stage--compact reveal" id="couple-stage">
       <!-- illustrated caricature couple, outfits swapped via CSS using body[data-active-event] -->
       <svg id="couple-illustration" viewBox="0 0 640 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated caricature of Shanky and Simran">
         <defs>
@@ -234,48 +261,7 @@
           <path d="M6 150 C -32 152 -66 150 -94 152" stroke="#b97d51" stroke-width="20" stroke-linecap="round" fill="none"/>
         </g>
       </svg>
-
-      <div class="sparkle s1" aria-hidden="true">&#10022;</div>
-      <div class="sparkle s2" aria-hidden="true">&#10022;</div>
-      <div class="sparkle s3" aria-hidden="true">&#10022;</div>
     </div>
-
-    <div class="hero-countdown reveal" id="hero-countdown" aria-live="polite">
-      <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-label">days</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">hrs</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">min</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">sec</span></div>
-    </div>
-    <p class="cd-caption reveal">until we say &ldquo;I do&rdquo; &mdash; Ring Ceremony, <span id="wedding-year-label">5 Feb</span></p>
-
-    <a href="#story" class="scroll-cue" aria-label="Scroll down">
-      <span></span>
-    </a>
-  </section>
-
-  <!-- ===================== OUR STORY ===================== -->
-  <section id="story" class="story">
-    <p class="eyebrow reveal center">A little bit of us</p>
-    <h2 class="section-title reveal center">Our Story</h2>
-    <div class="story-wrap">
-      <div class="polaroid reveal">
-        <div class="polaroid-photo" id="couple-photo-slot">
-          <span class="photo-placeholder-text">Drop <code>couple-photo.jpg</code> into<br><code>/wedding-invite/assets/</code><br>to see it here</span>
-        </div>
-        <p class="polaroid-caption">that evening by the sea</p>
-      </div>
-      <div class="story-text reveal">
-        <p>What started as easy laughter on a windswept beach turned into forever. Shanky &amp; Simran are overjoyed to invite their favourite people to celebrate three days of love, colour, and dhol beats.</p>
-        <p>From the intimacy of the ring ceremony to the joyous chaos of the baraat and the sparkle of the reception &mdash; every moment is better with you there.</p>
-        <div class="signature">Shanky &amp; Simran</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== EVENTS ===================== -->
-  <section id="events" class="events">
-    <p class="eyebrow reveal center">Save the dates</p>
-    <h2 class="section-title reveal center">The Celebrations</h2>
 
     <div class="event-tabs reveal" role="tablist" aria-label="Wedding events">
       <button class="event-tab active" data-event="sagan" role="tab" aria-selected="true">
@@ -335,45 +321,6 @@
       <div class="gallery-tile reveal" style="--tilt:3deg"><div class="tile-inner tile-quote">Two families, one big fat celebration</div></div>
     </div>
     <p class="gallery-hint reveal center">more photos coming soon &mdash; this space is ready whenever you add them</p>
-  </section>
-
-  <!-- ===================== RSVP ===================== -->
-  <section id="rsvp" class="rsvp">
-    <p class="eyebrow reveal center">Kindly respond</p>
-    <h2 class="section-title reveal center">RSVP</h2>
-    <form class="rsvp-form reveal" id="rsvp-form">
-      <div class="field">
-        <label for="name">Your name(s)</label>
-        <input type="text" id="name" name="name" required placeholder="e.g. Rohan &amp; Priya">
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required placeholder="you@example.com">
-      </div>
-      <div class="field">
-        <label>Which celebrations will you join?</label>
-        <div class="checks">
-          <label class="chip"><input type="checkbox" name="events" value="sagan"><span>Ring Ceremony</span></label>
-          <label class="chip"><input type="checkbox" name="events" value="wedding"><span>Wedding &amp; Baraat</span></label>
-          <label class="chip"><input type="checkbox" name="events" value="reception"><span>Reception</span></label>
-        </div>
-      </div>
-      <div class="field">
-        <label for="guests">Number of guests</label>
-        <input type="number" id="guests" name="guests" min="1" max="10" value="1">
-      </div>
-      <div class="field">
-        <label for="wishes">A wish for the couple</label>
-        <textarea id="wishes" name="wishes" rows="3" placeholder="Write something lovely..."></textarea>
-      </div>
-      <button type="submit" class="btn-primary">Send RSVP</button>
-      <p class="form-note">This form saves your response on this device only &mdash; connect it to a backend or a service like Formspree/Google Forms to collect responses for real.</p>
-    </form>
-    <div class="rsvp-success" id="rsvp-success" hidden>
-      <div class="rsvp-success-icon">&#128149;</div>
-      <h3>Thank you!</h3>
-      <p>Your RSVP has been recorded. We can't wait to celebrate with you.</p>
-    </div>
   </section>
 
   <!-- ===================== FOOTER ===================== -->
