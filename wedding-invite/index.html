@@ -3,335 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shanky &amp; Simran | We're Getting Married</title>
+<title>Shanky &amp; Simran | 05&ndash;07 February 2027</title>
 <meta name="description" content="Join Shanky &amp; Simran as they celebrate their Ring Ceremony, Wedding &amp; Reception.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E">
 </head>
-<body data-active-event="sagan">
+<body>
+<div class="wc-app">
+
+  <!-- floating petals -->
+  <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+  <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
 
   <!-- ===================== ENVELOPE INTRO ===================== -->
-  <div id="envelope-screen" aria-hidden="false">
-    <div class="envelope-wrap">
-      <div class="envelope" id="envelope">
-        <div class="envelope-back"></div>
-        <div class="petals-mini" aria-hidden="true"></div>
-        <div class="envelope-card">
-          <p class="ec-kicker">You are cordially invited to celebrate</p>
-          <h1 class="ec-names"><span>Shanky</span><span class="amp">&amp;</span><span>Simran</span></h1>
-          <p class="ec-sub">Ring Ceremony &middot; Wedding &middot; Reception</p>
-        </div>
-        <div class="envelope-front">
-          <div class="envelope-seal" id="seal">
-            <span>S&nbsp;S</span>
-          </div>
-        </div>
-      </div>
-      <p class="tap-hint">tap the seal to open your invitation</p>
+  <div class="envelope-screen" id="envelope-screen">
+    <div class="envelope-card" id="envelope-card">
+      <div class="seal">S&amp;S</div>
+      <div class="env-title">An Invitation Awaits</div>
+      <div class="env-sub">Tap to open</div>
     </div>
   </div>
 
-  <!-- floating petals canvas, lives behind everything -->
-  <canvas id="petal-canvas" aria-hidden="true"></canvas>
+  <div class="wc-content">
+    <button class="music-btn" id="music-btn" aria-label="Toggle music" title="Toggle music">&#9834;</button>
 
-  <!-- ===================== NAV ===================== -->
-  <header class="site-nav" id="site-nav">
-    <a href="#hero" class="brand">S&nbsp;&amp;&nbsp;S</a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links" id="nav-links">
-      <a href="#hero" data-nav>Home</a>
-      <a href="#events" data-nav>Events</a>
-      <a href="#gallery" data-nav>Gallery</a>
-    </nav>
-    <button class="chime-toggle" id="chime-toggle" title="Toggle sound" aria-pressed="true">
-      <svg viewBox="0 0 24 24" class="icon-sound-on"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/><path d="M16.5 12a3.5 3.5 0 0 0-2-3.16v6.32A3.5 3.5 0 0 0 16.5 12z" fill="currentColor"/><path d="M15 5.14v2.1a6 6 0 0 1 0 9.52v2.1a8 8 0 0 0 0-13.72z" fill="currentColor"/></svg>
-      <svg viewBox="0 0 24 24" class="icon-sound-off" hidden><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/><path d="M19.5 12l2.5-2.5-1.5-1.5-2.5 2.5-2.5-2.5-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 2.5-2.5 2.5 2.5 1.5-1.5-2.5-2.5z" fill="currentColor"/></svg>
-    </button>
-  </header>
-
-  <!-- ===================== HERO ===================== -->
-  <section id="hero" class="hero">
-    <div class="hero-frame">
-      <div class="corner corner-tl" aria-hidden="true"></div>
-      <div class="corner corner-tr" aria-hidden="true"></div>
-      <div class="corner corner-bl" aria-hidden="true"></div>
-      <div class="corner corner-br" aria-hidden="true"></div>
-    </div>
-
-    <p class="eyebrow reveal">Together with their families</p>
-    <h1 class="hero-names reveal">
-      <span class="script">Shanky</span>
-      <span class="hero-amp">&amp;</span>
-      <span class="script">Simran</span>
-    </h1>
-    <p class="hero-tag reveal">are tying the knot</p>
-
-    <div class="hero-photo-frame reveal" id="hero-photo-frame">
-      <img src="assets/couple-photo.jpg" alt="Shanky and Simran" class="hero-photo"
-           onerror="this.parentElement.classList.add('img-missing')">
-      <div class="hero-photo-missing-msg">
-        <span>Drop <code>couple-photo.jpg</code> into<br><code>/wedding-invite/assets/</code><br>to see it here</span>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="hero-media duo duo-hero">
+        <img src="assets/hero-couple.jpg" alt="Shanky and Simran">
+        <div class="duo-tint"></div>
+        <div class="hero-shimmer"></div>
+        <div class="duo-shade"></div>
       </div>
-      <div class="sparkle s1" aria-hidden="true">&#10022;</div>
-      <div class="sparkle s2" aria-hidden="true">&#10022;</div>
-      <div class="sparkle s3" aria-hidden="true">&#10022;</div>
-    </div>
+      <div class="hero-overlay">
+        <p class="eyebrow">Together with their families</p>
+        <h1 class="names">Shanky<span class="amp">&amp;</span>Simran</h1>
+        <p class="date-line">05 &ndash; 07 February 2027</p>
+        <div class="scroll-cue">Scroll</div>
+      </div>
+    </section>
 
-    <div class="hero-countdown reveal" id="hero-countdown" aria-live="polite">
-      <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-label">days</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">hrs</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">min</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">sec</span></div>
-    </div>
-    <p class="cd-caption reveal">until we say &ldquo;I do&rdquo; &mdash; Ring Ceremony, <span id="wedding-year-label">5 Feb</span></p>
+    <!-- ===================== COUNTDOWN ===================== -->
+    <section class="pad countdown reveal">
+      <p class="eyebrow" style="text-align:center">The countdown begins</p>
+      <h2 class="section-title">Counting Down to Forever</h2>
+      <div class="timer">
+        <div class="tunit"><span class="tnum" id="cd-days">00</span><span class="tlabel">Days</span></div>
+        <div class="tunit"><span class="tnum" id="cd-hours">00</span><span class="tlabel">Hours</span></div>
+        <div class="tunit"><span class="tnum" id="cd-mins">00</span><span class="tlabel">Minutes</span></div>
+        <div class="tunit"><span class="tnum" id="cd-secs">00</span><span class="tlabel">Seconds</span></div>
+      </div>
+    </section>
 
-    <a href="#events" class="scroll-cue" aria-label="Scroll down">
-      <span></span>
-    </a>
-  </section>
+    <!-- ===================== EVENTS ===================== -->
+    <section class="pad events reveal">
+      <p class="eyebrow" style="text-align:center">Celebration</p>
+      <h2 class="section-title">Three Days of Joy</h2>
 
-  <!-- ===================== EVENTS ===================== -->
-  <section id="events" class="events">
-    <p class="eyebrow reveal center">Save the dates</p>
-    <h2 class="section-title reveal center">The Celebrations</h2>
+      <div class="event-tabs" role="tablist" aria-label="Wedding events">
+        <button class="tab-btn active" data-index="0" role="tab" aria-selected="true">
+          <span class="tab-date">05 FEB</span><span class="tab-name">Sagan</span>
+        </button>
+        <button class="tab-btn" data-index="1" role="tab" aria-selected="false">
+          <span class="tab-date">06 FEB</span><span class="tab-name">Baraat</span>
+        </button>
+        <button class="tab-btn" data-index="2" role="tab" aria-selected="false">
+          <span class="tab-date">07 FEB</span><span class="tab-name">Reception</span>
+        </button>
+      </div>
 
-    <div class="couple-stage couple-stage--compact reveal" id="couple-stage">
-      <!-- illustrated caricature couple, outfits swapped via CSS using body[data-active-event] -->
-      <svg id="couple-illustration" viewBox="0 0 640 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated caricature of Shanky and Simran">
-        <defs>
-          <radialGradient id="stageGlow" cx="50%" cy="42%" r="60%">
-            <stop offset="0%" stop-color="#fff6f2"/>
-            <stop offset="100%" stop-color="#fbeaf0" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="goldEdge" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#e7c98a"/>
-            <stop offset="100%" stop-color="#c79a52"/>
-          </linearGradient>
-        </defs>
-
-        <ellipse cx="320" cy="270" rx="300" ry="260" fill="url(#stageGlow)"/>
-        <ellipse class="ground-shadow" cx="320" cy="486" rx="190" ry="18" fill="#d46a8c" opacity="0.14"/>
-
-        <!-- ===== SIMRAN (bride) ===== -->
-        <g id="simran" transform="translate(210,60)">
-          <!-- hair back -->
-          <path class="hair-back" d="M20 120 C -10 200, -5 320, 30 400 L 55 400 C 35 320, 35 210, 60 130 Z" fill="#3b2620"/>
-
-          <!-- bare shoulders / upper chest, shared across all three outfits -->
-          <path d="M-10 168 C -10 140 18 130 56 130 C 94 130 122 140 122 168 L 118 205 Q 56 224 -6 205 Z" fill="#d9976a"/>
-
-          <!-- outfit layers per event (only one visible at a time) -->
-          <g class="outfit outfit-sagan">
-            <!-- mustard halter dress -->
-            <path d="M-10 205 C -32 265 -38 400 -28 430 L 126 430 C 136 400 130 265 108 205 C 84 186 10 186 -10 205 Z" fill="#e3963e"/>
-            <path d="M-6 210 Q 56 232 114 207" fill="none" stroke="#c77b2a" stroke-width="3"/>
-            <line x1="6" y1="136" x2="-2" y2="207" stroke="#e3963e" stroke-width="8" stroke-linecap="round"/>
-            <line x1="104" y1="136" x2="110" y2="207" stroke="#e3963e" stroke-width="8" stroke-linecap="round"/>
-            <!-- eyelet lace dot texture -->
-            <g fill="#c77b2a" opacity="0.55">
-              <circle cx="0" cy="255" r="2.6"/><circle cx="26" cy="266" r="2.6"/><circle cx="54" cy="270" r="2.6"/><circle cx="82" cy="264" r="2.6"/><circle cx="106" cy="252" r="2.6"/>
-              <circle cx="10" cy="300" r="2.6"/><circle cx="38" cy="310" r="2.6"/><circle cx="68" cy="310" r="2.6"/><circle cx="96" cy="298" r="2.6"/>
-              <circle cx="18" cy="350" r="2.6"/><circle cx="50" cy="358" r="2.6"/><circle cx="82" cy="352" r="2.6"/>
-            </g>
-          </g>
-
-          <g class="outfit outfit-wedding">
-            <!-- gold bridal lehenga + choli -->
-            <path d="M-10 205 C -36 275 -44 425 -32 434 L 130 434 C 142 425 136 275 114 205 C 90 186 12 186 -10 205 Z" fill="#d9be86"/>
-            <path d="M-6 210 Q 56 234 112 207" fill="none" stroke="#8f6f34" stroke-width="3"/>
-            <line x1="6" y1="136" x2="-2" y2="207" stroke="#d9be86" stroke-width="8" stroke-linecap="round"/>
-            <line x1="104" y1="136" x2="110" y2="207" stroke="#d9be86" stroke-width="8" stroke-linecap="round"/>
-            <!-- gold embroidery dots + hem border -->
-            <g fill="#8f6f34">
-              <circle cx="0" cy="255" r="3"/><circle cx="26" cy="266" r="3"/><circle cx="54" cy="270" r="3"/><circle cx="82" cy="264" r="3"/><circle cx="106" cy="252" r="3"/>
-              <circle cx="10" cy="310" r="3"/><circle cx="40" cy="320" r="3"/><circle cx="70" cy="320" r="3"/><circle cx="98" cy="306" r="3"/>
-            </g>
-            <path d="M-30 425 Q 50 445 128 425" fill="none" stroke="#8f6f34" stroke-width="4"/>
-            <!-- layered bridal necklace -->
-            <path d="M2 208 Q 56 240 110 206" fill="none" stroke="#8f6f34" stroke-width="2.5"/>
-            <path d="M6 218 Q 56 254 106 216" fill="none" stroke="#7a2c34" stroke-width="2.5"/>
-            <circle cx="56" cy="253" r="4" fill="#7a2c34"/>
-            <!-- dupatta veil over head, draped to one side -->
-            <path d="M20 8 C -22 24 -30 90 -6 145 C 2 100 6 45 34 10 Z" fill="#d9be86" opacity="0.92"/>
-            <path d="M20 8 C -22 24 -30 90 -6 145" fill="none" stroke="#8f6f34" stroke-width="1.5" opacity="0.8"/>
-            <path d="M92 250 C 118 278 126 348 110 412 C 100 405 90 345 88 270 Z" fill="#9c2742" stroke="url(#goldEdge)" stroke-width="1.5"/>
-          </g>
-
-          <g class="outfit outfit-reception">
-            <!-- rose gown -->
-            <path d="M-10 205 C -30 265 -36 425 -24 434 L 120 434 C 132 425 126 265 104 205 C 82 186 10 186 -10 205 Z" fill="#c65b82"/>
-            <path d="M-4 210 Q 54 230 106 207" fill="none" stroke="#f6d9e4" stroke-width="3"/>
-            <line x1="6" y1="136" x2="-2" y2="207" stroke="#c65b82" stroke-width="8" stroke-linecap="round"/>
-            <line x1="104" y1="136" x2="110" y2="207" stroke="#c65b82" stroke-width="8" stroke-linecap="round"/>
-            <g fill="#f6d9e4" opacity="0.85">
-              <circle cx="6" cy="280" r="2.4"/><circle cx="30" cy="310" r="2.4"/><circle cx="60" cy="330" r="2.4"/>
-              <circle cx="90" cy="310" r="2.4"/><circle cx="100" cy="280" r="2.4"/>
-            </g>
-          </g>
-
-          <!-- neck + head -->
-          <path d="M40 108 L 70 108 L 70 140 L 40 140 Z" fill="#c98a5f"/>
-          <circle cx="55" cy="70" r="48" fill="#d9976a"/>
-          <!-- hair front / center part -->
-          <path d="M8 55 C 8 5 100 5 100 55 C 100 35 92 25 55 25 C 18 25 8 35 8 55 Z" fill="#3b2620"/>
-          <path d="M6 58 C 0 90 6 118 20 128 C 10 100 10 75 18 55 Z" fill="#3b2620"/>
-          <path d="M104 58 C 110 90 104 118 90 128 C 100 100 100 75 92 55 Z" fill="#3b2620"/>
-          <!-- bindi + brows + eyes + smile -->
-          <circle cx="55" cy="58" r="2.6" fill="#9c2742"/>
-          <path d="M34 62 Q 40 57 47 61" stroke="#2a1a16" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <path d="M63 61 Q 70 57 76 62" stroke="#2a1a16" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <circle cx="41" cy="70" r="3.6" fill="#2a1a16"/><circle cx="69" cy="70" r="3.6" fill="#2a1a16"/>
-          <circle cx="42.3" cy="68.7" r="1" fill="#fff"/><circle cx="70.3" cy="68.7" r="1" fill="#fff"/>
-          <path d="M42 86 Q 55 96 68 86" stroke="#7a2c34" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <circle class="blush" cx="34" cy="80" r="6" fill="#f2a1a1" opacity="0.55"/>
-          <circle class="blush" cx="76" cy="80" r="6" fill="#f2a1a1" opacity="0.55"/>
-          <!-- earrings -->
-          <circle cx="12" cy="86" r="3.2" fill="url(#goldEdge)"/><circle cx="98" cy="86" r="3.2" fill="url(#goldEdge)"/>
-          <!-- maang tikka only on wedding day -->
-          <path class="outfit outfit-wedding" d="M55 22 L 55 34" stroke="url(#goldEdge)" stroke-width="2"/>
-          <circle class="outfit outfit-wedding" cx="55" cy="36" r="3" fill="url(#goldEdge)"/>
-        </g>
-
-        <!-- ===== SHANKY (groom) ===== -->
-        <g id="shanky" transform="translate(360,44)">
-          <g class="outfit outfit-sagan">
-            <!-- black tux -->
-            <path d="M-20 140 C -42 210 -46 300 -34 312 L 132 312 C 142 300 138 210 116 140 C 92 124 6 124 -20 140 Z" fill="#1c1a22"/>
-            <path d="M-14 145 L 22 208 L 32 202 L 4 142 Z" fill="#141319"/>
-            <path d="M118 145 L 82 208 L 72 202 L 100 142 Z" fill="#141319"/>
-            <path d="M32 140 L 78 140 L 60 205 L 50 205 Z" fill="#f7f3ee"/>
-            <polygon points="46,150 58,159 46,168" fill="#1c1a22"/>
-            <polygon points="70,150 58,159 70,168" fill="#1c1a22"/>
-            <rect x="55" y="154" width="6" height="9" fill="#1c1a22"/>
-            <polygon points="18,222 34,222 26,235" fill="#e8a6bc"/>
-          </g>
-          <g class="outfit outfit-wedding">
-            <!-- gold/beige sherwani -->
-            <path d="M-20 140 C -44 215 -50 305 -36 314 L 134 314 C 146 305 140 215 116 140 C 92 122 4 122 -20 140 Z" fill="#e4cb98" stroke="#b99655" stroke-width="1.5"/>
-            <path d="M8 136 L 90 136 L 96 168 L 2 168 Z" fill="url(#goldEdge)"/>
-            <line x1="56" y1="168" x2="56" y2="300" stroke="#b99655" stroke-width="2"/>
-            <circle cx="56" cy="195" r="2.6" fill="#b99655"/><circle cx="56" cy="225" r="2.6" fill="#b99655"/><circle cx="56" cy="255" r="2.6" fill="#b99655"/>
-            <g stroke="url(#goldEdge)" stroke-width="2" fill="none">
-              <path d="M-14 165 Q 50 185 110 162"/>
-              <path d="M-18 215 Q 50 238 114 210"/>
-            </g>
-            <!-- kirpan -->
-            <line x1="120" y1="210" x2="120" y2="288" stroke="#c9a15a" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="120" cy="204" r="4.5" fill="#c9a15a"/>
-            <!-- pink turban (safa) -->
-            <path d="M8 -18 C -18 -8 -18 26 8 34 C 8 10 12 -6 8 -18 Z" fill="#d46a8c"/>
-            <path d="M8 -18 C 40 -32 90 -22 96 6 C 96 24 78 34 48 32 C 60 12 46 -8 8 -18 Z" fill="#e8a6bc"/>
-            <path d="M46 30 C 66 26 90 14 96 6" stroke="url(#goldEdge)" stroke-width="2.4" fill="none"/>
-            <circle cx="52" cy="6" r="5" fill="url(#goldEdge)"/>
-          </g>
-          <g class="outfit outfit-reception">
-            <!-- black tux, reception colourway -->
-            <path d="M-20 140 C -40 210 -44 300 -32 312 L 130 312 C 140 300 136 210 114 140 C 90 124 6 124 -20 140 Z" fill="#201d26"/>
-            <path d="M-14 145 L 22 208 L 32 202 L 4 142 Z" fill="#16141c"/>
-            <path d="M118 145 L 82 208 L 72 202 L 100 142 Z" fill="#16141c"/>
-            <path d="M32 140 L 78 140 L 60 205 L 50 205 Z" fill="#f7f3ee"/>
-            <polygon points="46,150 58,159 46,168" fill="#7a1f36"/>
-            <polygon points="70,150 58,159 70,168" fill="#7a1f36"/>
-            <rect x="55" y="154" width="6" height="9" fill="#7a1f36"/>
-            <polygon points="18,222 34,222 26,235" fill="url(#goldEdge)"/>
-          </g>
-          <!-- neck + head -->
-          <path d="M38 100 L 66 100 L 66 146 L 38 146 Z" fill="#a9714a"/>
-          <circle cx="52" cy="62" r="46" fill="#b97d51"/>
-          <!-- cap (everyday look, hidden on wedding day since turban replaces it) -->
-          <g class="cap-normal">
-            <path d="M6 40 C 6 6 98 6 98 40 L 98 46 L 6 46 Z" fill="#2b2630"/>
-            <path d="M2 46 C 20 54 84 54 102 46 L 100 40 C 78 48 26 48 4 40 Z" fill="#201b24"/>
-          </g>
-          <!-- beard -->
-          <path d="M12 66 C 10 96 26 118 52 120 C 78 118 94 96 92 66 C 92 90 78 104 52 104 C 26 104 12 90 12 66 Z" fill="#241b19"/>
-          <!-- brows, sunglasses-on-cap, eyes, smile -->
-          <path d="M22 56 Q 30 50 40 55" stroke="#241b19" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <path d="M64 55 Q 74 50 82 56" stroke="#241b19" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <circle cx="34" cy="64" r="3.6" fill="#241b19"/><circle cx="70" cy="64" r="3.6" fill="#241b19"/>
-          <circle cx="35.3" cy="62.7" r="1" fill="#fff"/><circle cx="71.3" cy="62.7" r="1" fill="#fff"/>
-          <path d="M34 88 Q 52 98 70 88" stroke="#241b19" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M0 34 C 14 18 90 18 104 34" stroke="#3a3a3a" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85"/>
-          <!-- arm around simran's shoulder -->
-          <path d="M6 150 C -32 152 -66 150 -94 152" stroke="#b97d51" stroke-width="20" stroke-linecap="round" fill="none"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="event-tabs reveal" role="tablist" aria-label="Wedding events">
-      <button class="event-tab active" data-event="sagan" role="tab" aria-selected="true">
-        <span class="tab-date">05 Feb</span><span class="tab-name">Ring Ceremony &amp; Sagan</span>
-      </button>
-      <button class="event-tab" data-event="wedding" role="tab" aria-selected="false">
-        <span class="tab-date">06 Feb</span><span class="tab-name">Wedding &amp; Baraat</span>
-      </button>
-      <button class="event-tab" data-event="reception" role="tab" aria-selected="false">
-        <span class="tab-date">07 Feb</span><span class="tab-name">Reception</span>
-      </button>
-    </div>
-
-    <div class="event-panels">
-      <article class="event-panel active" data-panel="sagan">
-        <div class="ep-icon">&#128141;</div>
-        <h3>Ring Ceremony &amp; Sagan</h3>
-        <p class="ep-date">Thursday, 5th February</p>
-        <p class="ep-desc">An intimate exchange of rings and blessings as our families come together for the first time to celebrate the beginning of our forever.</p>
-        <p class="ep-dress">Dress code: Pastels &amp; Pinks</p>
-        <div class="ep-countdown" data-countdown="sagan">
-          <span data-cd-d>--</span>d <span data-cd-h>--</span>h <span data-cd-m>--</span>m <span data-cd-s>--</span>s
+      <div class="event-panels">
+        <div class="event-panel active" data-index="0">
+          <div class="event-media duo duo-ring">
+            <img src="assets/event-cocktail.jpg" alt="Ring Ceremony and Sagan">
+            <div class="duo-tint"></div>
+            <div class="duo-shade"></div>
+          </div>
+          <div class="event-info">
+            <span class="ev-date">05 FEB &middot; 2027</span>
+            <h3>Ring Ceremony &amp; Sagan</h3>
+            <p>Our families come together to bless the union with rings, rituals and heartfelt wishes for the road ahead.</p>
+          </div>
         </div>
-      </article>
-      <article class="event-panel" data-panel="wedding">
-        <div class="ep-icon">&#128142;</div>
-        <h3>Wedding &amp; Baraat</h3>
-        <p class="ep-date">Friday, 6th February</p>
-        <p class="ep-desc">Dhol, dance and the groom's grand baraat lead into the sacred wedding rituals &mdash; come dance us down the aisle.</p>
-        <p class="ep-dress">Dress code: Reds, Maroons &amp; Gold</p>
-        <div class="ep-countdown" data-countdown="wedding">
-          <span data-cd-d>--</span>d <span data-cd-h>--</span>h <span data-cd-m>--</span>m <span data-cd-s>--</span>s
+        <div class="event-panel" data-index="1">
+          <div class="event-media duo duo-wedding">
+            <img src="assets/event-wedding.jpeg" alt="Wedding and Baraat">
+            <div class="duo-tint"></div>
+            <div class="duo-shade"></div>
+          </div>
+          <div class="event-info">
+            <span class="ev-date">06 FEB &middot; 2027</span>
+            <h3>Wedding &amp; Baraat</h3>
+            <p>The Baraat arrives with music and dance as Shanky and Simran take their vows before family and friends.</p>
+          </div>
         </div>
-      </article>
-      <article class="event-panel" data-panel="reception">
-        <div class="ep-icon">&#127881;</div>
-        <h3>Reception</h3>
-        <p class="ep-date">Saturday, 7th February</p>
-        <p class="ep-desc">An evening of dinner, dancing and celebration as Mr. &amp; Mrs. raise a toast to new beginnings with everyone they love.</p>
-        <p class="ep-dress">Dress code: Evening Glam</p>
-        <div class="ep-countdown" data-countdown="reception">
-          <span data-cd-d>--</span>d <span data-cd-h>--</span>h <span data-cd-m>--</span>m <span data-cd-s>--</span>s
+        <div class="event-panel" data-index="2">
+          <div class="event-media duo duo-reception">
+            <img src="assets/event-cocktail.jpg" alt="Reception">
+            <div class="duo-tint"></div>
+            <div class="duo-shade"></div>
+          </div>
+          <div class="event-info">
+            <span class="ev-date">07 FEB &middot; 2027</span>
+            <h3>Reception</h3>
+            <p>An evening of celebration, dinner and dancing to toast the newlyweds long into the night.</p>
+          </div>
         </div>
-      </article>
-    </div>
-    <p class="events-hint reveal center">tap a date above &mdash; watch Shanky &amp; Simran change outfits for the occasion &#10024;</p>
-  </section>
+      </div>
+    </section>
 
-  <!-- ===================== GALLERY ===================== -->
-  <section id="gallery" class="gallery">
-    <p class="eyebrow reveal center">Moments</p>
-    <h2 class="section-title reveal center">Gallery</h2>
-    <div class="gallery-grid">
-      <div class="gallery-tile reveal" style="--tilt:-3deg"><div class="tile-inner tile-photo"></div></div>
-      <div class="gallery-tile reveal" style="--tilt:2deg"><div class="tile-inner tile-quote">"Finally!" &mdash; every relative, probably</div></div>
-      <div class="gallery-tile reveal" style="--tilt:-2deg"><div class="tile-inner tile-photo tile-photo--alt"></div></div>
-      <div class="gallery-tile reveal" style="--tilt:3deg"><div class="tile-inner tile-quote">Two families, one big fat celebration</div></div>
-    </div>
-    <p class="gallery-hint reveal center">more photos coming soon &mdash; this space is ready whenever you add them</p>
-  </section>
+    <!-- ===================== FOOTER ===================== -->
+    <footer>
+      <p class="names-sm">Shanky &amp; Simran</p>
+      <p class="date-sm">05 &ndash; 07 February 2027</p>
+    </footer>
+  </div>
+</div>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="site-footer">
-    <div class="footer-monogram">S&nbsp;&amp;&nbsp;S</div>
-    <p class="footer-hashtag">#ShankyWedsSimran</p>
-    <p class="footer-note">With love, from our families to yours.</p>
-  </footer>
-
-  <button id="back-to-top" aria-label="Back to top">&#8593;</button>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
