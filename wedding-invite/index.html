@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shanky &amp; Simran | We're Getting Married</title>
+<meta name="description" content="Join Shanky &amp; Simran as they celebrate their Ring Ceremony, Wedding &amp; Reception.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E">
+</head>
+<body data-active-event="sagan">
+
+  <!-- ===================== ENVELOPE INTRO ===================== -->
+  <div id="envelope-screen" aria-hidden="false">
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope">
+        <div class="envelope-back"></div>
+        <div class="petals-mini" aria-hidden="true"></div>
+        <div class="envelope-card">
+          <p class="ec-kicker">You are cordially invited to celebrate</p>
+          <h1 class="ec-names"><span>Shanky</span><span class="amp">&amp;</span><span>Simran</span></h1>
+          <p class="ec-sub">Ring Ceremony &middot; Wedding &middot; Reception</p>
+        </div>
+        <div class="envelope-front">
+          <div class="envelope-seal" id="seal">
+            <span>S&nbsp;S</span>
+          </div>
+        </div>
+      </div>
+      <p class="tap-hint">tap the seal to open your invitation</p>
+    </div>
+  </div>
+
+  <!-- floating petals canvas, lives behind everything -->
+  <canvas id="petal-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="site-nav" id="site-nav">
+    <a href="#hero" class="brand">S&nbsp;&amp;&nbsp;S</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="nav-links">
+      <a href="#hero" data-nav>Home</a>
+      <a href="#story" data-nav>Our Story</a>
+      <a href="#events" data-nav>Events</a>
+      <a href="#gallery" data-nav>Gallery</a>
+      <a href="#rsvp" data-nav>RSVP</a>
+    </nav>
+    <button class="chime-toggle" id="chime-toggle" title="Toggle sound" aria-pressed="true">
+      <svg viewBox="0 0 24 24" class="icon-sound-on"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/><path d="M16.5 12a3.5 3.5 0 0 0-2-3.16v6.32A3.5 3.5 0 0 0 16.5 12z" fill="currentColor"/><path d="M15 5.14v2.1a6 6 0 0 1 0 9.52v2.1a8 8 0 0 0 0-13.72z" fill="currentColor"/></svg>
+      <svg viewBox="0 0 24 24" class="icon-sound-off" hidden><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/><path d="M19.5 12l2.5-2.5-1.5-1.5-2.5 2.5-2.5-2.5-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 2.5-2.5 2.5 2.5 1.5-1.5-2.5-2.5z" fill="currentColor"/></svg>
+    </button>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" class="hero">
+    <div class="hero-frame">
+      <div class="corner corner-tl" aria-hidden="true"></div>
+      <div class="corner corner-tr" aria-hidden="true"></div>
+      <div class="corner corner-bl" aria-hidden="true"></div>
+      <div class="corner corner-br" aria-hidden="true"></div>
+    </div>
+
+    <p class="eyebrow reveal">Together with their families</p>
+    <h1 class="hero-names reveal">
+      <span class="script">Shanky</span>
+      <span class="hero-amp">&amp;</span>
+      <span class="script">Simran</span>
+    </h1>
+    <p class="hero-tag reveal">are tying the knot</p>
+
+    <div class="couple-stage reveal" id="couple-stage">
+      <!-- illustrated caricature couple, outfits swapped via CSS using body[data-active-event] -->
+      <svg id="couple-illustration" viewBox="0 0 640 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated caricature of Shanky and Simran">
+        <defs>
+          <radialGradient id="stageGlow" cx="50%" cy="42%" r="60%">
+            <stop offset="0%" stop-color="#fff6f2"/>
+            <stop offset="100%" stop-color="#fbeaf0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="goldEdge" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#e7c98a"/>
+            <stop offset="100%" stop-color="#c79a52"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse cx="320" cy="270" rx="300" ry="260" fill="url(#stageGlow)"/>
+        <ellipse class="ground-shadow" cx="320" cy="486" rx="190" ry="18" fill="#d46a8c" opacity="0.14"/>
+
+        <!-- ===== SIMRAN (bride) ===== -->
+        <g id="simran" transform="translate(210,60)">
+          <!-- hair back -->
+          <path class="hair-back" d="M20 120 C -10 200, -5 320, 30 400 L 55 400 C 35 320, 35 210, 60 130 Z" fill="#3b2620"/>
+          <!-- outfit layers per event (only one visible at a time) -->
+          <g class="outfit outfit-sagan">
+            <path d="M-15 250 C -35 320 -40 420 -30 430 L 128 430 C 138 420 132 320 112 250 C 90 235 12 235 -15 250 Z" fill="#f3b8cd"/>
+            <path d="M-15 250 C -35 320 -40 420 -30 430 L 20 430 C 5 340 5 280 20 245 Z" fill="#eaa0ba"/>
+            <path d="M-10 260 Q 50 285 118 258" fill="none" stroke="#c98cae" stroke-width="4"/>
+            <circle cx="-6" cy="270" r="3.4" fill="#d4af6a"/><circle cx="14" cy="285" r="3.4" fill="#d4af6a"/><circle cx="36" cy="292" r="3.4" fill="#d4af6a"/>
+            <circle cx="60" cy="292" r="3.4" fill="#d4af6a"/><circle cx="84" cy="286" r="3.4" fill="#d4af6a"/><circle cx="104" cy="272" r="3.4" fill="#d4af6a"/>
+            <path d="M95 248 C 118 270 122 340 108 405 C 100 400 92 340 90 270 Z" fill="#eab3cc"/>
+          </g>
+          <g class="outfit outfit-wedding">
+            <path d="M-15 250 C -38 330 -46 425 -34 434 L 130 434 C 142 425 134 330 112 250 C 88 233 10 233 -15 250 Z" fill="#7a1f36"/>
+            <path d="M-15 250 C -38 330 -46 425 -34 434 L 24 434 C 8 340 8 280 22 245 Z" fill="#5f1729"/>
+            <path d="M-8 262 Q 50 292 116 260" fill="none" stroke="url(#goldEdge)" stroke-width="5"/>
+            <path d="M-4 300 Q 50 326 112 296" fill="none" stroke="url(#goldEdge)" stroke-width="3"/>
+            <g fill="#e7c98a">
+              <circle cx="0" cy="272" r="3.6"/><circle cx="22" cy="288" r="3.6"/><circle cx="46" cy="296" r="3.6"/>
+              <circle cx="70" cy="296" r="3.6"/><circle cx="94" cy="288" r="3.6"/><circle cx="112" cy="272" r="3.6"/>
+            </g>
+            <path d="M93 246 C 120 272 128 345 112 415 C 102 408 90 345 88 268 Z" fill="#9c2742" stroke="url(#goldEdge)" stroke-width="1.5"/>
+          </g>
+          <g class="outfit outfit-reception">
+            <path d="M-15 250 C -34 330 -40 425 -28 434 L 122 434 C 134 425 128 330 108 250 C 86 233 10 233 -15 250 Z" fill="#c65b82"/>
+            <path d="M-2 258 Q 50 280 108 256" fill="none" stroke="#f6d9e4" stroke-width="4"/>
+            <g fill="#f6d9e4" opacity="0.85">
+              <circle cx="6" cy="300" r="2.4"/><circle cx="30" cy="330" r="2.4"/><circle cx="60" cy="350" r="2.4"/>
+              <circle cx="90" cy="330" r="2.4"/><circle cx="100" cy="300" r="2.4"/>
+            </g>
+          </g>
+          <!-- neck + head -->
+          <path d="M40 108 L 70 108 L 70 135 L 40 135 Z" fill="#c98a5f"/>
+          <circle cx="55" cy="70" r="48" fill="#d9976a"/>
+          <!-- hair front / center part -->
+          <path d="M8 55 C 8 5 100 5 100 55 C 100 35 92 25 55 25 C 18 25 8 35 8 55 Z" fill="#3b2620"/>
+          <path d="M6 58 C 0 90 6 118 20 128 C 10 100 10 75 18 55 Z" fill="#3b2620"/>
+          <path d="M104 58 C 110 90 104 118 90 128 C 100 100 100 75 92 55 Z" fill="#3b2620"/>
+          <!-- bindi + brows + eyes + smile -->
+          <circle cx="55" cy="58" r="2.6" fill="#9c2742"/>
+          <path d="M34 62 Q 40 57 47 61" stroke="#2a1a16" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <path d="M63 61 Q 70 57 76 62" stroke="#2a1a16" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <circle cx="41" cy="70" r="3.6" fill="#2a1a16"/><circle cx="69" cy="70" r="3.6" fill="#2a1a16"/>
+          <circle cx="42.3" cy="68.7" r="1" fill="#fff"/><circle cx="70.3" cy="68.7" r="1" fill="#fff"/>
+          <path d="M42 86 Q 55 96 68 86" stroke="#7a2c34" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle class="blush" cx="34" cy="80" r="6" fill="#f2a1a1" opacity="0.55"/>
+          <circle class="blush" cx="76" cy="80" r="6" fill="#f2a1a1" opacity="0.55"/>
+          <!-- earrings -->
+          <circle cx="12" cy="86" r="3.2" fill="url(#goldEdge)"/><circle cx="98" cy="86" r="3.2" fill="url(#goldEdge)"/>
+          <!-- maang tikka only on wedding day -->
+          <path class="outfit outfit-wedding" d="M55 22 L 55 34" stroke="url(#goldEdge)" stroke-width="2"/>
+          <circle class="outfit outfit-wedding" cx="55" cy="36" r="3" fill="url(#goldEdge)"/>
+        </g>
+
+        <!-- ===== SHANKY (groom) ===== -->
+        <g id="shanky" transform="translate(360,44)">
+          <g class="outfit outfit-sagan">
+            <path d="M-20 140 C -42 210 -46 300 -34 312 L 132 312 C 142 300 138 210 116 140 C 92 124 6 124 -20 140 Z" fill="#f1ded1" stroke="#dbb99e" stroke-width="1.5"/>
+            <path d="M40 140 L 58 140 L 58 180 L 40 180 Z" fill="#e8a6bc"/>
+            <path d="M8 138 L 90 138 L 82 154 L 16 154 Z" fill="#dccb8f"/>
+          </g>
+          <g class="outfit outfit-wedding">
+            <path d="M-20 140 C -44 215 -50 305 -36 314 L 134 314 C 146 305 140 215 116 140 C 92 122 4 122 -20 140 Z" fill="#f4efe2" stroke="#d8c7a3" stroke-width="1.5"/>
+            <path d="M8 136 L 90 136 L 96 180 L 2 180 Z" fill="url(#goldEdge)"/>
+            <path d="M14 180 L 84 180 L 80 220 L 18 220 Z" fill="#f4efe2"/>
+            <g stroke="url(#goldEdge)" stroke-width="2" fill="none">
+              <path d="M-14 160 Q 50 180 110 158"/>
+              <path d="M-18 210 Q 50 234 114 206"/>
+            </g>
+            <!-- turban -->
+            <path d="M8 -18 C -18 -8 -18 26 8 34 C 8 10 12 -6 8 -18 Z" fill="#7a1f36"/>
+            <path d="M8 -18 C 40 -32 90 -22 96 6 C 96 24 78 34 48 32 C 60 12 46 -8 8 -18 Z" fill="#8f2540"/>
+            <path d="M46 30 C 66 26 90 14 96 6" stroke="url(#goldEdge)" stroke-width="2.4" fill="none"/>
+            <circle cx="52" cy="6" r="5" fill="url(#goldEdge)"/>
+          </g>
+          <g class="outfit outfit-reception">
+            <path d="M-20 140 C -40 210 -44 300 -32 312 L 130 312 C 140 300 136 210 114 140 C 90 124 6 124 -20 140 Z" fill="#2b2630"/>
+            <path d="M40 140 L 58 140 L 66 180 L 32 180 Z" fill="#c65b82"/>
+            <path d="M-6 144 L 116 144" stroke="#1c1820" stroke-width="6"/>
+          </g>
+          <!-- neck + head -->
+          <path d="M38 100 L 66 100 L 66 146 L 38 146 Z" fill="#a9714a"/>
+          <circle cx="52" cy="62" r="46" fill="#b97d51"/>
+          <!-- cap (everyday look, hidden on wedding day since turban replaces it) -->
+          <g class="cap-normal">
+            <path d="M6 40 C 6 6 98 6 98 40 L 98 46 L 6 46 Z" fill="#2b2630"/>
+            <path d="M2 46 C 20 54 84 54 102 46 L 100 40 C 78 48 26 48 4 40 Z" fill="#201b24"/>
+          </g>
+          <!-- beard -->
+          <path d="M12 66 C 10 96 26 118 52 120 C 78 118 94 96 92 66 C 92 90 78 104 52 104 C 26 104 12 90 12 66 Z" fill="#241b19"/>
+          <!-- brows, sunglasses-on-cap, eyes, smile -->
+          <path d="M22 56 Q 30 50 40 55" stroke="#241b19" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <path d="M64 55 Q 74 50 82 56" stroke="#241b19" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <circle cx="34" cy="64" r="3.6" fill="#241b19"/><circle cx="70" cy="64" r="3.6" fill="#241b19"/>
+          <circle cx="35.3" cy="62.7" r="1" fill="#fff"/><circle cx="71.3" cy="62.7" r="1" fill="#fff"/>
+          <path d="M34 88 Q 52 98 70 88" stroke="#241b19" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M0 34 C 14 18 90 18 104 34" stroke="#3a3a3a" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85"/>
+          <!-- arm around simran's shoulder -->
+          <path d="M6 150 C -32 152 -66 150 -94 152" stroke="#b97d51" stroke-width="20" stroke-linecap="round" fill="none"/>
+        </g>
+      </svg>
+
+      <div class="sparkle s1" aria-hidden="true">&#10022;</div>
+      <div class="sparkle s2" aria-hidden="true">&#10022;</div>
+      <div class="sparkle s3" aria-hidden="true">&#10022;</div>
+    </div>
+
+    <div class="hero-countdown reveal" id="hero-countdown" aria-live="polite">
+      <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-label">days</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">hrs</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">min</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">sec</span></div>
+    </div>
+    <p class="cd-caption reveal">until we say &ldquo;I do&rdquo; &mdash; Ring Ceremony, <span id="wedding-year-label">5 Feb</span></p>
+
+    <a href="#story" class="scroll-cue" aria-label="Scroll down">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ===================== OUR STORY ===================== -->
+  <section id="story" class="story">
+    <p class="eyebrow reveal center">A little bit of us</p>
+    <h2 class="section-title reveal center">Our Story</h2>
+    <div class="story-wrap">
+      <div class="polaroid reveal">
+        <div class="polaroid-photo" id="couple-photo-slot">
+          <span class="photo-placeholder-text">Drop <code>couple-photo.jpg</code> into<br><code>/wedding-invite/assets/</code><br>to see it here</span>
+        </div>
+        <p class="polaroid-caption">that evening by the sea</p>
+      </div>
+      <div class="story-text reveal">
+        <p>What started as easy laughter on a windswept beach turned into forever. Shanky &amp; Simran are overjoyed to invite their favourite people to celebrate three days of love, colour, and dhol beats.</p>
+        <p>From the intimacy of the ring ceremony to the joyous chaos of the baraat and the sparkle of the reception &mdash; every moment is better with you there.</p>
+        <div class="signature">Shanky &amp; Simran</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EVENTS ===================== -->
+  <section id="events" class="events">
+    <p class="eyebrow reveal center">Save the dates</p>
+    <h2 class="section-title reveal center">The Celebrations</h2>
+
+    <div class="event-tabs reveal" role="tablist" aria-label="Wedding events">
+      <button class="event-tab active" data-event="sagan" role="tab" aria-selected="true">
+        <span class="tab-date">05 Feb</span><span class="tab-name">Ring Ceremony &amp; Sagan</span>
+      </button>
+      <button class="event-tab" data-event="wedding" role="tab" aria-selected="false">
+        <span class="tab-date">06 Feb</span><span class="tab-name">Wedding &amp; Baraat</span>
+      </button>
+      <button class="event-tab" data-event="reception" role="tab" aria-selected="false">
+        <span class="tab-date">07 Feb</span><span class="tab-name">Reception</span>
+      </button>
+    </div>
+
+    <div class="event-panels">
+      <article class="event-panel active" data-panel="sagan">
+        <div class="ep-icon">&#128141;</div>
+        <h3>Ring Ceremony &amp; Sagan</h3>
+        <p class="ep-date">Thursday, 5th February</p>
+        <p class="ep-desc">An intimate exchange of rings and blessings as our families come together for the first time to celebrate the beginning of our forever.</p>
+        <p class="ep-dress">Dress code: Pastels &amp; Pinks</p>
+        <div class="ep-countdown" data-countdown="sagan">
+          <span data-cd-d>--</span>d <span data-cd-h>--</span>h <span data-cd-m>--</span>m <span data-cd-s>--</span>s
+        </div>
+      </article>
+      <article class="event-panel" data-panel="wedding">
+        <div class="ep-icon">&#128142;</div>
+        <h3>Wedding &amp; Baraat</h3>
+        <p class="ep-date">Friday, 6th February</p>
+        <p class="ep-desc">Dhol, dance and the groom's grand baraat lead into the sacred wedding rituals &mdash; come dance us down the aisle.</p>
+        <p class="ep-dress">Dress code: Reds, Maroons &amp; Gold</p>
+        <div class="ep-countdown" data-countdown="wedding">
+          <span data-cd-d>--</span>d <span data-cd-h>--</span>h <span data-cd-m>--</span>m <span data-cd-s>--</span>s
+        </div>
+      </article>
+      <article class="event-panel" data-panel="reception">
+        <div class="ep-icon">&#127881;</div>
+        <h3>Reception</h3>
+        <p class="ep-date">Saturday, 7th February</p>
+        <p class="ep-desc">An evening of dinner, dancing and celebration as Mr. &amp; Mrs. raise a toast to new beginnings with everyone they love.</p>
+        <p class="ep-dress">Dress code: Evening Glam</p>
+        <div class="ep-countdown" data-countdown="reception">
+          <span data-cd-d>--</span>d <span data-cd-h>--</span>h <span data-cd-m>--</span>m <span data-cd-s>--</span>s
+        </div>
+      </article>
+    </div>
+    <p class="events-hint reveal center">tap a date above &mdash; watch Shanky &amp; Simran change outfits for the occasion &#10024;</p>
+  </section>
+
+  <!-- ===================== GALLERY ===================== -->
+  <section id="gallery" class="gallery">
+    <p class="eyebrow reveal center">Moments</p>
+    <h2 class="section-title reveal center">Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-tile reveal" style="--tilt:-3deg"><div class="tile-inner tile-photo"></div></div>
+      <div class="gallery-tile reveal" style="--tilt:2deg"><div class="tile-inner tile-quote">"Finally!" &mdash; every relative, probably</div></div>
+      <div class="gallery-tile reveal" style="--tilt:-2deg"><div class="tile-inner tile-photo tile-photo--alt"></div></div>
+      <div class="gallery-tile reveal" style="--tilt:3deg"><div class="tile-inner tile-quote">Two families, one big fat celebration</div></div>
+    </div>
+    <p class="gallery-hint reveal center">more photos coming soon &mdash; this space is ready whenever you add them</p>
+  </section>
+
+  <!-- ===================== RSVP ===================== -->
+  <section id="rsvp" class="rsvp">
+    <p class="eyebrow reveal center">Kindly respond</p>
+    <h2 class="section-title reveal center">RSVP</h2>
+    <form class="rsvp-form reveal" id="rsvp-form">
+      <div class="field">
+        <label for="name">Your name(s)</label>
+        <input type="text" id="name" name="name" required placeholder="e.g. Rohan &amp; Priya">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label>Which celebrations will you join?</label>
+        <div class="checks">
+          <label class="chip"><input type="checkbox" name="events" value="sagan"><span>Ring Ceremony</span></label>
+          <label class="chip"><input type="checkbox" name="events" value="wedding"><span>Wedding &amp; Baraat</span></label>
+          <label class="chip"><input type="checkbox" name="events" value="reception"><span>Reception</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="guests">Number of guests</label>
+        <input type="number" id="guests" name="guests" min="1" max="10" value="1">
+      </div>
+      <div class="field">
+        <label for="wishes">A wish for the couple</label>
+        <textarea id="wishes" name="wishes" rows="3" placeholder="Write something lovely..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Send RSVP</button>
+      <p class="form-note">This form saves your response on this device only &mdash; connect it to a backend or a service like Formspree/Google Forms to collect responses for real.</p>
+    </form>
+    <div class="rsvp-success" id="rsvp-success" hidden>
+      <div class="rsvp-success-icon">&#128149;</div>
+      <h3>Thank you!</h3>
+      <p>Your RSVP has been recorded. We can't wait to celebrate with you.</p>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="footer-monogram">S&nbsp;&amp;&nbsp;S</div>
+    <p class="footer-hashtag">#ShankyWedsSimran</p>
+    <p class="footer-note">With love, from our families to yours.</p>
+  </footer>
+
+  <button id="back-to-top" aria-label="Back to top">&#8593;</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
