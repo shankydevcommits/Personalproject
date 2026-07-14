@@ -2,14 +2,18 @@
 // Shanky & Simran — Wedding Invitation
 // ============================================================================
 
-const WEDDING_TARGET = new Date('2027-02-05T00:00:00').getTime();
+const WEDDING_YEAR = 2027;
+const EVENT_DATES = [
+  new Date(WEDDING_YEAR, 1, 5, 11, 0, 0), // 0: Ring Ceremony & Sagan
+  new Date(WEDDING_YEAR, 1, 6, 17, 0, 0), // 1: Wedding & Baraat
+  new Date(WEDDING_YEAR, 1, 7, 19, 0, 0), // 2: Reception
+];
 
 document.addEventListener('DOMContentLoaded', () => {
   initEnvelope();
   initReveal();
-  initCountdown();
+  initCountdowns();
   initEventTabs();
-  initMusic();
 });
 
 // ---- ENVELOPE INTRO ---------------------------------------------------------
@@ -41,24 +45,41 @@ function initReveal(){
   targets.forEach(t => io.observe(t));
 }
 
-// ---- COUNTDOWN -----------------------------------------------------------------
-function initCountdown(){
-  const els = {
-    days: document.getElementById('cd-days'),
-    hours: document.getElementById('cd-hours'),
-    mins: document.getElementById('cd-mins'),
-    secs: document.getElementById('cd-secs'),
-  };
-  if(!els.days) return;
+// ---- COUNTDOWNS -----------------------------------------------------------------
+function initCountdowns(){
+  const pad = n => String(Math.max(0, n)).padStart(2, '0');
 
-  const pad = n => String(n).padStart(2, '0');
+  const heroEls = {
+    d: document.getElementById('cd-days'),
+    h: document.getElementById('cd-hours'),
+    m: document.getElementById('cd-mins'),
+    s: document.getElementById('cd-secs'),
+  };
+  const panelEls = [...document.querySelectorAll('[data-countdown]')].map(el => ({
+    target: EVENT_DATES[Number(el.dataset.countdown)],
+    d: el.querySelector('[data-cd-d]'),
+    h: el.querySelector('[data-cd-h]'),
+    m: el.querySelector('[data-cd-m]'),
+    s: el.querySelector('[data-cd-s]'),
+  }));
 
   function tick(){
-    const diff = Math.max(0, WEDDING_TARGET - Date.now());
-    els.days.textContent = pad(Math.floor(diff / 86400000));
-    els.hours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
-    els.mins.textContent = pad(Math.floor((diff % 3600000) / 60000));
-    els.secs.textContent = pad(Math.floor((diff % 60000) / 1000));
+    const now = new Date();
+    const next = EVENT_DATES.find(d => d > now) || EVENT_DATES[0];
+    const diff = Math.max(0, next - now);
+    if(heroEls.d){
+      heroEls.d.textContent = pad(Math.floor(diff / 86400000));
+      heroEls.h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      heroEls.m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+      heroEls.s.textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+    panelEls.forEach(p => {
+      const dd = Math.max(0, p.target - now);
+      p.d.textContent = Math.floor(dd / 86400000);
+      p.h.textContent = pad(Math.floor((dd % 86400000) / 3600000));
+      p.m.textContent = pad(Math.floor((dd % 3600000) / 60000));
+      p.s.textContent = pad(Math.floor((dd % 60000) / 1000));
+    });
   }
   tick();
   setInterval(tick, 1000);
@@ -80,49 +101,4 @@ function initEventTabs(){
       panels.forEach(p => p.classList.toggle('active', p.dataset.index === idx));
     });
   });
-}
-
-// ---- AMBIENT MUSIC TOGGLE (procedural drone — swap for a real audio track when available) ----
-let audioCtx = null;
-let master = null;
-let oscs = null;
-let musicOn = false;
-
-function initMusic(){
-  const btn = document.getElementById('music-btn');
-  if(!btn) return;
-  btn.addEventListener('click', () => {
-    musicOn = !musicOn;
-    btn.innerHTML = musicOn ? '&#9835;' : '&#9834;';
-    if(musicOn) startMusic(); else stopMusic();
-  });
-}
-
-function startMusic(){
-  try{
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const ctx = audioCtx;
-    master = ctx.createGain();
-    master.gain.value = 0;
-    master.connect(ctx.destination);
-    master.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 1.2);
-
-    const freqs = [196.00, 246.94, 293.66]; // G3, B3, D4
-    oscs = freqs.map(f => {
-      const o = ctx.createOscillator();
-      o.type = 'sine';
-      o.frequency.value = f;
-      const g = ctx.createGain();
-      g.gain.value = 0.5;
-      o.connect(g);
-      g.connect(master);
-      o.start();
-      return o;
-    });
-  } catch(err) { /* Web Audio unavailable — no-op */ }
-}
-
-function stopMusic(){
-  if(oscs){ oscs.forEach(o => { try{ o.stop(); } catch(err){} }); oscs = null; }
-  master = null;
 }
