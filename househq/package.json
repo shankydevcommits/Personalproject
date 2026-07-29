@@ -1,0 +1,30 @@
+{
+  "name": "househq-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "upload-pdfs": "node scripts/upload-pdfs.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "marked": "^13.0.3",
+    "next": "16.2.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "resend": "^4.0.0",
+    "stripe": "^17.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.12",
+    "typescript": "^5.5.3"
+  }
+}
