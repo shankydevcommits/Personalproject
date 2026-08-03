@@ -42,26 +42,26 @@ export default function HomePage() {
             <text x="72" y="52" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontWeight="600" fontSize="12" fill="var(--stamp)" letterSpacing="1" transform="rotate(-8 72 72)">VERIFIED</text>
             <text x="72" y="72" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontWeight="600" fontSize="10.5" fill="var(--stamp)" letterSpacing="0.3" transform="rotate(-8 72 72)">AUSTRALIAN</text>
             <text x="72" y="86" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontWeight="600" fontSize="10.5" fill="var(--stamp)" letterSpacing="0.3" transform="rotate(-8 72 72)">RULES &amp; REGULATIONS</text>
-            <text x="72" y="104" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontWeight="500" fontSize="10" fill="var(--stamp)" letterSpacing="0.5" transform="rotate(-8 72 72)">JUL 2026</text>
+            <text x="72" y="104" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontWeight="500" fontSize="8.5" fill="var(--stamp)" letterSpacing="0.3" transform="rotate(-8 72 72)">UPDATED MONTHLY</text>
           </g>
           <text x="660" y="90" fontFamily="Fraunces, serif" fontWeight="600" fontSize="34" fill="var(--ink)">Property paperwork,</text>
           <text x="660" y="132" fontFamily="Fraunces, serif" fontWeight="600" fontSize="34" fill="var(--ink)">
             <tspan fontStyle="italic" fill="var(--stamp)">sorted</tspan> — nationally.
           </text>
-          <text x="660" y="165" fontFamily="IBM Plex Mono, monospace" fontWeight="500" fontSize="12" fill="var(--slate)" letterSpacing="0.5">96 CHECKLISTS · 8 STATES &amp; TERRITORIES</text>
+          <text x="660" y="165" fontFamily="IBM Plex Mono, monospace" fontWeight="500" fontSize="12" fill="var(--slate)" letterSpacing="0.5">104 CHECKLISTS · 8 STATES &amp; TERRITORIES</text>
         </svg>
       </section>
 
       <section className="hero">
         <div className="hero-grid">
           <div>
-            <div className="eyebrow">Checked against the actual rules in your state</div>
+            <div className="eyebrow">The only checklist site built only for Australia</div>
             <h1>Read this before you sign anything.</h1>
             <p>
               We put together checklists for buying, renting, investing and
-              selling in Australia — the stuff that actually matters, checked
-              against what your state government says, not whatever&apos;s
-              ranking on Google.
+              selling in Australia. Checked against what your state
+              government actually says, not a generic template written for a
+              US or UK audience and relabelled.
             </p>
             <div className="hero-actions">
               <a href="#catalog" className="btn-primary">
@@ -84,7 +84,7 @@ export default function HomePage() {
                 <br />
                 &amp; Regulations
               </span>
-              Jul 2026
+              Updated monthly
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function HomePage() {
           </p>
           <div className="about-stats">
             <div className="about-stat">
-              <div className="num">96</div>
+              <div className="num">104</div>
               <div className="label">Checklists published</div>
             </div>
             <div className="about-stat">
@@ -181,6 +181,20 @@ export default function HomePage() {
           <div className="cs-grid">
             <div className="cs-card">
               <div className="cs-stamp">Coming soon</div>
+              <h3>Property metrics &amp; tools</h3>
+              <p>
+                Not sure what to actually look for in a property? We&apos;re
+                building tools to help you work that out before you buy.
+              </p>
+              <ul className="cs-list">
+                <li>Suburb and comparable sales checklists</li>
+                <li>Yield, growth and affordability calculators</li>
+                <li>A proper checklist for inspection day</li>
+              </ul>
+              <NotifyForm list="tools" placeholder="Your email address" />
+            </div>
+            <div className="cs-card">
+              <div className="cs-stamp">Coming soon</div>
               <h3>Agent &amp; broker partnerships</h3>
               <p>
                 If you&apos;re an agent or broker, we&apos;re setting up a way
@@ -197,7 +211,7 @@ export default function HomePage() {
               <div className="cs-stamp">Coming soon</div>
               <h3>More guides, not just checklists</h3>
               <p>
-                The 96 checklists cover every state now — next we&apos;re
+                The 104 checklists cover every state now. Next we&apos;re
                 building the deeper stuff a checklist can&apos;t fully cover
                 on its own.
               </p>
@@ -207,20 +221,6 @@ export default function HomePage() {
                 <li>Longer guides on the trickier situations</li>
               </ul>
               <NotifyForm list="guides" placeholder="Your email address" />
-            </div>
-            <div className="cs-card">
-              <div className="cs-stamp">Coming soon</div>
-              <h3>Property metrics &amp; tools</h3>
-              <p>
-                Not sure what to actually look for in a property? We&apos;re
-                building tools to help you work that out before you buy.
-              </p>
-              <ul className="cs-list">
-                <li>Suburb and comparable sales checklists</li>
-                <li>Yield, growth and affordability calculators</li>
-                <li>A proper checklist for inspection day</li>
-              </ul>
-              <NotifyForm list="tools" placeholder="Your email address" />
             </div>
           </div>
         </div>

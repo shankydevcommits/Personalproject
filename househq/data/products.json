@@ -8,9 +8,10 @@
       "categoryName": "First Home Buyers",
       "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-01-VIC-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "checklist-01-VIC-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "checklist-01-VIC-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-fhb-2",
@@ -20,9 +21,10 @@
       "categoryName": "First Home Buyers",
       "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-02-VIC-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "checklist-02-VIC-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "checklist-02-VIC-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-fhb-3",
@@ -32,9 +34,10 @@
       "categoryName": "First Home Buyers",
       "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "vic/checklist-03-VIC-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "checklist-03-VIC-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "checklist-03-VIC-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-renters-1",
@@ -44,9 +47,10 @@
       "categoryName": "Renters",
       "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "vic/checklist-04-VIC-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "checklist-04-VIC-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "checklist-04-VIC-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-renters-2",
@@ -56,9 +60,10 @@
       "categoryName": "Renters",
       "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-05-VIC-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "checklist-05-VIC-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "checklist-05-VIC-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-renters-3",
@@ -68,9 +73,10 @@
       "categoryName": "Renters",
       "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "vic/checklist-06-VIC-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "checklist-06-VIC-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "checklist-06-VIC-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-investors-1",
@@ -80,9 +86,10 @@
       "categoryName": "Investors",
       "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-07-VIC-Property-Investment-Purchase.pdf",
-      "pdfFilename": "checklist-07-VIC-Property-Investment-Purchase.pdf"
+      "pdfFilename": "checklist-07-VIC-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-investors-2",
@@ -92,9 +99,10 @@
       "categoryName": "Investors",
       "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-08-VIC-Landlord-Compliance.pdf",
-      "pdfFilename": "checklist-08-VIC-Landlord-Compliance.pdf"
+      "pdfFilename": "checklist-08-VIC-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-investors-3",
@@ -104,9 +112,10 @@
       "categoryName": "Investors",
       "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-09-VIC-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "checklist-09-VIC-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "checklist-09-VIC-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-sellers-1",
@@ -116,9 +125,10 @@
       "categoryName": "Sellers",
       "name": "Agent Selection & Commission Negotiation Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "vic/checklist-10-VIC-Agent-Selection-Commission.pdf",
-      "pdfFilename": "checklist-10-VIC-Agent-Selection-Commission.pdf"
+      "pdfFilename": "checklist-10-VIC-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-sellers-2",
@@ -128,9 +138,10 @@
       "categoryName": "Sellers",
       "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "vic/checklist-11-VIC-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "checklist-11-VIC-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "checklist-11-VIC-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "vic-sellers-3",
@@ -140,9 +151,23 @@
       "categoryName": "Sellers",
       "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "vic/checklist-12-VIC-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "checklist-12-VIC-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "checklist-12-VIC-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "vic-investors-smsf",
+      "state": "vic",
+      "stateName": "Victoria",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "vic/checklist-13-VIC-SMSF-Property-Investment.pdf",
+      "pdfFilename": "checklist-13-VIC-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "nsw-fhb-1",
@@ -150,11 +175,12 @@
       "stateName": "New South Wales",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (NSW)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-01-NSW-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "nsw-checklist-01-NSW-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "nsw-checklist-01-NSW-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-fhb-2",
@@ -162,11 +188,12 @@
       "stateName": "New South Wales",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (NSW)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-02-NSW-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "nsw-checklist-02-NSW-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "nsw-checklist-02-NSW-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-fhb-3",
@@ -174,11 +201,12 @@
       "stateName": "New South Wales",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (NSW)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nsw/nsw-checklist-03-NSW-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "nsw-checklist-03-NSW-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "nsw-checklist-03-NSW-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-renters-1",
@@ -186,11 +214,12 @@
       "stateName": "New South Wales",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (NSW)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nsw/nsw-checklist-04-NSW-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "nsw-checklist-04-NSW-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "nsw-checklist-04-NSW-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-renters-2",
@@ -198,11 +227,12 @@
       "stateName": "New South Wales",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (NSW)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-05-NSW-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "nsw-checklist-05-NSW-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "nsw-checklist-05-NSW-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-renters-3",
@@ -210,11 +240,12 @@
       "stateName": "New South Wales",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (NSW)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nsw/nsw-checklist-06-NSW-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "nsw-checklist-06-NSW-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "nsw-checklist-06-NSW-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-investors-1",
@@ -222,11 +253,12 @@
       "stateName": "New South Wales",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (NSW)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-07-NSW-Property-Investment-Purchase.pdf",
-      "pdfFilename": "nsw-checklist-07-NSW-Property-Investment-Purchase.pdf"
+      "pdfFilename": "nsw-checklist-07-NSW-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-investors-2",
@@ -234,11 +266,12 @@
       "stateName": "New South Wales",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (NSW)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-08-NSW-Landlord-Compliance.pdf",
-      "pdfFilename": "nsw-checklist-08-NSW-Landlord-Compliance.pdf"
+      "pdfFilename": "nsw-checklist-08-NSW-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-investors-3",
@@ -246,11 +279,12 @@
       "stateName": "New South Wales",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (NSW)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-09-NSW-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "nsw-checklist-09-NSW-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "nsw-checklist-09-NSW-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-sellers-1",
@@ -258,11 +292,12 @@
       "stateName": "New South Wales",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (NSW)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nsw/nsw-checklist-10-NSW-Agent-Selection-Commission.pdf",
-      "pdfFilename": "nsw-checklist-10-NSW-Agent-Selection-Commission.pdf"
+      "pdfFilename": "nsw-checklist-10-NSW-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-sellers-2",
@@ -270,11 +305,12 @@
       "stateName": "New South Wales",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (NSW)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nsw/nsw-checklist-11-NSW-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "nsw-checklist-11-NSW-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "nsw-checklist-11-NSW-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "nsw-sellers-3",
@@ -282,11 +318,25 @@
       "stateName": "New South Wales",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (NSW)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nsw/nsw-checklist-12-NSW-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "nsw-checklist-12-NSW-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "nsw-checklist-12-NSW-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "nsw-investors-smsf",
+      "state": "nsw",
+      "stateName": "New South Wales",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "nsw/nsw-checklist-13-NSW-SMSF-Property-Investment.pdf",
+      "pdfFilename": "nsw-checklist-13-NSW-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "qld-fhb-1",
@@ -294,11 +344,12 @@
       "stateName": "Queensland",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (QLD)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-01-QLD-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "qld-checklist-01-QLD-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "qld-checklist-01-QLD-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-fhb-2",
@@ -306,11 +357,12 @@
       "stateName": "Queensland",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (QLD)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-02-QLD-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "qld-checklist-02-QLD-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "qld-checklist-02-QLD-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-fhb-3",
@@ -318,11 +370,12 @@
       "stateName": "Queensland",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (QLD)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "qld/qld-checklist-03-QLD-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "qld-checklist-03-QLD-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "qld-checklist-03-QLD-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-renters-1",
@@ -330,11 +383,12 @@
       "stateName": "Queensland",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (QLD)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "qld/qld-checklist-04-QLD-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "qld-checklist-04-QLD-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "qld-checklist-04-QLD-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-renters-2",
@@ -342,11 +396,12 @@
       "stateName": "Queensland",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (QLD)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-05-QLD-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "qld-checklist-05-QLD-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "qld-checklist-05-QLD-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-renters-3",
@@ -354,11 +409,12 @@
       "stateName": "Queensland",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (QLD)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "qld/qld-checklist-06-QLD-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "qld-checklist-06-QLD-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "qld-checklist-06-QLD-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-investors-1",
@@ -366,11 +422,12 @@
       "stateName": "Queensland",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (QLD)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-07-QLD-Property-Investment-Purchase.pdf",
-      "pdfFilename": "qld-checklist-07-QLD-Property-Investment-Purchase.pdf"
+      "pdfFilename": "qld-checklist-07-QLD-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-investors-2",
@@ -378,11 +435,12 @@
       "stateName": "Queensland",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (QLD)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-08-QLD-Landlord-Compliance.pdf",
-      "pdfFilename": "qld-checklist-08-QLD-Landlord-Compliance.pdf"
+      "pdfFilename": "qld-checklist-08-QLD-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-investors-3",
@@ -390,11 +448,12 @@
       "stateName": "Queensland",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (QLD)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-09-QLD-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "qld-checklist-09-QLD-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "qld-checklist-09-QLD-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-sellers-1",
@@ -402,11 +461,12 @@
       "stateName": "Queensland",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (QLD)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "qld/qld-checklist-10-QLD-Agent-Selection-Commission.pdf",
-      "pdfFilename": "qld-checklist-10-QLD-Agent-Selection-Commission.pdf"
+      "pdfFilename": "qld-checklist-10-QLD-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-sellers-2",
@@ -414,11 +474,12 @@
       "stateName": "Queensland",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (QLD)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "qld/qld-checklist-11-QLD-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "qld-checklist-11-QLD-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "qld-checklist-11-QLD-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "qld-sellers-3",
@@ -426,11 +487,25 @@
       "stateName": "Queensland",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (QLD)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "qld/qld-checklist-12-QLD-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "qld-checklist-12-QLD-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "qld-checklist-12-QLD-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "qld-investors-smsf",
+      "state": "qld",
+      "stateName": "Queensland",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "qld/qld-checklist-13-QLD-SMSF-Property-Investment.pdf",
+      "pdfFilename": "qld-checklist-13-QLD-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "wa-fhb-1",
@@ -438,11 +513,12 @@
       "stateName": "Western Australia",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (WA)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-01-WA-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "wa-checklist-01-WA-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "wa-checklist-01-WA-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-fhb-2",
@@ -450,11 +526,12 @@
       "stateName": "Western Australia",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (WA)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-02-WA-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "wa-checklist-02-WA-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "wa-checklist-02-WA-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-fhb-3",
@@ -462,11 +539,12 @@
       "stateName": "Western Australia",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (WA)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "wa/wa-checklist-03-WA-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "wa-checklist-03-WA-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "wa-checklist-03-WA-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-renters-1",
@@ -474,11 +552,12 @@
       "stateName": "Western Australia",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (WA)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "wa/wa-checklist-04-WA-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "wa-checklist-04-WA-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "wa-checklist-04-WA-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-renters-2",
@@ -486,11 +565,12 @@
       "stateName": "Western Australia",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (WA)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-05-WA-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "wa-checklist-05-WA-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "wa-checklist-05-WA-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-renters-3",
@@ -498,11 +578,12 @@
       "stateName": "Western Australia",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (WA)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "wa/wa-checklist-06-WA-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "wa-checklist-06-WA-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "wa-checklist-06-WA-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-investors-1",
@@ -510,11 +591,12 @@
       "stateName": "Western Australia",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (WA)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-07-WA-Property-Investment-Purchase.pdf",
-      "pdfFilename": "wa-checklist-07-WA-Property-Investment-Purchase.pdf"
+      "pdfFilename": "wa-checklist-07-WA-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-investors-2",
@@ -522,11 +604,12 @@
       "stateName": "Western Australia",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (WA)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-08-WA-Landlord-Compliance.pdf",
-      "pdfFilename": "wa-checklist-08-WA-Landlord-Compliance.pdf"
+      "pdfFilename": "wa-checklist-08-WA-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-investors-3",
@@ -534,11 +617,12 @@
       "stateName": "Western Australia",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (WA)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-09-WA-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "wa-checklist-09-WA-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "wa-checklist-09-WA-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-sellers-1",
@@ -546,11 +630,12 @@
       "stateName": "Western Australia",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (WA)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "wa/wa-checklist-10-WA-Agent-Selection-Commission.pdf",
-      "pdfFilename": "wa-checklist-10-WA-Agent-Selection-Commission.pdf"
+      "pdfFilename": "wa-checklist-10-WA-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-sellers-2",
@@ -558,11 +643,12 @@
       "stateName": "Western Australia",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (WA)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "wa/wa-checklist-11-WA-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "wa-checklist-11-WA-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "wa-checklist-11-WA-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "wa-sellers-3",
@@ -570,11 +656,25 @@
       "stateName": "Western Australia",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (WA)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "wa/wa-checklist-12-WA-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "wa-checklist-12-WA-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "wa-checklist-12-WA-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "wa-investors-smsf",
+      "state": "wa",
+      "stateName": "Western Australia",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "wa/wa-checklist-13-WA-SMSF-Property-Investment.pdf",
+      "pdfFilename": "wa-checklist-13-WA-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "sa-fhb-1",
@@ -582,11 +682,12 @@
       "stateName": "South Australia",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (SA)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-01-SA-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "sa-checklist-01-SA-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "sa-checklist-01-SA-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-fhb-2",
@@ -594,11 +695,12 @@
       "stateName": "South Australia",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (SA)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-02-SA-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "sa-checklist-02-SA-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "sa-checklist-02-SA-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-fhb-3",
@@ -606,11 +708,12 @@
       "stateName": "South Australia",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (SA)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "sa/sa-checklist-03-SA-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "sa-checklist-03-SA-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "sa-checklist-03-SA-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-renters-1",
@@ -618,11 +721,12 @@
       "stateName": "South Australia",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (SA)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "sa/sa-checklist-04-SA-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "sa-checklist-04-SA-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "sa-checklist-04-SA-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-renters-2",
@@ -630,11 +734,12 @@
       "stateName": "South Australia",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (SA)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-05-SA-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "sa-checklist-05-SA-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "sa-checklist-05-SA-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-renters-3",
@@ -642,11 +747,12 @@
       "stateName": "South Australia",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (SA)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "sa/sa-checklist-06-SA-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "sa-checklist-06-SA-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "sa-checklist-06-SA-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-investors-1",
@@ -654,11 +760,12 @@
       "stateName": "South Australia",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (SA)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-07-SA-Property-Investment-Purchase.pdf",
-      "pdfFilename": "sa-checklist-07-SA-Property-Investment-Purchase.pdf"
+      "pdfFilename": "sa-checklist-07-SA-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-investors-2",
@@ -666,11 +773,12 @@
       "stateName": "South Australia",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (SA)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-08-SA-Landlord-Compliance.pdf",
-      "pdfFilename": "sa-checklist-08-SA-Landlord-Compliance.pdf"
+      "pdfFilename": "sa-checklist-08-SA-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-investors-3",
@@ -678,11 +786,12 @@
       "stateName": "South Australia",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (SA)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-09-SA-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "sa-checklist-09-SA-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "sa-checklist-09-SA-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-sellers-1",
@@ -690,11 +799,12 @@
       "stateName": "South Australia",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (SA)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "sa/sa-checklist-10-SA-Agent-Selection-Commission.pdf",
-      "pdfFilename": "sa-checklist-10-SA-Agent-Selection-Commission.pdf"
+      "pdfFilename": "sa-checklist-10-SA-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-sellers-2",
@@ -702,11 +812,12 @@
       "stateName": "South Australia",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (SA)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "sa/sa-checklist-11-SA-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "sa-checklist-11-SA-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "sa-checklist-11-SA-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "sa-sellers-3",
@@ -714,11 +825,25 @@
       "stateName": "South Australia",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (SA)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "sa/sa-checklist-12-SA-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "sa-checklist-12-SA-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "sa-checklist-12-SA-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "sa-investors-smsf",
+      "state": "sa",
+      "stateName": "South Australia",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "sa/sa-checklist-13-SA-SMSF-Property-Investment.pdf",
+      "pdfFilename": "sa-checklist-13-SA-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "tas-fhb-1",
@@ -726,11 +851,12 @@
       "stateName": "Tasmania",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (TAS)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-01-TAS-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "tas-checklist-01-TAS-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "tas-checklist-01-TAS-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-fhb-2",
@@ -738,11 +864,12 @@
       "stateName": "Tasmania",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (TAS)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-02-TAS-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "tas-checklist-02-TAS-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "tas-checklist-02-TAS-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-fhb-3",
@@ -750,11 +877,12 @@
       "stateName": "Tasmania",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (TAS)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "tas/tas-checklist-03-TAS-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "tas-checklist-03-TAS-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "tas-checklist-03-TAS-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-renters-1",
@@ -762,11 +890,12 @@
       "stateName": "Tasmania",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (TAS)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "tas/tas-checklist-04-TAS-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "tas-checklist-04-TAS-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "tas-checklist-04-TAS-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-renters-2",
@@ -774,11 +903,12 @@
       "stateName": "Tasmania",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (TAS)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-05-TAS-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "tas-checklist-05-TAS-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "tas-checklist-05-TAS-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-renters-3",
@@ -786,11 +916,12 @@
       "stateName": "Tasmania",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (TAS)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "tas/tas-checklist-06-TAS-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "tas-checklist-06-TAS-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "tas-checklist-06-TAS-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-investors-1",
@@ -798,11 +929,12 @@
       "stateName": "Tasmania",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (TAS)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-07-TAS-Property-Investment-Purchase.pdf",
-      "pdfFilename": "tas-checklist-07-TAS-Property-Investment-Purchase.pdf"
+      "pdfFilename": "tas-checklist-07-TAS-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-investors-2",
@@ -810,11 +942,12 @@
       "stateName": "Tasmania",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (TAS)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-08-TAS-Landlord-Compliance.pdf",
-      "pdfFilename": "tas-checklist-08-TAS-Landlord-Compliance.pdf"
+      "pdfFilename": "tas-checklist-08-TAS-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-investors-3",
@@ -822,11 +955,12 @@
       "stateName": "Tasmania",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (TAS)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-09-TAS-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "tas-checklist-09-TAS-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "tas-checklist-09-TAS-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-sellers-1",
@@ -834,11 +968,12 @@
       "stateName": "Tasmania",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (TAS)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "tas/tas-checklist-10-TAS-Agent-Selection-Commission.pdf",
-      "pdfFilename": "tas-checklist-10-TAS-Agent-Selection-Commission.pdf"
+      "pdfFilename": "tas-checklist-10-TAS-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-sellers-2",
@@ -846,11 +981,12 @@
       "stateName": "Tasmania",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (TAS)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "tas/tas-checklist-11-TAS-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "tas-checklist-11-TAS-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "tas-checklist-11-TAS-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "tas-sellers-3",
@@ -858,11 +994,25 @@
       "stateName": "Tasmania",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (TAS)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "tas/tas-checklist-12-TAS-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "tas-checklist-12-TAS-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "tas-checklist-12-TAS-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "tas-investors-smsf",
+      "state": "tas",
+      "stateName": "Tasmania",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "tas/tas-checklist-13-TAS-SMSF-Property-Investment.pdf",
+      "pdfFilename": "tas-checklist-13-TAS-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "act-fhb-1",
@@ -870,11 +1020,12 @@
       "stateName": "Australian Capital Territory",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (ACT)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-01-ACT-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "act-checklist-01-ACT-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "act-checklist-01-ACT-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "act-fhb-2",
@@ -882,11 +1033,12 @@
       "stateName": "Australian Capital Territory",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (ACT)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-02-ACT-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "act-checklist-02-ACT-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "act-checklist-02-ACT-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "act-fhb-3",
@@ -894,11 +1046,12 @@
       "stateName": "Australian Capital Territory",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (ACT)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "act/act-checklist-03-ACT-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "act-checklist-03-ACT-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "act-checklist-03-ACT-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "act-renters-1",
@@ -906,11 +1059,12 @@
       "stateName": "Australian Capital Territory",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (ACT)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "act/act-checklist-04-ACT-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "act-checklist-04-ACT-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "act-checklist-04-ACT-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "act-renters-2",
@@ -918,11 +1072,12 @@
       "stateName": "Australian Capital Territory",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (ACT)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-05-ACT-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "act-checklist-05-ACT-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "act-checklist-05-ACT-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "act-renters-3",
@@ -930,11 +1085,12 @@
       "stateName": "Australian Capital Territory",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (ACT)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "act/act-checklist-06-ACT-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "act-checklist-06-ACT-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "act-checklist-06-ACT-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "act-investors-1",
@@ -942,11 +1098,12 @@
       "stateName": "Australian Capital Territory",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (ACT)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-07-ACT-Property-Investment-Purchase.pdf",
-      "pdfFilename": "act-checklist-07-ACT-Property-Investment-Purchase.pdf"
+      "pdfFilename": "act-checklist-07-ACT-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "act-investors-2",
@@ -954,11 +1111,12 @@
       "stateName": "Australian Capital Territory",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (ACT)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-08-ACT-Landlord-Compliance.pdf",
-      "pdfFilename": "act-checklist-08-ACT-Landlord-Compliance.pdf"
+      "pdfFilename": "act-checklist-08-ACT-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "act-investors-3",
@@ -966,11 +1124,12 @@
       "stateName": "Australian Capital Territory",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (ACT)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-09-ACT-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "act-checklist-09-ACT-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "act-checklist-09-ACT-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "act-sellers-1",
@@ -978,11 +1137,12 @@
       "stateName": "Australian Capital Territory",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (ACT)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "act/act-checklist-10-ACT-Agent-Selection-Commission.pdf",
-      "pdfFilename": "act-checklist-10-ACT-Agent-Selection-Commission.pdf"
+      "pdfFilename": "act-checklist-10-ACT-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "act-sellers-2",
@@ -990,11 +1150,12 @@
       "stateName": "Australian Capital Territory",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (ACT)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "act/act-checklist-11-ACT-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "act-checklist-11-ACT-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "act-checklist-11-ACT-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "act-sellers-3",
@@ -1002,11 +1163,25 @@
       "stateName": "Australian Capital Territory",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (ACT)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "act/act-checklist-12-ACT-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "act-checklist-12-ACT-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "act-checklist-12-ACT-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "act-investors-smsf",
+      "state": "act",
+      "stateName": "Australian Capital Territory",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "act/act-checklist-13-ACT-SMSF-Property-Investment.pdf",
+      "pdfFilename": "act-checklist-13-ACT-SMSF-Property-Investment.pdf",
+      "pinned": true
     },
     {
       "slug": "nt-fhb-1",
@@ -1014,11 +1189,12 @@
       "stateName": "Northern Territory",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "The First Home Buyer's 90-Day Checklist (NT)",
+      "name": "The First Home Buyer's 90-Day Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-01-NT-FHB-90-Day-Checklist.pdf",
-      "pdfFilename": "nt-checklist-01-NT-FHB-90-Day-Checklist.pdf"
+      "pdfFilename": "nt-checklist-01-NT-FHB-90-Day-Checklist.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-fhb-2",
@@ -1026,11 +1202,12 @@
       "stateName": "Northern Territory",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Contract & Inspection Red-Flags Checklist (NT)",
+      "name": "Contract & Inspection Red-Flags Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-02-NT-Contract-Inspection-Red-Flags.pdf",
-      "pdfFilename": "nt-checklist-02-NT-Contract-Inspection-Red-Flags.pdf"
+      "pdfFilename": "nt-checklist-02-NT-Contract-Inspection-Red-Flags.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-fhb-3",
@@ -1038,11 +1215,12 @@
       "stateName": "Northern Territory",
       "category": "fhb",
       "categoryName": "First Home Buyers",
-      "name": "Pre-Settlement to Moving Day Checklist (NT)",
+      "name": "Pre-Settlement to Moving Day Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nt/nt-checklist-03-NT-Pre-Settlement-Moving-Day.pdf",
-      "pdfFilename": "nt-checklist-03-NT-Pre-Settlement-Moving-Day.pdf"
+      "pdfFilename": "nt-checklist-03-NT-Pre-Settlement-Moving-Day.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-renters-1",
@@ -1050,11 +1228,12 @@
       "stateName": "Northern Territory",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Rental Application Fast-Track Checklist (NT)",
+      "name": "Rental Application Fast-Track Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nt/nt-checklist-04-NT-Rental-Application-Fast-Track.pdf",
-      "pdfFilename": "nt-checklist-04-NT-Rental-Application-Fast-Track.pdf"
+      "pdfFilename": "nt-checklist-04-NT-Rental-Application-Fast-Track.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-renters-2",
@@ -1062,11 +1241,12 @@
       "stateName": "Northern Territory",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "End-of-Lease Bond-Back Checklist (NT)",
+      "name": "End-of-Lease Bond-Back Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-05-NT-End-of-Lease-Bond-Back.pdf",
-      "pdfFilename": "nt-checklist-05-NT-End-of-Lease-Bond-Back.pdf"
+      "pdfFilename": "nt-checklist-05-NT-End-of-Lease-Bond-Back.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-renters-3",
@@ -1074,11 +1254,12 @@
       "stateName": "Northern Territory",
       "category": "renters",
       "categoryName": "Renters",
-      "name": "Moving-In Condition Report & Rights Checklist (NT)",
+      "name": "Moving-In Condition Report & Rights Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nt/nt-checklist-06-NT-Moving-In-Condition-Report-Rights.pdf",
-      "pdfFilename": "nt-checklist-06-NT-Moving-In-Condition-Report-Rights.pdf"
+      "pdfFilename": "nt-checklist-06-NT-Moving-In-Condition-Report-Rights.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-investors-1",
@@ -1086,11 +1267,12 @@
       "stateName": "Northern Territory",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Property Investment Purchase Checklist (NT)",
+      "name": "Property Investment Purchase Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-07-NT-Property-Investment-Purchase.pdf",
-      "pdfFilename": "nt-checklist-07-NT-Property-Investment-Purchase.pdf"
+      "pdfFilename": "nt-checklist-07-NT-Property-Investment-Purchase.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-investors-2",
@@ -1098,11 +1280,12 @@
       "stateName": "Northern Territory",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Landlord Compliance Checklist (NT)",
+      "name": "Landlord Compliance Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-08-NT-Landlord-Compliance.pdf",
-      "pdfFilename": "nt-checklist-08-NT-Landlord-Compliance.pdf"
+      "pdfFilename": "nt-checklist-08-NT-Landlord-Compliance.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-investors-3",
@@ -1110,11 +1293,12 @@
       "stateName": "Northern Territory",
       "category": "investors",
       "categoryName": "Investors",
-      "name": "Tax & Depreciation Essentials Checklist (NT)",
+      "name": "Tax & Depreciation Essentials Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-09-NT-Tax-Depreciation-Essentials.pdf",
-      "pdfFilename": "nt-checklist-09-NT-Tax-Depreciation-Essentials.pdf"
+      "pdfFilename": "nt-checklist-09-NT-Tax-Depreciation-Essentials.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-sellers-1",
@@ -1122,11 +1306,12 @@
       "stateName": "Northern Territory",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Agent Selection & Commission Checklist (NT)",
+      "name": "Agent Selection & Commission Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nt/nt-checklist-10-NT-Agent-Selection-Commission.pdf",
-      "pdfFilename": "nt-checklist-10-NT-Agent-Selection-Commission.pdf"
+      "pdfFilename": "nt-checklist-10-NT-Agent-Selection-Commission.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-sellers-2",
@@ -1134,11 +1319,12 @@
       "stateName": "Northern Territory",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Pre-Listing Prep & Styling Checklist (NT)",
+      "name": "Pre-Listing Prep & Styling Checklist",
       "description": "",
-      "priceCents": 700,
+      "priceCents": 799,
       "pdfPath": "nt/nt-checklist-11-NT-Pre-Listing-Prep-Styling.pdf",
-      "pdfFilename": "nt-checklist-11-NT-Pre-Listing-Prep-Styling.pdf"
+      "pdfFilename": "nt-checklist-11-NT-Pre-Listing-Prep-Styling.pdf",
+      "pinned": false
     },
     {
       "slug": "nt-sellers-3",
@@ -1146,61 +1332,67 @@
       "stateName": "Northern Territory",
       "category": "sellers",
       "categoryName": "Sellers",
-      "name": "Vendor Disclosure & Contract Checklist (NT)",
+      "name": "Vendor Disclosure & Contract Checklist",
       "description": "",
-      "priceCents": 900,
+      "priceCents": 999,
       "pdfPath": "nt/nt-checklist-12-NT-Vendor-Disclosure-Contract.pdf",
-      "pdfFilename": "nt-checklist-12-NT-Vendor-Disclosure-Contract.pdf"
+      "pdfFilename": "nt-checklist-12-NT-Vendor-Disclosure-Contract.pdf",
+      "pinned": false
+    },
+    {
+      "slug": "nt-investors-smsf",
+      "state": "nt",
+      "stateName": "Northern Territory",
+      "category": "investors",
+      "categoryName": "Investors",
+      "name": "Buying Property Through Your SMSF",
+      "description": "",
+      "priceCents": 999,
+      "pdfPath": "nt/nt-checklist-13-NT-SMSF-Property-Investment.pdf",
+      "pdfFilename": "nt-checklist-13-NT-SMSF-Property-Investment.pdf",
+      "pinned": true
     }
   ],
   "bundles": [
     {
       "state": "vic",
       "stateName": "Victoria",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "nsw",
       "stateName": "New South Wales",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "qld",
       "stateName": "Queensland",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "wa",
       "stateName": "Western Australia",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "sa",
       "stateName": "South Australia",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "tas",
       "stateName": "Tasmania",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "act",
       "stateName": "Australian Capital Territory",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     },
     {
       "state": "nt",
       "stateName": "Northern Territory",
-      "priceCents": 6900,
-      "wasCents": 9700
+      "priceCents": 8999
     }
   ],
   "states": {

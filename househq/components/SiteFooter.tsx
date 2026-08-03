@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HouseHQLogo from "./HouseHQLogo";
 
 export default function SiteFooter() {
   return (
@@ -6,7 +7,10 @@ export default function SiteFooter() {
       <div className="footer-grid">
         <div>
           <div className="logo" style={{ marginBottom: 12 }}>
-            <span className="logo-mark">✓</span>HouseHQ
+            <span className="logo-mark">
+              <HouseHQLogo />
+            </span>
+            HouseHQ
           </div>
           <p style={{ fontSize: 13, color: "var(--slate)", maxWidth: 240 }}>
             Property checklists checked state by state. General info only,
@@ -16,6 +20,9 @@ export default function SiteFooter() {
         <div>
           <h5>Checklists</h5>
           <ul>
+            <li>
+              <Link href="/checklists">Browse by state</Link>
+            </li>
             <li>
               <Link href="/#catalog">First Home Buyers</Link>
             </li>

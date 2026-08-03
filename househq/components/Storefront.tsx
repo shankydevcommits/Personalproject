@@ -4,17 +4,19 @@ import { useState } from "react";
 import {
   states,
   categoryMeta,
+  categoryHeading,
   stateAbbr,
   stateChipLabel,
   formatPrice,
   productsFor,
   findBundle,
+  bundleWasCents,
   type Product,
   type Bundle,
 } from "@/lib/catalog";
 import BuyModal, { type ModalTarget } from "./BuyModal";
 
-const ALL_TABS = ["fhb", "renters", "investors", "sellers"];
+const STAGE_TABS = ["all", "fhb", "renters", "investors", "sellers"];
 
 export default function Storefront() {
   const [currentState, setCurrentState] = useState("vic");
@@ -23,10 +25,13 @@ export default function Storefront() {
 
   const abbr = stateAbbr[currentState];
   const bundle = findBundle(currentState) as Bundle;
-  const tabsToShow = currentTab === "all" ? ALL_TABS : [currentTab];
+  const wasCents = bundleWasCents(currentState);
+  const visibleProducts = productsFor(
+    currentState,
+    currentTab === "all" ? undefined : currentTab
+  );
 
-  function switchState(state: string) {
-    setCurrentState(state);
+  function scrollToCatalog() {
     document
       .getElementById("catalog")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -39,38 +44,41 @@ export default function Storefront() {
           <div className="section-label">Start here</div>
           <h2>Find your stage</h2>
         </div>
-        <div
-          className="state-selector"
-          style={{ display: "flex", gap: 8, marginBottom: 24, flexWrap: "wrap" }}
-        >
-          {states.map((s) => (
+        <div className="block-grid">
+          {STAGE_TABS.map((tab) => (
             <div
-              key={s}
-              className={`state-chip${s === currentState ? " active" : ""}`}
-              onClick={() => switchState(s)}
+              key={tab}
+              className={`select-block${tab === currentTab ? " active" : ""}`}
+              onClick={() => {
+                setCurrentTab(tab);
+                scrollToCatalog();
+              }}
             >
-              {stateChipLabel[s]}
+              <div className="cat-code">{categoryMeta[tab].code}</div>
+              <h3>{categoryMeta[tab].name}</h3>
+              <p>{categoryMeta[tab].blurb}</p>
             </div>
           ))}
         </div>
-        <div className="cat-grid">
-          {ALL_TABS.map((cat) => (
+      </section>
+
+      <section id="state-select">
+        <div className="section-head">
+          <div className="section-label">Then</div>
+          <h2>Choose your state</h2>
+        </div>
+        <div className="block-grid">
+          {states.map((s) => (
             <div
-              key={cat}
-              className="cat-card"
+              key={s}
+              className={`select-block${s === currentState ? " active" : ""}`}
               onClick={() => {
-                setCurrentTab(cat);
-                document
-                  .getElementById("catalog")
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                setCurrentState(s);
+                scrollToCatalog();
               }}
             >
-              <div className="cat-code">{categoryMeta[cat].code}</div>
-              <h3>{categoryMeta[cat].name}</h3>
-              <p>{categoryMeta[cat].blurb}</p>
-              <div className="cat-count">
-                3 checklists · <span>{abbr}</span>
-              </div>
+              <div className="cat-code">STATE</div>
+              <h3>{stateChipLabel[s]}</h3>
             </div>
           ))}
         </div>
@@ -80,54 +88,42 @@ export default function Storefront() {
         <div className="section-head">
           <div className="section-label">The catalogue</div>
           <h2>
-            First Home Buyer checklists — <span>{abbr}</span>
+            {categoryHeading[currentTab]} for <span>{abbr}</span>
           </h2>
         </div>
-        <div className="catalog-tabs">
-          <div
-            className={`tab${currentTab === "all" ? " active" : ""}`}
-            onClick={() => setCurrentTab("all")}
-          >
-            All
-          </div>
-          {ALL_TABS.map((cat) => (
-            <div
-              key={cat}
-              className={`tab${currentTab === cat ? " active" : ""}`}
-              onClick={() => setCurrentTab(cat)}
-            >
-              {categoryMeta[cat].name}
-            </div>
+
+        <div className="product-grid">
+          {visibleProducts.map((product) => (
+            <ProductCard
+              key={product.slug}
+              product={product}
+              onBuy={() => setTarget({ mode: "single", product })}
+            />
           ))}
         </div>
-
-        {tabsToShow.map((cat) => (
-          <div className="product-grid" key={cat}>
-            {productsFor(currentState, cat).map((product) => (
-              <ProductCard
-                key={product.slug}
-                product={product}
-                onBuy={() => setTarget({ mode: "single", product })}
-              />
-            ))}
-          </div>
-        ))}
 
         <div className="bundle-strip">
           <div className="left">
             <h4>The Complete {stateChipLabel[currentState]} Bundle</h4>
-            <p>
-              All 12 checklists — FHB, renters, investors and sellers — in one
-              download.
-            </p>
+            <p>All 13 checklists (FHB, renters, investors and sellers) in one download.</p>
           </div>
-          <div
-            className="bundle-price"
-            onClick={() => setTarget({ mode: "bundle", bundle })}
-            style={{ cursor: "pointer" }}
-          >
-            <span className="was">{formatPrice(bundle.wasCents)}</span>
-            {formatPrice(bundle.priceCents)}
+          <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+            <div className="bundle-price">
+              <span className="was">{formatPrice(wasCents)}</span>
+              {formatPrice(bundle.priceCents)}
+            </div>
+            <span
+              className="buy-btn"
+              style={{
+                background: "var(--stamp)",
+                borderColor: "var(--stamp)",
+                color: "var(--white)",
+                cursor: "pointer",
+              }}
+              onClick={() => setTarget({ mode: "bundle", bundle })}
+            >
+              Buy bundle
+            </span>
           </div>
         </div>
       </section>
@@ -146,6 +142,7 @@ function ProductCard({
 }) {
   return (
     <div className="product-card">
+      {product.pinned && <div className="pinned-badge">&#9733;</div>}
       <div className="product-topline">
         <h4 style={{ maxWidth: "75%" }}>{product.name}</h4>
         <div className="badge-mini">

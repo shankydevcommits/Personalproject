@@ -152,7 +152,7 @@ review/merge if you want a checkpoint before it goes live.
 
 ---
 
-## Part 6 — Upload the 96 PDFs to Supabase
+## Part 6 — Upload the 104 PDFs to Supabase
 
 The actual checklist PDFs live in `househq/private-content/pdfs/` in the
 repo (they're already there, committed alongside the code — nothing to
@@ -173,7 +173,7 @@ npm install
 npm run upload-pdfs
 ```
 This creates a private `checklists` bucket in Supabase (if it doesn't
-already exist) and uploads all 96 files into it, organised by state. It's
+already exist) and uploads all 104 files into it, organised by state. It's
 safe to re-run — it overwrites files with the same name rather than
 duplicating them.
 
@@ -211,6 +211,22 @@ With Stripe still in **test mode**:
    Code should do on your behalf.
 3. Optional: add a custom domain in Vercel → Project → Settings →
    Domains, then update `SITE_URL` to match and redeploy.
+
+## Part 9 — Get found on Google
+
+The site now generates a real page per checklist (e.g.
+`/checklists/vic/first-home-buyers-90-day-checklist`) plus a `/sitemap.xml`
+and `/robots.txt` automatically — that's the SEO groundwork from the build
+brief. To actually get indexed:
+
+1. Go to **search.google.com/search-console** → add your live domain as a
+   property (Google will ask you to verify ownership — it offers a DNS or
+   HTML-file method; pick whichever your domain host makes easiest).
+2. Once verified, go to **Sitemaps** in the left sidebar, and submit:
+   `https://yourdomain.com.au/sitemap.xml`
+3. Give it a few days to a couple of weeks — Google needs to crawl and
+   index over a hundred new pages, it's not instant. You can check
+   indexing progress in the same Search Console dashboard.
 
 ---
 

@@ -3,7 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HouseHQ — Australian Property Checklists, Fact-Checked by State</title>
+<title>HouseHQ: Australian Property Checklists, Fact-Checked by State</title>
+<meta name="description" content="Fact-checked Australian property checklists for first home buyers, renters, investors and sellers. Covers all 8 states and territories, updated monthly, under $10 a checklist.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.househq.com.au/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HouseHQ">
+<meta property="og:title" content="HouseHQ: Australian Property Checklists, Fact-Checked by State">
+<meta property="og:description" content="Fact-checked Australian property checklists for first home buyers, renters, investors and sellers. Covers all 8 states and territories, updated monthly.">
+<meta property="og:url" content="https://www.househq.com.au/">
+<meta property="og:locale" content="en_AU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HouseHQ: Australian Property Checklists, Fact-Checked by State">
+<meta name="twitter:description" content="Fact-checked Australian property checklists for first home buyers, renters, investors and sellers.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "HouseHQ",
+  "url": "https://www.househq.com.au/",
+  "description": "Fact-checked Australian property checklists for first home buyers, renters, investors and sellers, covering all 8 states and territories.",
+  "areaServed": {"@type": "Country", "name": "Australia"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is this legal, financial, or tax advice?",
+     "acceptedAnswer": {"@type": "Answer", "text": "No. It's general information checked against state government sources. Talk to a licensed conveyancer, solicitor, broker or accountant before making a real decision."}},
+    {"@type": "Question", "name": "How do you make sure the checklists are accurate?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Every checklist is checked against primary sources such as State Revenue Offices, tenancy authorities and current legislation, not other websites."}},
+    {"@type": "Question", "name": "Which state checklist do I need?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Use the checklist for the state where the property is located, since stamp duty, tenancy law and cooling-off periods are all set at the state level."}}
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -37,7 +77,30 @@
   }
   nav{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;max-width:1100px;margin:0 auto;}
   .logo{font-family:'Fraunces',serif;font-weight:600;font-size:22px;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
-  .logo-mark{width:26px;height:26px;border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;}
+  .logo-mark{width:26px;height:26px;display:flex;align-items:center;justify-content:center;}
+  .logo-mark svg{width:26px;height:26px;}
+  .au-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;background:var(--stamp);color:var(--white);padding:3px 7px;border-radius:10px;letter-spacing:0.05em;margin-left:8px;vertical-align:middle;}
+
+  /* ---- Ticker banner ---- */
+  .ticker{
+    background:var(--ink); color:var(--paper); overflow:hidden;
+    white-space:nowrap; position:relative; border-bottom:1px solid var(--stamp);
+  }
+  .ticker-track{
+    display:inline-block; padding-left:100%;
+    animation:ticker-scroll 26s linear infinite;
+  }
+  .ticker a{color:var(--paper); text-decoration:none;}
+  .ticker-track span{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+    padding:9px 0; display:inline-block;
+  }
+  .ticker-track span.hot{color:#E8A33D; margin-right:10px;}
+  .ticker-track span.gap{display:inline-block; width:80px;}
+  @keyframes ticker-scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+  }
   .nav-links{display:flex;gap:32px;font-size:14px;font-weight:500;color:var(--slate);}
   .nav-links a:hover{color:var(--ink);}
   .nav-cta{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:2px;letter-spacing:0.02em;}
@@ -108,6 +171,26 @@
   .cat-card p{font-size:13px;color:var(--slate);}
   .cat-count{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--verified);margin-top:14px;font-weight:600;}
 
+  /* ---- Select blocks (stage + state, 3-per-row, clickable) ---- */
+  .block-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:820px){.block-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.block-grid{grid-template-columns:1fr;}}
+  .select-block{
+    background:var(--kraft);
+    border:1.5px solid var(--line);
+    border-radius:4px;
+    padding:22px 20px;
+    transition:transform .15s ease, border-color .12s ease, background .12s ease;
+    cursor:pointer;
+  }
+  .select-block:hover{transform:translateY(-3px);}
+  .select-block .cat-code{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--stamp);font-weight:600;margin-bottom:10px;letter-spacing:0.04em;}
+  .select-block h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:4px;color:var(--ink);}
+  .select-block p{font-size:12.5px;color:var(--slate);margin:0;}
+  .select-block.active{background:var(--ink);border-color:var(--ink);}
+  .select-block.active .cat-code{color:#E8A33D;}
+  .select-block.active h3, .select-block.active p{color:var(--paper);}
+
   /* ---- Catalog ---- */
   .catalog-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
   .tab{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:8px 14px;border:1px solid var(--line);border-radius:20px;color:var(--slate);}
@@ -121,6 +204,12 @@
     border-radius:4px;
     padding:22px;
     position:relative;
+  }
+  .pinned-badge{
+    font-size:24px; line-height:1;
+    color:#E8B923;
+    text-shadow:0 1px 2px rgba(28,43,54,0.2);
+    margin-bottom:8px;
   }
   .product-topline{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
   .badge-mini{
@@ -267,16 +356,19 @@
   .state-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--slate);}
   .state-pill.live .dot{background:var(--white);}
 
-  /* ---- State selector chips ---- */
-  .state-chip{
-    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
-    padding:9px 16px;border-radius:20px;border:1.5px solid var(--ink);
-    color:var(--ink);cursor:pointer;transition:all .12s ease;
+  /* ---- Thank you message ---- */
+  .thank-you-msg{
+    display:flex; align-items:flex-start; gap:12px;
+    background:var(--white); border:1.5px solid var(--verified);
+    border-radius:4px; padding:16px 18px; margin-top:8px;
   }
-  .state-chip:hover{background:var(--kraft);}
-  .state-chip.active{background:var(--ink);color:var(--paper);}
-  .state-chip.disabled{border-color:var(--line);color:var(--slate);cursor:default;opacity:0.6;}
-  .state-chip.disabled:hover{background:none;}
+  .thank-you-msg .ty-check{
+    width:26px; height:26px; border-radius:50%; background:var(--verified);
+    color:var(--white); display:flex; align-items:center; justify-content:center;
+    font-size:14px; flex-shrink:0;
+  }
+  .thank-you-msg .ty-text h5{font-family:'Fraunces',serif;font-size:15px;font-weight:600;margin-bottom:3px;}
+  .thank-you-msg .ty-text p{font-size:13px;color:var(--slate);margin:0;}
 
   /* ---- Footer ---- */
   footer{border-top:1px solid var(--line);padding:48px 28px 32px;}
@@ -291,9 +383,19 @@
 </head>
 <body>
 
+<div class="ticker">
+  <a href="#catalog" onclick="switchTab('investors')">
+    <div class="ticker-track">
+      <span><span class="hot">🔥 HOT RIGHT NOW —</span>New SMSF borrowing rules land 10 August 2026. See what's changing before you buy.<span class="gap"></span></span>
+      <span><span class="hot">🔥 HOT RIGHT NOW —</span>New SMSF borrowing rules land 10 August 2026. See what's changing before you buy.<span class="gap"></span></span>
+      <span><span class="hot">🔥 HOT RIGHT NOW —</span>New SMSF borrowing rules land 10 August 2026. See what's changing before you buy.<span class="gap"></span></span>
+    </div>
+  </a>
+</div>
+
 <header>
   <nav class="wrap">
-    <div class="logo"><span class="logo-mark">✓</span>HouseHQ</div>
+    <div class="logo"><span class="logo-mark"><svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M3 11L13 3l10 8" fill="none" stroke="#A63A2E" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="8" y1="16.5" x2="18" y2="16.5" stroke="#1C2B36" stroke-width="1.9" stroke-linecap="round"/><line x1="8" y1="21" x2="15" y2="21" stroke="#1C2B36" stroke-width="1.9" stroke-linecap="round"/></svg></span>HouseHQ<span class="au-badge">AU ONLY</span></div>
     <div class="nav-links">
       <a href="#catalog">Checklists</a>
       <a href="#about">About</a>
@@ -330,21 +432,21 @@
       <text x="72" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="12" fill="var(--stamp)" letter-spacing="1" transform="rotate(-8 72 72)">VERIFIED</text>
       <text x="72" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="10.5" fill="var(--stamp)" letter-spacing="0.3" transform="rotate(-8 72 72)">AUSTRALIAN</text>
       <text x="72" y="86" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="10.5" fill="var(--stamp)" letter-spacing="0.3" transform="rotate(-8 72 72)">RULES &amp; REGULATIONS</text>
-      <text x="72" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500" font-size="10" fill="var(--stamp)" letter-spacing="0.5" transform="rotate(-8 72 72)">JUL 2026</text>
+      <text x="72" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500" font-size="8.5" fill="var(--stamp)" letter-spacing="0.3" transform="rotate(-8 72 72)">UPDATED MONTHLY</text>
     </g>
     <!-- headline text -->
     <text x="660" y="90" font-family="Fraunces, serif" font-weight="600" font-size="34" fill="var(--ink)">Property paperwork,</text>
     <text x="660" y="132" font-family="Fraunces, serif" font-weight="600" font-size="34" fill="var(--ink)"><tspan font-style="italic" fill="var(--stamp)">sorted</tspan> — nationally.</text>
-    <text x="660" y="165" font-family="IBM Plex Mono, monospace" font-weight="500" font-size="12" fill="var(--slate)" letter-spacing="0.5">96 CHECKLISTS · 8 STATES &amp; TERRITORIES</text>
+    <text x="660" y="165" font-family="IBM Plex Mono, monospace" font-weight="500" font-size="12" fill="var(--slate)" letter-spacing="0.5">104 CHECKLISTS · 8 STATES &amp; TERRITORIES</text>
   </svg>
 </section>
 
 <section class="hero">
   <div class="hero-grid">
     <div>
-      <div class="eyebrow">Checked against the actual rules in your state</div>
+      <div class="eyebrow">The only checklist site built only for Australia</div>
       <h1>Read this before you sign anything.</h1>
-      <p>We put together checklists for buying, renting, investing and selling in Australia — the stuff that actually matters, checked against what your state government says, not whatever's ranking on Google.</p>
+      <p>We put together checklists for buying, renting, investing and selling in Australia. Checked against what your state government actually says, not a generic template written for a US or UK audience and relabelled.</p>
       <div class="hero-actions">
         <a href="#catalog" class="btn-primary">Browse All Checklists</a>
         <a href="#how-it-works" class="btn-secondary">How we fact-check</a>
@@ -355,7 +457,7 @@
       <div class="stamp-text" style="font-size:9.5px;">
         Verified
         <span class="big" style="font-size:11px;">Australian Rules<br/>&amp; Regulations</span>
-        Jul 2026
+        Updated monthly
       </div>
     </div>
   </div>
@@ -366,40 +468,72 @@
     <div class="section-label">Start here</div>
     <h2>Find your stage</h2>
   </div>
-  <div class="state-selector" style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
-    <div class="state-chip active" data-state="vic" onclick="switchState('vic')">Victoria</div>
-    <div class="state-chip" data-state="nsw" onclick="switchState('nsw')">New South Wales</div>
-    <div class="state-chip" data-state="qld" onclick="switchState('qld')">Queensland</div>
-    <div class="state-chip" data-state="wa" onclick="switchState('wa')">Western Australia</div>
-    <div class="state-chip" data-state="sa" onclick="switchState('sa')">South Australia</div>
-    <div class="state-chip" data-state="tas" onclick="switchState('tas')">Tasmania</div>
-    <div class="state-chip" data-state="act" onclick="switchState('act')">ACT</div>
-    <div class="state-chip" data-state="nt" onclick="switchState('nt')">Northern Territory</div>
-  </div>
-  <div class="cat-grid">
-    <div class="cat-card">
+  <div class="block-grid">
+    <div class="select-block active" data-tab="all" onclick="switchTab('all')">
+      <div class="cat-code">CAT · ALL</div>
+      <h3>All Checklists</h3>
+      <p>See everything in one place.</p>
+    </div>
+    <div class="select-block" data-tab="fhb" onclick="switchTab('fhb')">
       <div class="cat-code">CAT · FHB</div>
       <h3>First Home Buyers</h3>
-      <p>Grants, stamp duty, the contract, settlement — what to do and when.</p>
-      <div class="cat-count">3 checklists · <span class="state-label">VIC</span></div>
+      <p>Grants, stamp duty, the contract, settlement.</p>
     </div>
-    <div class="cat-card">
+    <div class="select-block" data-tab="renters" onclick="switchTab('renters')">
       <div class="cat-code">CAT · RENT</div>
       <h3>Renters</h3>
-      <p>How to actually win an application, and how to get your bond back.</p>
-      <div class="cat-count">3 checklists · <span class="state-label">VIC</span></div>
+      <p>Win the application, get your bond back.</p>
     </div>
-    <div class="cat-card">
+    <div class="select-block" data-tab="investors" onclick="switchTab('investors')">
       <div class="cat-code">CAT · INV</div>
       <h3>Investors</h3>
-      <p>What to check before you buy, and what the tax office expects after.</p>
-      <div class="cat-count">3 checklists · <span class="state-label">VIC</span></div>
+      <p>Before you buy, and what tax expects after.</p>
     </div>
-    <div class="cat-card">
+    <div class="select-block" data-tab="sellers" onclick="switchTab('sellers')">
       <div class="cat-code">CAT · SELL</div>
       <h3>Sellers</h3>
-      <p>Picking an agent, and what you legally have to tell buyers.</p>
-      <div class="cat-count">3 checklists · <span class="state-label">VIC</span></div>
+      <p>Picking an agent, and what you must disclose.</p>
+    </div>
+  </div>
+</section>
+
+<section id="state-select">
+  <div class="section-head">
+    <div class="section-label">Then</div>
+    <h2>Choose your state</h2>
+  </div>
+  <div class="block-grid">
+    <div class="select-block active" data-state="vic" onclick="switchState('vic')">
+      <div class="cat-code">STATE</div>
+      <h3>Victoria</h3>
+    </div>
+    <div class="select-block" data-state="nsw" onclick="switchState('nsw')">
+      <div class="cat-code">STATE</div>
+      <h3>New South Wales</h3>
+    </div>
+    <div class="select-block" data-state="qld" onclick="switchState('qld')">
+      <div class="cat-code">STATE</div>
+      <h3>Queensland</h3>
+    </div>
+    <div class="select-block" data-state="wa" onclick="switchState('wa')">
+      <div class="cat-code">STATE</div>
+      <h3>Western Australia</h3>
+    </div>
+    <div class="select-block" data-state="sa" onclick="switchState('sa')">
+      <div class="cat-code">STATE</div>
+      <h3>South Australia</h3>
+    </div>
+    <div class="select-block" data-state="tas" onclick="switchState('tas')">
+      <div class="cat-code">STATE</div>
+      <h3>Tasmania</h3>
+    </div>
+    <div class="select-block" data-state="act" onclick="switchState('act')">
+      <div class="cat-code">STATE</div>
+      <h3>ACT</h3>
+    </div>
+    <div class="select-block" data-state="nt" onclick="switchState('nt')">
+      <div class="cat-code">STATE</div>
+      <h3>Northern Territory</h3>
     </div>
   </div>
 </section>
@@ -407,593 +541,594 @@
 <section id="catalog">
   <div class="section-head">
     <div class="section-label">The catalogue</div>
-    <h2>First Home Buyer checklists — <span id="stateHeading">VIC</span></h2>
-  </div>
-  <div class="catalog-tabs">
-    <div class="tab active" data-tab="all" onclick="switchTab('all')">All</div>
-    <div class="tab" data-tab="fhb" onclick="switchTab('fhb')">First Home Buyers</div>
-    <div class="tab" data-tab="renters" onclick="switchTab('renters')">Renters</div>
-    <div class="tab" data-tab="investors" onclick="switchTab('investors')">Investors</div>
-    <div class="tab" data-tab="sellers" onclick="switchTab('sellers')">Sellers</div>
+    <h2><span id="categoryHeading">All checklists</span> for <span id="stateHeading">VIC</span></h2>
   </div>
 
-  <div class="product-grid" id="panel-vic-fhb">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist" data-price="$9">
+  <div class="product-grid" id="panel-vic" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (VIC)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist" data-price="$9.99" data-category="fhb">
       <div class="product-topline">
         <h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4>
         <div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
       </div>
       <div class="desc">Grants, stamp duty concessions, cooling-off rights and the full pre-purchase timeline.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist" data-price="$9.99" data-category="fhb">
       <div class="product-topline">
         <h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4>
         <div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
       </div>
       <div class="desc">What to check in the Section 32, and before you commit to any contract.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist" data-price="$7.99" data-category="fhb">
       <div class="product-topline">
         <h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4>
         <div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
       </div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-
-  <div class="product-grid" id="panel-vic-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">Win the lease — prescribed application rules, documents and red flags to avoid.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">Win the lease: prescribed application rules, documents and red flags to avoid.</div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">RTBA, VCAT, fair wear and tear — protect your bond with the right evidence.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">RTBA, VCAT, fair wear and tear. Protect your bond with the right evidence.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Minimum standards, condition reports and your rights from day one.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
 
-  <div class="product-grid" id="panel-vic-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist" data-price="$9">
+<div class="product-card" data-name="Property Investment Purchase Checklist" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Structure, due diligence and land tax exposure before you buy.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">The 15 minimum standards and safety checks every rental provider must meet.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Depreciation schedules, land tax and the 2027 CGT changes explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-
-  <div class="product-grid" id="panel-vic-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Negotiation Checklist" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Negotiation Checklist" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand exactly what you're agreeing to.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Section 32 essentials and underquoting obligations, in plain English.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== NSW PANELS ===== -->
-  <div class="product-grid" id="panel-nsw-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (NSW)" data-price="$9">
+  <div class="product-grid" id="panel-nsw" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (NSW)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (NSW)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">FHBAS, FHOG, cooling-off rights and the full pre-purchase timeline for NSW.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (NSW)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (NSW)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">s10.7 certificates, underquoting protections and contract essentials.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (NSW)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (NSW)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-nsw-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (NSW)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (NSW)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Standard form agreements, banned fees and pet reform rights.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (NSW)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (NSW)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Rental Bonds Online, NCAT and the mandatory end-of-tenancy survey.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (NSW)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (NSW)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Standard form agreements, no-grounds eviction bans and your rights.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-nsw-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (NSW)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (NSW)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Structure, due diligence and land tax exposure before you buy.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (NSW)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (NSW)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Standard form agreements, ending tenancies and pet obligations.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (NSW)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (NSW)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Land tax thresholds, foreign surcharges and the 2027 CGT changes.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-nsw-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (NSW)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (NSW)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand your agreement.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (NSW)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (NSW)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (NSW)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (NSW)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Contract of Sale essentials and underquoting obligations.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== QLD PANELS ===== -->
-  <div class="product-grid" id="panel-qld-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (QLD)" data-price="$9">
+  <div class="product-grid" id="panel-qld" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (QLD)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (QLD)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">FHOG, transfer duty concessions and the full pre-purchase timeline for QLD.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (QLD)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (QLD)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Queensland's new Seller Disclosure Statement regime, explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (QLD)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (QLD)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-qld-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (QLD)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (QLD)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Form 22, privacy rules and what agents can and can't ask.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (QLD)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (QLD)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">RTA, QCAT and the portable bond pilot explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (QLD)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (QLD)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Minimum Housing Standards and your rights from day one.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-qld-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (QLD)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (QLD)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Structure, due diligence and land tax exposure before you buy.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (QLD)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (QLD)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Minimum Housing Standards, bonds and ending tenancies correctly.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (QLD)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (QLD)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Land tax thresholds, AFAD, foreign surcharges and 2027 CGT changes.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-qld-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (QLD)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (QLD)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and prepare for your disclosure obligations.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (QLD)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (QLD)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (QLD)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (QLD)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">The Seller Disclosure Statement regime, explained for vendors.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== WA PANELS ===== -->
-  <div class="product-grid" id="panel-wa-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (WA)" data-price="$9">
+  <div class="product-grid" id="panel-wa" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (WA)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (WA)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">FHOG, stamp duty concessions and the full pre-purchase timeline for WA.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (WA)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (WA)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Critical: WA has no cooling-off period. What to check before you sign.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (WA)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (WA)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-wa-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (WA)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (WA)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">What's changing in WA's active tenancy law reform, and what to expect.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (WA)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (WA)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">The 2026 bond release reforms explained, and how to claim.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (WA)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (WA)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your rights from day one, and the reform to watch for.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-wa-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (WA)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (WA)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">Structure and due diligence — including WA's no foreign land tax surcharge.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">Structure and due diligence, including WA's no foreign land tax surcharge.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (WA)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (WA)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Current rules, and the reform pipeline every WA landlord should watch.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (WA)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (WA)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Land tax, MRIT and the 2027 CGT changes explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-wa-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (WA)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (WA)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand your agreement.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (WA)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (WA)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (WA)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (WA)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">Your obligations as a vendor — critical given there's no cooling-off period.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">Your obligations as a vendor, critical given there's no cooling-off period.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== SA PANELS ===== -->
-  <div class="product-grid" id="panel-sa-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (SA)" data-price="$9">
+  <div class="product-grid" id="panel-sa" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (SA)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (SA)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">FHOG, stamp duty and SA's 2-day cooling-off period, explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (SA)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (SA)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">The Form 1, and what to check with just 2 days to move.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (SA)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (SA)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-sa-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (SA)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (SA)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">2024's biggest rental reform in a generation, explained for renters.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (SA)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (SA)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">SACAT, stricter evidence rules and how to protect your bond.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (SA)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (SA)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your rights from day one, including SA's new pet protections.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-sa-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (SA)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (SA)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">Structure and due diligence — including SA's harsh trust land tax rules.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">Structure and due diligence, including SA's harsh trust land tax rules.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (SA)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (SA)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Forms, grounds, bonds and pets under the 2024–2026 reforms.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (SA)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (SA)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Why trust structures can backfire on SA land tax, and what to do instead.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-sa-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (SA)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (SA)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand your agreement.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (SA)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (SA)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (SA)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (SA)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your Form 1 obligations, explained for vendors.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== TAS PANELS ===== -->
-  <div class="product-grid" id="panel-tas-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (TAS)" data-price="$9">
+  <div class="product-grid" id="panel-tas" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (TAS)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (TAS)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Live policy transition alert: what's changing with TAS grants and duty right now.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (TAS)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (TAS)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Critical: TAS has no cooling-off period. What to check before you sign.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (TAS)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (TAS)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-tas-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (TAS)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (TAS)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">How TAS's Commissioner-based dispute system actually works.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (TAS)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (TAS)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">MyBond, the Rental Deposit Authority and how to claim your bond.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (TAS)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (TAS)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your rights from day one, including the new pet-dispute pathway.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-tas-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (TAS)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (TAS)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Structure and due diligence for TAS property investors.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (TAS)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (TAS)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Minimum standards, bonds and TAS's distinctive termination rules.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (TAS)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (TAS)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Land tax, foreign surcharges and the 2027 CGT changes explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-tas-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (TAS)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (TAS)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand your agreement.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (TAS)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (TAS)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (TAS)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (TAS)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">Your obligations as a vendor — critical given there's no cooling-off period.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">Your obligations as a vendor, critical given there's no cooling-off period.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== ACT PANELS ===== -->
-  <div class="product-grid" id="panel-act-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (ACT)" data-price="$9">
+  <div class="product-grid" id="panel-act" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (ACT)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (ACT)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Nation-first: full stamp duty abolition for ACT first home buyers, explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (ACT)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (ACT)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Leasehold land, disclosure and what to check before you sign.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (ACT)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (ACT)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-act-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (ACT)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (ACT)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Win the lease in Canberra's competitive market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (ACT)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (ACT)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">ACAT, the ACT Revenue Office and how to protect your bond.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (ACT)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (ACT)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your rights from day one, including strong early rent protections.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-act-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (ACT)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (ACT)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Structure and due diligence in a leasehold, rates-based jurisdiction.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (ACT)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (ACT)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Bonds, rent rules and land tax obligations for ACT landlords.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (ACT)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (ACT)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Rates, land tax and the 2027 CGT changes explained.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-act-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (ACT)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (ACT)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand your agreement.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (ACT)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (ACT)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (ACT)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (ACT)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your obligations as a vendor in a leasehold jurisdiction.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
   <!-- ===== NT PANELS ===== -->
-  <div class="product-grid" id="panel-nt-fhb" style="display:none;">
-    <div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (NT)" data-price="$9">
+  <div class="product-grid" id="panel-nt" style="display:none;">
+<div class="product-card" data-name="Buying Property Through Your SMSF (NT)" data-price="$9.99" data-category="investors">
+      <div class="pinned-badge">&#9733;</div>
+      <div class="product-topline"><h4 style="max-width:75%;">Buying Property Through Your SMSF</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+      <div class="desc">Pros, cons, and what you can still do under the new LRBA ban from 10 Aug 2026.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+    </div>
+<div class="product-card" data-name="The First Home Buyer's 90-Day Checklist (NT)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">The First Home Buyer's 90-Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">The $50,000 HomeGrown Grant and HLPE, explained for NT buyers.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (NT)" data-price="$9">
+<div class="product-card" data-name="Contract &amp; Inspection Red-Flags Checklist (NT)" data-price="$9.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Contract &amp; Inspection Red-Flags Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">NT's flexible cooling-off period, and cyclone-specific inspection tips.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (NT)" data-price="$7">
+<div class="product-card" data-name="Pre-Settlement to Moving Day Checklist (NT)" data-price="$7.99" data-category="fhb">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Settlement to Moving Day Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Insurance, final inspection, utilities and settlement-week logistics.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-nt-renters" style="display:none;">
-    <div class="product-card" data-name="Rental Application Fast-Track Checklist (NT)" data-price="$7">
+<div class="product-card" data-name="Rental Application Fast-Track Checklist (NT)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Rental Application Fast-Track Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Rent-bidding bans and what agents can and can't ask.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="End-of-Lease Bond-Back Checklist (NT)" data-price="$9">
+<div class="product-card" data-name="End-of-Lease Bond-Back Checklist (NT)" data-price="$9.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">End-of-Lease Bond-Back Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">NTCAT, trust accounts and how to protect your bond.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (NT)" data-price="$7">
+<div class="product-card" data-name="Moving-In Condition Report &amp; Rights Checklist (NT)" data-price="$7.99" data-category="renters">
       <div class="product-topline"><h4 style="max-width:75%;">Moving-In Condition Report &amp; Rights Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your rights from day one, including the NT's specific rent-increase rules.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-nt-investors" style="display:none;">
-    <div class="product-card" data-name="Property Investment Purchase Checklist (NT)" data-price="$9">
+
+<div class="product-card" data-name="Property Investment Purchase Checklist (NT)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Property Investment Purchase Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Why the NT is Australia's most tax-friendly jurisdiction for landholding.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Landlord Compliance Checklist (NT)" data-price="$9">
+<div class="product-card" data-name="Landlord Compliance Checklist (NT)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Landlord Compliance Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Bonds, rent rules and the rent-bidding ban for NT landlords.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (NT)" data-price="$9">
+<div class="product-card" data-name="Tax &amp; Depreciation Essentials Checklist (NT)" data-price="$9.99" data-category="investors">
       <div class="product-topline"><h4 style="max-width:75%;">Tax &amp; Depreciation Essentials Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-      <div class="desc">No land tax, no foreign surcharge — what that really means for investors.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="desc">No land tax, no foreign surcharge. What that really means for investors.</div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
-  <div class="product-grid" id="panel-nt-sellers" style="display:none;">
-    <div class="product-card" data-name="Agent Selection &amp; Commission Checklist (NT)" data-price="$7">
+<div class="product-card" data-name="Agent Selection &amp; Commission Checklist (NT)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Agent Selection &amp; Commission Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Choose the right agent and understand your agreement.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (NT)" data-price="$7">
+<div class="product-card" data-name="Pre-Listing Prep &amp; Styling Checklist (NT)" data-price="$7.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Pre-Listing Prep &amp; Styling Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Where to spend, where to save, before your property goes to market.</div>
-      <div class="product-footer"><span class="price">$7</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$7.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-    <div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (NT)" data-price="$9">
+<div class="product-card" data-name="Vendor Disclosure &amp; Contract Checklist (NT)" data-price="$9.99" data-category="sellers">
       <div class="product-topline"><h4 style="max-width:75%;">Vendor Disclosure &amp; Contract Checklist</h4><div class="badge-mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div></div>
       <div class="desc">Your obligations as a vendor, and how buyer grants affect your sale.</div>
-      <div class="product-footer"><span class="price">$9</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
+      <div class="product-footer"><span class="price">$9.99</span><span class="buy-btn" onclick="openModal(this)">Buy now</span></div>
     </div>
-  </div>
+</div>
 
-  <div class="bundle-strip">
+  <div class="bundle-strip" data-name="The Complete State Bundle" data-price="$89.99">
     <div class="left">
       <h4 id="bundleTitle">The Complete VIC Bundle</h4>
-      <p>All 12 checklists — FHB, renters, investors and sellers — in one download.</p>
+      <p>All 13 checklists (FHB, renters, investors and sellers) in one download.</p>
     </div>
-    <div class="bundle-price"><span class="was">$97</span>$69</div>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <div class="bundle-price"><span class="was">$119.87</span>$89.99</div>
+      <span class="buy-btn" style="background:var(--stamp);border-color:var(--stamp);color:var(--white);" onclick="openModal(this)">Buy bundle</span>
+    </div>
   </div>
 </section>
 
@@ -1027,12 +1162,12 @@
       <div class="section-label">Who's behind this</div>
       <h2>Why we built this</h2>
     </div>
-    <p>Buying a house, renting a place, sorting out a sale — you end up with fifteen tabs open. A mortgage broker's blog, a removalist's blog, some government page written for lawyers. None of it's written for you, and half of it's trying to sell you something on the way through.</p>
-    <p>That's basically the whole reason this exists. Every checklist here comes from primary sources — state revenue offices, tenancy authorities, actual legislation — instead of someone else's article with the wording changed. We're not a brokerage or a real estate agency. We don't get a kickback for pointing you at a particular lender.</p>
+    <p>Buying a house, renting a place, sorting out a sale: you end up with fifteen tabs open. A mortgage broker's blog, a removalist's blog, some government page written for lawyers. None of it's written for you, and half of it's trying to sell you something on the way through.</p>
+    <p>That's basically the whole reason this exists. Every checklist here comes from primary sources: state revenue offices, tenancy authorities, actual legislation, instead of someone else's article with the wording changed. We're not a brokerage or a real estate agency. We don't get a kickback for pointing you at a particular lender.</p>
     <p>We started with Victoria, then kept going until every state and territory was covered, because "just check your state's rules" is a lot easier to say than to actually do.</p>
     <div class="about-stats">
       <div class="about-stat">
-        <div class="num">96</div>
+        <div class="num">104</div>
         <div class="label">Checklists published</div>
       </div>
       <div class="about-stat">
@@ -1056,34 +1191,6 @@
     <div class="cs-grid">
       <div class="cs-card">
         <div class="cs-stamp">Coming soon</div>
-        <h3>Agent &amp; broker partnerships</h3>
-        <p>If you're an agent or broker, we're setting up a way to hand clients something better than a business card.</p>
-        <ul class="cs-list">
-          <li>Branded checklist bundles for your agency</li>
-          <li>Disclosed referral commission per client</li>
-          <li>No software to learn, just hand it over</li>
-        </ul>
-        <form class="notify-form" onsubmit="return false;">
-          <input type="email" placeholder="Agency email address">
-          <button type="submit">Notify me</button>
-        </form>
-      </div>
-      <div class="cs-card">
-        <div class="cs-stamp">Coming soon</div>
-        <h3>More guides, not just checklists</h3>
-        <p>The 96 checklists cover every state now — next we're building the deeper stuff a checklist can't fully cover on its own.</p>
-        <ul class="cs-list">
-          <li>An interactive stamp duty &amp; grant calculator</li>
-          <li>A free 5-day First Home Buyer email course</li>
-          <li>Longer guides on the trickier situations</li>
-        </ul>
-        <form class="notify-form" onsubmit="return false;">
-          <input type="email" placeholder="Your email address">
-          <button type="submit">Notify me</button>
-        </form>
-      </div>
-      <div class="cs-card">
-        <div class="cs-stamp">Coming soon</div>
         <h3>Property metrics &amp; tools</h3>
         <p>Not sure what to actually look for in a property? We're building tools to help you work that out before you buy.</p>
         <ul class="cs-list">
@@ -1091,11 +1198,38 @@
           <li>Yield, growth and affordability calculators</li>
           <li>A proper checklist for inspection day</li>
         </ul>
-        <form class="notify-form" onsubmit="return false;">
-          <input type="email" placeholder="Your email address">
+        <form class="notify-form" onsubmit="showThankYou(this, 'notify'); return false;">
+          <input type="email" placeholder="Your email address" required>
           <button type="submit">Notify me</button>
         </form>
-
+      </div>
+      <div class="cs-card">
+        <div class="cs-stamp">Coming soon</div>
+        <h3>Agent &amp; broker partnerships</h3>
+        <p>If you're an agent or broker, we're setting up a way to hand clients something better than a business card.</p>
+        <ul class="cs-list">
+          <li>Branded checklist bundles for your agency</li>
+          <li>Disclosed referral commission per client</li>
+          <li>No software to learn, just hand it over</li>
+        </ul>
+        <form class="notify-form" onsubmit="showThankYou(this, 'notify'); return false;">
+          <input type="email" placeholder="Agency email address" required>
+          <button type="submit">Notify me</button>
+        </form>
+      </div>
+      <div class="cs-card">
+        <div class="cs-stamp">Coming soon</div>
+        <h3>More guides, not just checklists</h3>
+        <p>The 104 checklists cover every state now. Next we're building the deeper stuff a checklist can't fully cover on its own.</p>
+        <ul class="cs-list">
+          <li>An interactive stamp duty &amp; grant calculator</li>
+          <li>A free 5-day First Home Buyer email course</li>
+          <li>Longer guides on the trickier situations</li>
+        </ul>
+        <form class="notify-form" onsubmit="showThankYou(this, 'notify'); return false;">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit">Notify me</button>
+        </form>
       </div>
     </div>
   </div>
@@ -1110,7 +1244,7 @@
 
     <details class="faq-item" open>
       <summary>Is this legal, financial, or tax advice?</summary>
-      <p>No, and we're not going to pretend it is. It's general info, checked against state government sources, and it's a good starting point — but talk to an actual conveyancer, solicitor, broker or accountant before you make a real decision. They know your situation, we don't.</p>
+      <p>No, and we're not going to pretend it is. It's general info, checked against state government sources, and it's a good starting point, but talk to an actual conveyancer, solicitor, broker or accountant before you make a real decision. They know your situation, we don't.</p>
     </details>
 
     <details class="faq-item">
@@ -1119,13 +1253,13 @@
     </details>
 
     <details class="faq-item">
-      <summary>I live in one state but I'm buying in another — which checklist do I need?</summary>
-      <p>Go by where the property is, not where you live. Stamp duty, tenancy rules, cooling-off periods — all of it's set state by state, so a Victorian checklist won't help you much if you're buying in Queensland.</p>
+      <summary>I live in one state but I'm buying in another. Which checklist do I need?</summary>
+      <p>Go by where the property is, not where you live. Stamp duty, tenancy rules, cooling-off periods: all of it's set state by state, so a Victorian checklist won't help you much if you're buying in Queensland.</p>
     </details>
 
     <details class="faq-item">
       <summary>What if I want a refund?</summary>
-      <p>If a file's broken or won't open, tell us and we'll fix it or refund you, no argument. What we don't do is refund a checklist just because you changed your mind after downloading it — that's standard for digital products. Full details are in the Refund Policy.</p>
+      <p>If a file's broken or won't open, tell us and we'll fix it or refund you, no argument. What we don't do is refund a checklist just because you changed your mind after downloading it. That's standard for digital products. Full details are in the Refund Policy.</p>
     </details>
 
     <details class="faq-item">
@@ -1140,7 +1274,7 @@
 
     <details class="faq-item">
       <summary>Can agents use these with clients?</summary>
-      <p>That's exactly what we're building — see the agent partnership card above. Pop your email in there and we'll let you know when it's ready to go.</p>
+      <p>That's exactly what we're building. See the agent partnership card above. Pop your email in there and we'll let you know when it's ready to go.</p>
     </details>
   </div>
 </section>
@@ -1151,10 +1285,10 @@
       <div class="section-label">Get in touch</div>
       <h2>Contact Us</h2>
     </div>
-    <p style="font-size:14px;color:var(--slate);margin-bottom:8px;">Got a question about a checklist, want to order a batch for your agency, or something else entirely — just send it through.</p>
-    <form class="contact-form" onsubmit="return false;">
+    <p style="font-size:14px;color:var(--slate);margin-bottom:8px;">Got a question about a checklist, want to order a batch for your agency, or something else entirely? Just send it through.</p>
+    <form class="contact-form" onsubmit="showThankYou(this, 'contact'); return false;">
       <label>Full name</label>
-      <input type="text" placeholder="Your name">
+      <input type="text" placeholder="Your name" required>
       <label>Email address</label>
       <input type="email" placeholder="you@email.com">
       <label>Phone number</label>
@@ -1170,7 +1304,7 @@
   <div class="wrap" style="padding:48px 0;">
     <div class="disclaimer-wrap">
       <div class="section-label" style="margin-bottom:14px;">General information disclaimer</div>
-      <p><strong>Everything on this site and in our checklists is general information — nothing more.</strong> It's not financial, legal, tax or personal advice, and it doesn't know anything about your specific situation. Property, tax and legal circumstances are different for everyone, so before you make a real purchasing, financial or legal decision, talk to someone qualified — a conveyancer, solicitor, mortgage broker, financial adviser or accountant.</p>
+      <p><strong>Everything on this site and in our checklists is general information, nothing more.</strong> It's not financial, legal, tax or personal advice, and it doesn't know anything about your specific situation. Property, tax and legal circumstances are different for everyone, so before you make a real purchasing, financial or legal decision, talk to someone qualified: a conveyancer, solicitor, mortgage broker, financial adviser or accountant.</p>
       <p style="margin-top:12px;">We check each checklist against current Australian state and federal sources when it's published, and each one shows its last-checked date. But grant amounts, thresholds and legislation change with every budget, so confirm anything that actually matters to your decision with the relevant government authority before you rely on it.</p>
       <p style="margin-top:12px;">For the full legal terms, see our <a href="legal-01-privacy-policy.md" style="color:var(--ink);">Privacy Policy</a>, <a href="legal-02-terms-and-conditions.md" style="color:var(--ink);">Terms &amp; Conditions</a>, and <a href="legal-03-refund-policy.md" style="color:var(--ink);">Refund Policy</a>.</p>
     </div>
@@ -1180,7 +1314,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="logo" style="margin-bottom:12px;"><span class="logo-mark">✓</span>HouseHQ</div>
+      <div class="logo" style="margin-bottom:12px;"><span class="logo-mark"><svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M3 11L13 3l10 8" fill="none" stroke="#A63A2E" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="8" y1="16.5" x2="18" y2="16.5" stroke="#1C2B36" stroke-width="1.9" stroke-linecap="round"/><line x1="8" y1="21" x2="15" y2="21" stroke="#1C2B36" stroke-width="1.9" stroke-linecap="round"/></svg></span>HouseHQ</div>
       <p style="font-size:13px;color:var(--slate);max-width:240px;">Property checklists checked state by state. General info only, not advice.</p>
     </div>
     <div>
@@ -1213,7 +1347,7 @@
   </div>
   <div class="footer-bottom">
     <span>© 2026 HouseHQ. ABN [pending registration].</span>
-    <span>General information only — not financial, legal or tax advice.</span>
+    <span>General information only, not financial, legal or tax advice.</span>
   </div>
 </footer>
 
@@ -1226,16 +1360,16 @@
     <div class="modal-step active" id="step1">
       <div class="modal-eyebrow">Step 1 of 2 — Verify to download</div>
       <h3>Almost there</h3>
-      <div class="product-name" id="modalProductName">The First Home Buyer's 90-Day Checklist — $9</div>
+      <div class="product-name" id="modalProductName">The First Home Buyer's 90-Day Checklist ($9.99)</div>
       <label>Email address</label>
       <input type="email" placeholder="you@email.com">
       <div class="hint">We'll email your download link here once verified.</div>
       <label>Mobile number</label>
       <input type="tel" placeholder="04XX XXX XXX">
-      <div class="hint">Captured for order updates — not used for verification.</div>
+      <div class="hint">Captured for order updates, not used for verification.</div>
       <div class="consent-row">
         <input type="checkbox" id="consentBox">
-        <p>Also send me occasional emails about new checklists and bundles. I can unsubscribe anytime. (Optional — required fields above are only for delivering my purchase.)</p>
+        <p>Also send me occasional emails about new checklists and bundles. I can unsubscribe anytime. (Optional. The fields above are only required to deliver your purchase.)</p>
       </div>
       <button class="modal-btn" onclick="goToStep2()">Email me a verification code</button>
     </div>
@@ -1269,45 +1403,61 @@
 </div>
 
 <script>
+  // Thank-you message on form submit
+  function showThankYou(form, kind){
+    const messages = {
+      notify: {title: "You're on the list", text: "We'll email you the moment this is ready. No spam, unsubscribe anytime."},
+      contact: {title: "Message sent", text: "Thanks for reaching out. We'll get back to you shortly."}
+    };
+    const m = messages[kind] || messages.notify;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'thank-you-msg';
+    wrapper.innerHTML = '<div class="ty-check">&#10003;</div><div class="ty-text"><h5>'+m.title+'</h5><p>'+m.text+'</p></div>';
+    form.replaceWith(wrapper);
+  }
+
   // State + tab switching
   let currentState = 'vic';
   let currentTab = 'all';
   const stateNames = {vic:'VIC', nsw:'NSW', qld:'QLD', wa:'WA', sa:'SA', tas:'TAS', act:'ACT', nt:'NT'};
-  const allTabs = ['fhb','renters','investors','sellers'];
+  const categoryNames = {all:'All checklists', fhb:'First Home Buyer checklists', renters:'Renter checklists', investors:'Investor checklists', sellers:'Seller checklists'};
 
   function render(){
-    document.querySelectorAll('.product-grid').forEach(p=>p.style.display='none');
-    if(currentTab === 'all'){
-      allTabs.forEach(t=>{
-        const panel = document.getElementById('panel-'+currentState+'-'+t);
-        if(panel) panel.style.display='grid';
+    document.querySelectorAll('.product-grid[id^="panel-"]').forEach(p=>p.style.display='none');
+    const panel = document.getElementById('panel-'+currentState);
+    if(panel){
+      panel.style.display = 'grid';
+      panel.querySelectorAll('.product-card').forEach(card=>{
+        const cat = card.dataset.category;
+        card.style.display = (currentTab === 'all' || cat === currentTab) ? '' : 'none';
       });
-    } else {
-      const panel = document.getElementById('panel-'+currentState+'-'+currentTab);
-      if(panel) panel.style.display='grid';
     }
     document.getElementById('stateHeading').textContent = stateNames[currentState];
+    document.getElementById('categoryHeading').textContent = categoryNames[currentTab];
     document.getElementById('bundleTitle').textContent = 'The Complete ' + stateNames[currentState] + ' Bundle';
+    document.querySelector('.bundle-strip').dataset.name = 'The Complete ' + stateNames[currentState] + ' Bundle';
     document.querySelectorAll('.state-label').forEach(el=>el.textContent = stateNames[currentState]);
   }
   function switchTab(tab){
     currentTab = tab;
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    document.querySelector('.tab[data-tab="'+tab+'"]').classList.add('active');
+    document.querySelectorAll('.select-block[data-tab]').forEach(t=>t.classList.remove('active'));
+    const block = document.querySelector('.select-block[data-tab="'+tab+'"]');
+    if(block) block.classList.add('active');
     render();
+    document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
   }
   function switchState(state){
     currentState = state;
-    document.querySelectorAll('.state-chip').forEach(c=>c.classList.remove('active'));
-    document.querySelector('.state-chip[data-state="'+state+'"]').classList.add('active');
+    document.querySelectorAll('.select-block[data-state]').forEach(c=>c.classList.remove('active'));
+    document.querySelector('.select-block[data-state="'+state+'"]').classList.add('active');
     render();
     document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
   }
 
   // Modal flow
   function openModal(el){
-    const card = el.closest('.product-card');
-    document.getElementById('modalProductName').textContent = card.dataset.name + ' — ' + card.dataset.price;
+    const card = el.closest('[data-name]');
+    document.getElementById('modalProductName').textContent = card.dataset.name + ' (' + card.dataset.price + ')';
     document.getElementById('step1').classList.add('active');
     document.getElementById('step2').classList.remove('active');
     document.getElementById('step3').classList.remove('active');
@@ -1326,6 +1476,9 @@
   document.querySelectorAll('.code-boxes input').forEach((input,i,arr)=>{
     input.addEventListener('input', ()=>{ if(input.value && arr[i+1]) arr[i+1].focus(); });
   });
+
+  // Initialize default view: All checklists, VIC
+  render();
 </script>
 
 </body>
