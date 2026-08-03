@@ -1,6 +1,6 @@
 # HouseHQ website
 
-Real, working e-commerce site for HouseHQ's 96 Australian property
+Real, working e-commerce site for HouseHQ's 104 Australian property
 checklists: state/category catalogue, Stripe checkout, an email
 verification gate before download, marketing-consent tracking with
 one-click unsubscribe, contact form, and "notify me" signups.
@@ -15,7 +15,7 @@ getting this live.
 
 - **Next.js 16** (App Router, TypeScript) — pages + API routes in one app.
 - **Supabase** (Postgres + private Storage) — orders, consent records,
-  contact/notify submissions, and the 96 PDF files.
+  contact/notify submissions, and the 104 PDF files.
 - **Stripe Checkout** — payment. Chosen over Payhip because the brief's
   verification-gate requirement (code emailed only after payment, download
   locked until verified) needs a webhook tied to our own database — Stripe's
@@ -32,9 +32,9 @@ househq/
   app/                  Next.js pages + API routes
   components/           React components (Storefront, BuyModal, forms, etc.)
   lib/                  Server helpers: catalog, Supabase, Stripe, Resend, tokens
-  data/products.json    All 96 products + 8 bundles (generated from the mockup)
+  data/products.json    All 104 products (13 per state, incl. the SMSF checklist) + 8 bundles (generated from the mockup)
   supabase/schema.sql   Database schema — run once in Supabase's SQL editor
-  scripts/upload-pdfs.mjs  One-time script to upload the 96 PDFs to Supabase Storage
+  scripts/upload-pdfs.mjs  One-time script to upload the 104 PDFs to Supabase Storage
   private-content/      Source PDFs, legal markdown, checklist markdown (not public)
   design-reference/     The original approved mockup + build brief, kept as-is
 ```
@@ -53,8 +53,27 @@ househq/
    nothing is ever served from a public folder or a guessable URL.
 4. A backup email with the same signed link(s) goes out for safety.
 
-Bundles follow the same flow but generate 12 signed links (one per state
+Bundles follow the same flow but generate 13 signed links (one per state
 checklist) instead of one.
+
+## SEO: a real page per checklist
+
+The interactive `/` catalogue is a single page, which search engines can't
+usefully index per-checklist. Alongside it, every checklist also gets its
+own static, crawlable page:
+
+- `/checklists` — index of all 8 states
+- `/checklists/{state}` — hub page linking to that state's 13 checklists
+- `/checklists/{state}/{slug}` — one page per checklist, with its own
+  title/meta description, `Product` JSON-LD (price, currency, availability),
+  a genuine content preview pulled straight from the source markdown in
+  `private-content/source-markdown/` (first section shown in full, later
+  sections shown as locked titles), and a buy button reusing the same
+  checkout flow as the main catalogue.
+
+`app/sitemap.ts` and `app/robots.ts` generate `/sitemap.xml` and
+`/robots.txt` automatically from the product catalogue — nothing to
+maintain by hand when products change.
 
 ## Local development
 

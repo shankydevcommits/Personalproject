@@ -1,4 +1,5 @@
 import raw from "@/data/products.json";
+import { slugify } from "./slug";
 
 export type Product = {
   slug: string;
@@ -11,13 +12,13 @@ export type Product = {
   priceCents: number;
   pdfPath: string;
   pdfFilename: string;
+  pinned: boolean;
 };
 
 export type Bundle = {
   state: string;
   stateName: string;
   priceCents: number;
-  wasCents: number;
 };
 
 export const products: Product[] = raw.products as Product[];
@@ -54,30 +55,43 @@ export const categoryMeta: Record<
   string,
   { code: string; name: string; blurb: string }
 > = {
+  all: {
+    code: "CAT · ALL",
+    name: "All Checklists",
+    blurb: "See everything in one place.",
+  },
   fhb: {
     code: "CAT · FHB",
     name: "First Home Buyers",
-    blurb: "Grants, stamp duty, the contract, settlement — what to do and when.",
+    blurb: "Grants, stamp duty, the contract, settlement.",
   },
   renters: {
     code: "CAT · RENT",
     name: "Renters",
-    blurb: "How to actually win an application, and how to get your bond back.",
+    blurb: "Win the application, get your bond back.",
   },
   investors: {
     code: "CAT · INV",
     name: "Investors",
-    blurb: "What to check before you buy, and what the tax office expects after.",
+    blurb: "Before you buy, and what tax expects after.",
   },
   sellers: {
     code: "CAT · SELL",
     name: "Sellers",
-    blurb: "Picking an agent, and what you legally have to tell buyers.",
+    blurb: "Picking an agent, and what you must disclose.",
   },
 };
 
+export const categoryHeading: Record<string, string> = {
+  all: "All checklists",
+  fhb: "First Home Buyer checklists",
+  renters: "Renter checklists",
+  investors: "Investor checklists",
+  sellers: "Seller checklists",
+};
+
 export function formatPrice(cents: number): string {
-  return `$${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)}`;
+  return `$${(cents / 100).toFixed(2)}`;
 }
 
 export function findProduct(slug: string): Product | undefined {
@@ -88,12 +102,42 @@ export function findBundle(state: string): Bundle | undefined {
   return bundles.find((b) => b.state === state);
 }
 
+/** Pinned items (currently just the SMSF checklist) always display first. */
+function pinnedFirst(items: Product[]): Product[] {
+  return [...items].sort((a, b) => Number(b.pinned) - Number(a.pinned));
+}
+
 export function productsFor(state: string, category?: string): Product[] {
-  return products.filter(
-    (p) => p.state === state && (category ? p.category === category : true)
+  return pinnedFirst(
+    products.filter(
+      (p) => p.state === state && (category ? p.category === category : true)
+    )
   );
 }
 
 export function bundleProductsFor(state: string): Product[] {
-  return products.filter((p) => p.state === state);
+  return pinnedFirst(products.filter((p) => p.state === state));
+}
+
+/** The bundle's honest "was" price - the real sum of its individual items, not a hardcoded number. */
+export function bundleWasCents(state: string): number {
+  return bundleProductsFor(state).reduce((sum, p) => sum + p.priceCents, 0);
+}
+
+/** Human-readable URL slug for a checklist's own SEO landing page. */
+export function checklistUrlSlug(product: Product): string {
+  return slugify(product.name);
+}
+
+export function checklistUrl(product: Product): string {
+  return `/checklists/${product.state}/${checklistUrlSlug(product)}`;
+}
+
+export function findProductByUrlSlug(
+  state: string,
+  urlSlug: string
+): Product | undefined {
+  return products.find(
+    (p) => p.state === state && checklistUrlSlug(p) === urlSlug
+  );
 }
